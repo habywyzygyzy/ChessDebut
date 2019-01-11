@@ -1,12 +1,11 @@
 package GUI;
 
 import com.supareno.pgnparser.PGNParser;
-import com.supareno.pgnparser.jaxb.Game;
 import com.supareno.pgnparser.jaxb.Games;
 import com.supareno.pgnparser.jaxb.Hits;
 import tools.PrintDebug;
-import tools.ReadObject;
-import tools.WriteObject;
+import tools.Deserialization;
+import tools.Serialization;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,14 +15,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static GUI.PreparePanel.preparePickerPanel;
 import static tools.LoadFolder.loadFolder;
-import static tools.PrintDebug.printGame;
-import static tools.PrintDebug.printGames;
 
 public class MainFrame extends JFrame {
 
     private static final int WIDTH = 800;
-    private static final int HEIGHT = 219;
+    private static final int HEIGHT = 600;
     private JPanel mainPanel;
     private JTable mainTable;
 
@@ -37,9 +35,15 @@ public class MainFrame extends JFrame {
         setLayout(new BorderLayout());
         setSize(WIDTH, HEIGHT);
         setVisible(true);
+
+        JPanel pickerPanel = new JPanel();
+        preparePickerPanel(pickerPanel, 200,HEIGHT);
+        add(pickerPanel, BorderLayout.EAST);
         add(header, BorderLayout.NORTH);
         add(mainTable, BorderLayout.CENTER);
     }
+
+
 
     public static void main(String args[]) {
 
@@ -74,9 +78,9 @@ public class MainFrame extends JFrame {
         PrintDebug.TypeOfPrintedMoves type = PrintDebug.TypeOfPrintedMoves.ALL;
         String path = "./example";
         String path2 = "./KingBase2018-pgn";
-        String path3 = "./KingBaseLite2018-pgn";
-        String serPathGames = "./games.ser";
-        String serPathHits = "./hits.ser";
+        String path3 = "C:\\Users\\Kamil\\Downloads\\KingBaseLite2018-pgn";
+        String serializationPathGames = "./games.ser";
+        String serializationPathHits = "./hits.ser";
         Games games = null;
         Hits hits = null;
         List<String> listOfMoves = new ArrayList<String>();
@@ -90,26 +94,30 @@ public class MainFrame extends JFrame {
         List<Games> gamesList = new ArrayList<Games>();
         long start = System.nanoTime();
 
-        //games = parser.parseFile(loadFolder(path)[0]);
-        hits = parser.parseFile(loadFolder(path)[0]).getGame().get(0).getHits();
+        games = parser.parseFile(loadFolder(path3)[0]);
+        //hits = parser.parseFile(loadFolder(path)[0]).getGame().get(0).getHits();
 
 
         long end = System.nanoTime() - start;
 
-        System.out.println("Czas parsowania w ms "  + end/1000000);
+        System.out.println("Czas parsowania w ms " + end / 1000000);
 
-
-        WriteObject writeObj = new WriteObject();
-        writeObj.serializeListOfGames(gamesList, serPathGames);
+        System.out.println("Serialization started");
+        Serialization writeObj = new Serialization();
+        writeObj.serializeListOfGames(games, serializationPathGames);
+        System.out.println("Serialization ended");
         //writeObj.serializeHits(hits, serPathHits);
 
+        System.out.println("Deserialization started");
         long serialStart = System.nanoTime();
-        ReadObject readObj = new ReadObject();
-        List<Games> gamesList2 = readObj.deserialzeListOfGames(serPathGames);
+        Deserialization readObj = new Deserialization();
+        games = readObj.deserialzeListOfGames(serializationPathGames);
         //Hits hits2 = readObj.deserialzeHits(serPathHits);
 
         long serialEnd = System.nanoTime() - serialStart;
 
-        System.out.println("Czas deserializacji w ms " + serialEnd/1000000);
+        System.out.println("Czas deserializacji w ms " + serialEnd / 1000000);
+        //PrintDebug.printGames(gamesList2,type);
+        System.out.println("test");
     }
 }

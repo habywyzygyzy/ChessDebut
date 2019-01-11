@@ -9,10 +9,8 @@ import java.util.List;
 
 public class PrintDebug {
 
-    public static void printGames(List<Games> gamesList, TypeOfPrintedMoves type) {
-        for (Games games : gamesList) {
+    public static void printGames(Games games, TypeOfPrintedMoves type) {
             printGame(games, type);
-        }
     }
 
     public static void printGame(Games games, TypeOfPrintedMoves type) {
