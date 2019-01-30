@@ -2,6 +2,7 @@ package GUI;
 
 import com.supareno.pgnparser.PGNParser;
 import com.supareno.pgnparser.jaxb.Games;
+import database.DBExecutor;
 import singletons.ParseFolderPathSingleton;
 
 import javax.swing.*;
@@ -9,15 +10,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
-import static tools.LoadFolder.*;
 import static tools.LoadFolder.loadFolder;
 
 public class PickerPanel extends JPanel {
 
     public PickerPanel(int width, int height) {
+        final File[] selectedFolder = {new File("C:\\Users\\Kamil\\Desktop\\Politechnika\\INZ\\ChessDebut\\example")};
+        ParseFolderPathSingleton.getInstance().setFiles(loadFolder(selectedFolder[0].getAbsolutePath()));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setPreferredSize(new Dimension(width, height));
         final JLabel dirLabel = new JLabel("Directory", JLabel.CENTER);
@@ -34,9 +34,9 @@ public class PickerPanel extends JPanel {
                 fileChooser.setAcceptAllFileFilterUsed(false);
                 int returnValue = fileChooser.showOpenDialog(null);
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    File selectedFolder = fileChooser.getSelectedFile();
-                    dirLabel.setText(selectedFolder.getAbsolutePath());
-                    ParseFolderPathSingleton.getInstance().setFiles(loadFolder(selectedFolder.getAbsolutePath()));
+                    selectedFolder[0] = fileChooser.getSelectedFile();
+                    dirLabel.setText(selectedFolder[0].getAbsolutePath());
+                    ParseFolderPathSingleton.getInstance().setFiles(loadFolder(selectedFolder[0].getAbsolutePath()));
                 }
             }
         });
@@ -52,10 +52,12 @@ public class PickerPanel extends JPanel {
                     games = parser.parseFile(ParseFolderPathSingleton.getInstance().getFiles()[i]);
                 long end = System.nanoTime() - start;
                 System.out.println("Czas parsowania w ms " + end / 1000000);
+                DBExecutor db = new DBExecutor();
+                db.Test();
             }
         });
 
-        JButton chooseDatabase = new JButton("Choose Database");
+        JButton chooseDatabase = new JButton("Choose DBExecutor");
         chooseDatabase.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.add(dirPickerButton);
@@ -64,9 +66,9 @@ public class PickerPanel extends JPanel {
         this.add(Box.createRigidArea(new Dimension(5, 10)));
         this.add(parsePGNFromFolder);
         this.add(Box.createRigidArea(new Dimension(5, 10)));
-        this.add(chooseDatabase);
+        //this.add(chooseDatabase);
         this.add(Box.createRigidArea(new Dimension(5, 10)));
-        this.add(testLabel);
+        //this.add(testLabel);
         this.setBackground(Color.WHITE);
         this.setVisible(true);
     }

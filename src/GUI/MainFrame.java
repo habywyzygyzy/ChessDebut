@@ -16,11 +16,11 @@ public class MainFrame extends JFrame {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setVisible(true);
-        PickerPanel pickerPanel = new PickerPanel(300, HEIGHT);
-        StatisticsTablePanel statisticsTablePanel = new StatisticsTablePanel(650, HEIGHT, data);
+        PickerPanel pickerPanel = new PickerPanel(300, 100);
+        StatisticsTablePanel statisticsTablePanel = new StatisticsTablePanel(1000, HEIGHT, data);
         ChessBoardPanel chessBoardPanel = new ChessBoardPanel(950, HEIGHT);
-        getContentPane().add(pickerPanel, BorderLayout.WEST);
-        getContentPane(). add(statisticsTablePanel, BorderLayout.CENTER);
+        getContentPane().add(pickerPanel, BorderLayout.SOUTH);
+        getContentPane(). add(statisticsTablePanel, BorderLayout.WEST);
         getContentPane().add(chessBoardPanel, BorderLayout.EAST);
         setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
