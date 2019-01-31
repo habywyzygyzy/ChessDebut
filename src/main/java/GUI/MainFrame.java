@@ -27,8 +27,8 @@ public class MainFrame extends JFrame {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setVisible(true);
         PickerPanel pickerPanel = new PickerPanel(300, 100);
-        StatisticsTablePanel statisticsTablePanel = new StatisticsTablePanel(1000, HEIGHT, data);
-        ChessBoardPanel chessBoardPanel = new ChessBoardPanel(950, HEIGHT);
+        StatisticsTablePanel statisticsTablePanel = new StatisticsTablePanel(700, HEIGHT, data);
+        ChessBoardPanel chessBoardPanel = new ChessBoardPanel(700, HEIGHT);
         getContentPane().add(pickerPanel, BorderLayout.SOUTH);
         getContentPane().add(statisticsTablePanel, BorderLayout.WEST);
         getContentPane().add(chessBoardPanel, BorderLayout.EAST);
