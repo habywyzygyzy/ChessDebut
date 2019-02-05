@@ -1,12 +1,8 @@
 package GUI;
 
-import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.game.Game;
-import com.github.bhlangonijr.chesslib.move.Move;
-import com.github.bhlangonijr.chesslib.move.MoveList;
 import com.github.bhlangonijr.chesslib.pgn.PgnHolder;
 import database.DBExecutor;
-import singletons.ParseFolderPathSingleton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +11,14 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
+import static singletons.ParseFolderPathSingleton.getInstance;
 import static tools.LoadFolder.loadFolder;
 
 public class PickerPanel extends JPanel {
 
     public PickerPanel(int width, int height) {
         final File[] selectedFolder = {new File("C:\\Users\\Kamil\\Desktop\\Politechnika\\INZ\\ChessDebut\\example")};
-        ParseFolderPathSingleton.getInstance().setFiles(loadFolder(selectedFolder[0].getAbsolutePath()));
+        getInstance().setFiles(loadFolder(selectedFolder[0].getAbsolutePath()));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setPreferredSize(new Dimension(width, height));
         final JLabel dirLabel = new JLabel("Directory", JLabel.CENTER);
@@ -40,7 +37,7 @@ public class PickerPanel extends JPanel {
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     selectedFolder[0] = fileChooser.getSelectedFile();
                     dirLabel.setText(selectedFolder[0].getAbsolutePath());
-                    ParseFolderPathSingleton.getInstance().setFiles(loadFolder(selectedFolder[0].getPath()));
+                    getInstance().setFiles(loadFolder(selectedFolder[0].getPath()));
                 }
             }
         });
@@ -52,8 +49,8 @@ public class PickerPanel extends JPanel {
                 PgnHolder pgn = null;
                 ArrayList<Game> games = new ArrayList<Game>();
                 long start = System.nanoTime();
-                for (int i = 0; i < ParseFolderPathSingleton.getInstance().getFiles().length; i++) {
-                    pgn = new PgnHolder(ParseFolderPathSingleton.getInstance().getFiles()[i].getAbsolutePath());
+                for (int i = 0; i < getInstance().getFiles().length; i++) {
+                    pgn = new PgnHolder(getInstance().getFiles()[i].getAbsolutePath());
                     try {
                         pgn.loadPgn();
                         games.addAll(pgn.getGame());
@@ -65,7 +62,7 @@ public class PickerPanel extends JPanel {
                 System.out.println("Czas parsowania w ms " + end / 1000000);
                 System.out.println(games.size());
 
-                for (Game game : games) {
+                /*for (Game game : games) {
                     try {
                         game.loadMoveText();
                     } catch (Exception e) {
@@ -78,7 +75,7 @@ public class PickerPanel extends JPanel {
                         board.doMove(move);
                     }
                     System.out.println("FEN: " + board.getFen());
-                }
+                }*/
 
                 //                PGNParser parser = new PGNParser();
                 /*Games games = new Games();

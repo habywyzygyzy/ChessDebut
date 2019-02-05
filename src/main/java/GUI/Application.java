@@ -3,6 +3,8 @@ package GUI;
 import javax.swing.*;
 
 import static database.DBConnection.openConnection;
+import static java.lang.Boolean.TRUE;
+import static singletons.ChessBoardSingleton.setIsWhiteMove;
 
 public class Application {
     public static void main(String[] args) {
@@ -10,6 +12,7 @@ public class Application {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 openConnection();
+                setIsWhiteMove(TRUE);
                 String[][] data = new String[20][];
                 String[] row;
 

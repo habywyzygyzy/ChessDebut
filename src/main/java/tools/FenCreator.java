@@ -1,7 +1,7 @@
 package tools;
 
 public class FenCreator {
-    public String translateBoardToFEN(String[][] board) {
+    public static String translateBoardToFEN(String[][] board) {
         String fen = "";
         for (int rank = 0; rank < board.length; rank++) {
             // count empty fields

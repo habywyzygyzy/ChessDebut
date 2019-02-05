@@ -1,8 +1,5 @@
 package GUI;
 
-import singletons.ChessBoardSingleton;
-import tools.FenCreator;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,10 +7,10 @@ import java.awt.event.ActionListener;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static singletons.ChessBoardSingleton.*;
+import static tools.FenCreator.translateBoardToFEN;
 
 public class ChessBoardPanel extends JPanel {
-
-    private Boolean whiteMoveFlag = TRUE;
 
     public ChessBoardPanel(int width, int height) {
         final JTextField[][] chessBoardSquares = new JTextField[8][8];
@@ -28,12 +25,12 @@ public class ChessBoardPanel extends JPanel {
                         stringBoard[j][i] = chessBoardSquares[i][j].getText();
                     }
                 }
-                String state = new String(new FenCreator().translateBoardToFEN(stringBoard));
-                if (whiteMoveFlag)
+                String state = new String(translateBoardToFEN(stringBoard));
+                if (getIsWhiteMove())
                     state += " w";
                 else
                     state += " b";
-                ChessBoardSingleton.getInstance().setState(state);
+                getInstance().setState(state);
                 printCurrentBoardState();
                 //test();
             }
@@ -45,7 +42,7 @@ public class ChessBoardPanel extends JPanel {
         whiteMove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                whiteMoveFlag = TRUE;
+                setIsWhiteMove(TRUE);
             }
         });
         JRadioButton blackMove = new JRadioButton("Black Move", false);
@@ -53,7 +50,7 @@ public class ChessBoardPanel extends JPanel {
         blackMove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                whiteMoveFlag = FALSE;
+                setIsWhiteMove(FALSE);
             }
         });
 
@@ -87,7 +84,7 @@ public class ChessBoardPanel extends JPanel {
         }
         int x = random.shortValue();
         long end = System.nanoTime() - start;
-        System.out.println("zmiennoprzecinkowe " + end/1000);
+        System.out.println("zmiennoprzecinkowe " + end / 1000);
         start = System.nanoTime();
         for (int i = 0; i < 10000; i++) {
             for (int j = 0; j < 10000; j++) {
@@ -96,7 +93,7 @@ public class ChessBoardPanel extends JPanel {
             }
         }
         end = System.nanoTime() - start;
-        System.out.println("całkowite " + end/1000);
+        System.out.println("całkowite " + end / 1000);
 
         String s = new String("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         start = System.nanoTime();
@@ -107,7 +104,7 @@ public class ChessBoardPanel extends JPanel {
             }
         }
         end = System.nanoTime() - start;
-        System.out.println("napisy " + end/1000);
+        System.out.println("napisy " + end / 1000);
     }
 
     private void printCurrentBoardState() {
@@ -122,7 +119,7 @@ public class ChessBoardPanel extends JPanel {
             e.printStackTrace();
         }*/
         //System.out.println(ChessBoardSingleton.getInstance().getState() + " " + Coding.scoreDepthHash(ChessBoardSingleton.getInstance().getState()));
-        System.out.println(ChessBoardSingleton.getInstance().getState());
+        System.out.println(getInstance().getState());
     }
 
     private static void addSquaresToBoard(JPanel chessBoardPanel, JTextField[][] chessBoardSquares) {
