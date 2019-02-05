@@ -1,8 +1,11 @@
 package GUI;
 
+import com.github.bhlangonijr.chesslib.Board;
+import com.github.bhlangonijr.chesslib.game.Game;
+import com.github.bhlangonijr.chesslib.move.Move;
+import com.github.bhlangonijr.chesslib.move.MoveList;
+import com.github.bhlangonijr.chesslib.pgn.PgnHolder;
 import database.DBExecutor;
-import org.supareno.pgnparser.jaxb.model.Games;
-import org.supareno.pgnparser.pgn.parser.PGNParser;
 import singletons.ParseFolderPathSingleton;
 
 import javax.swing.*;
@@ -10,6 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 import static tools.LoadFolder.loadFolder;
 
@@ -36,7 +40,7 @@ public class PickerPanel extends JPanel {
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     selectedFolder[0] = fileChooser.getSelectedFile();
                     dirLabel.setText(selectedFolder[0].getAbsolutePath());
-                    ParseFolderPathSingleton.getInstance().setFiles(loadFolder(selectedFolder[0].getAbsolutePath()));
+                    ParseFolderPathSingleton.getInstance().setFiles(loadFolder(selectedFolder[0].getPath()));
                 }
             }
         });
@@ -45,30 +49,50 @@ public class PickerPanel extends JPanel {
         parsePGNFromFolder.setAlignmentX(Component.CENTER_ALIGNMENT);
         parsePGNFromFolder.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                PGNParser parser = new PGNParser();
+                PgnHolder pgn = null;
+                ArrayList<Game> games = new ArrayList<Game>();
                 long start = System.nanoTime();
-                Games games = new Games();
-                for (int i = 0; i < ParseFolderPathSingleton.getInstance().getFiles().length; i++)
-                    games = parser.parseFile(ParseFolderPathSingleton.getInstance().getFiles()[i]);
+                for (int i = 0; i < ParseFolderPathSingleton.getInstance().getFiles().length; i++) {
+                    pgn = new PgnHolder(ParseFolderPathSingleton.getInstance().getFiles()[i].getAbsolutePath());
+                    try {
+                        pgn.loadPgn();
+                        games.addAll(pgn.getGame());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 long end = System.nanoTime() - start;
                 System.out.println("Czas parsowania w ms " + end / 1000000);
+                System.out.println(games.size());
+
+                for (Game game : games) {
+                    try {
+                        game.loadMoveText();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    MoveList moves = game.getHalfMoves();
+                    Board board = new Board();
+                    //Replay all the moves from the game and print the final position in FEN format
+                    for (Move move : moves) {
+                        board.doMove(move);
+                    }
+                    System.out.println("FEN: " + board.getFen());
+                }
+
+                //                PGNParser parser = new PGNParser();
+                /*Games games = new Games();
+                for (int i = 0; i < ParseFolderPathSingleton.getInstance().getFiles().length; i++)
+                    games = parser.parseFile(ParseFolderPathSingleton.getInstance().getFiles()[i]);*/
                 DBExecutor db = new DBExecutor();
                 db.Test();
             }
         });
-
-        JButton chooseDatabase = new JButton("Choose DBExecutor");
-        chooseDatabase.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         this.add(dirPickerButton);
         this.add(Box.createRigidArea(new Dimension(5, 10)));
         this.add(dirLabel);
         this.add(Box.createRigidArea(new Dimension(5, 10)));
         this.add(parsePGNFromFolder);
-        this.add(Box.createRigidArea(new Dimension(5, 10)));
-        //this.add(chooseDatabase);
-        this.add(Box.createRigidArea(new Dimension(5, 10)));
-        //this.add(testLabel);
         this.setBackground(Color.WHITE);
         this.setVisible(true);
     }

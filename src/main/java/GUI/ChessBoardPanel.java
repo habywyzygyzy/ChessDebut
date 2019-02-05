@@ -1,50 +1,128 @@
 package GUI;
 
 import singletons.ChessBoardSingleton;
+import tools.FenCreator;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 public class ChessBoardPanel extends JPanel {
+
+    private Boolean whiteMoveFlag = TRUE;
 
     public ChessBoardPanel(int width, int height) {
         final JTextField[][] chessBoardSquares = new JTextField[8][8];
+        FlowLayout topLayout = new FlowLayout();
         GridLayout chessBoardLayout = new GridLayout(0, 9);
         Button submitButton = new Button("Submit");
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String[][] chessBoardState = new String[8][8];
-                for (int i = 0; i < 8; i++)
-                    for (int j = 0; j < 8; j++)
-                        chessBoardState[i][j] = chessBoardSquares[i][j].getText();
-                ChessBoardSingleton.getInstance().setState(chessBoardState);
+                String[][] stringBoard = new String[8][8];
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        stringBoard[j][i] = chessBoardSquares[i][j].getText();
+                    }
+                }
+                String state = new String(new FenCreator().translateBoardToFEN(stringBoard));
+                if (whiteMoveFlag)
+                    state += " w";
+                else
+                    state += " b";
+                ChessBoardSingleton.getInstance().setState(state);
                 printCurrentBoardState();
+                //test();
             }
         });
+
+        ButtonGroup radioGroup = new ButtonGroup();
+        JRadioButton whiteMove = new JRadioButton("White Move", true);
+        radioGroup.add(whiteMove);
+        whiteMove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                whiteMoveFlag = TRUE;
+            }
+        });
+        JRadioButton blackMove = new JRadioButton("Black Move", false);
+        radioGroup.add(blackMove);
+        blackMove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                whiteMoveFlag = FALSE;
+            }
+        });
+
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(topLayout);
+        topPanel.add(whiteMove);
+        topPanel.add(blackMove);
+        topPanel.add(submitButton);
 
         JPanel chessBoard = new JPanel();
         chessBoard.setLayout(chessBoardLayout);
         prepareChessBoardSquares(chessBoardSquares);
         addColumnLabel(chessBoard);
         addSquaresToBoard(chessBoard, chessBoardSquares);
+
         this.setLayout(new BorderLayout());
         this.add(chessBoard, BorderLayout.CENTER);
-        this.add(submitButton, BorderLayout.NORTH);
+        this.add(topPanel, BorderLayout.NORTH);
         this.setPreferredSize(new Dimension(width, height));
         this.setVisible(true);
     }
 
-    private void printCurrentBoardState() {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (ChessBoardSingleton.getInstance().getState()[j][i].length() < 2)
-                    ChessBoardSingleton.getInstance().getState()[j][i] += " ";
-                System.out.print(ChessBoardSingleton.getInstance().getState()[j][i] + " ");
+    private void test() {
+        Double random = 1 + Math.random() * (2 - 1);
+        long start = System.nanoTime();
+        for (int i = 0; i < 10000; i++) {
+            for (int j = 0; j < 10000; j++) {
+                if (random == 1)
+                    System.out.println(random);
             }
-            System.out.print("\n");
         }
+        int x = random.shortValue();
+        long end = System.nanoTime() - start;
+        System.out.println("zmiennoprzecinkowe " + end/1000);
+        start = System.nanoTime();
+        for (int i = 0; i < 10000; i++) {
+            for (int j = 0; j < 10000; j++) {
+                if (x == -1)
+                    System.out.println(x);
+            }
+        }
+        end = System.nanoTime() - start;
+        System.out.println("całkowite " + end/1000);
+
+        String s = new String("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        start = System.nanoTime();
+        for (int i = 0; i < 10000; i++) {
+            for (int j = 0; j < 10000; j++) {
+                if (s.equals("fsdffsdffsdffsdffsdffsdffsdffsdf"))
+                    System.out.println("af");
+            }
+        }
+        end = System.nanoTime() - start;
+        System.out.println("napisy " + end/1000);
+    }
+
+    private void printCurrentBoardState() {
+        //System.out.println(ChessBoardSingleton.getInstance().getState() + " " + ChessBoardSingleton.getInstance().getState().hashCode());
+        //BigInteger bi = new BigInteger(ChessBoardSingleton.getInstance().getState().getBytes());
+        //System.out.println(ChessBoardSingleton.getInstance().getState() + " " + bi + new String(bi.toByteArray()));
+        /*try {
+            System.out.println(ChessBoardSingleton.getInstance().getState() + " " + Coding.makeSHA1Hash(ChessBoardSingleton.getInstance().getState()));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }*/
+        //System.out.println(ChessBoardSingleton.getInstance().getState() + " " + Coding.scoreDepthHash(ChessBoardSingleton.getInstance().getState()));
+        System.out.println(ChessBoardSingleton.getInstance().getState());
     }
 
     private static void addSquaresToBoard(JPanel chessBoardPanel, JTextField[][] chessBoardSquares) {
@@ -72,6 +150,7 @@ public class ChessBoardPanel extends JPanel {
         for (int i = 0; i < chessBoardSquares.length; i++) {
             for (int j = 0; j < chessBoardSquares[i].length; j++) {
                 JTextField field = new JTextField();
+                //field.setText(" ");
                 field.setMargin(margin);
                 field.setHorizontalAlignment(JTextField.CENTER);
                 field.setFont(font);
@@ -81,50 +160,51 @@ public class ChessBoardPanel extends JPanel {
                         switch (j) {
                             case 0:
                             case 7:
-                                field.setText("bR");
+                                field.setText("r");
                                 break;
                             case 1:
                             case 6:
-                                field.setText("bN");
+                                field.setText("n");
                                 break;
                             case 2:
                             case 5:
-                                field.setText("bB");
+                                field.setText("b");
                                 break;
                             case 3:
-                                field.setText("bQ");
+                                field.setText("q");
                                 break;
                             case 4:
-                                field.setText("bK");
+                                field.setText("k");
                                 break;
                         }
+
                         break;
                     }
                     case 1:
-                        field.setText("b");
+                        field.setText("p");
                         break;
                     case 6:
-                        field.setText("w");
+                        field.setText("P");
                         break;
                     case 7: {
                         switch (j) {
                             case 0:
                             case 7:
-                                field.setText("wR");
+                                field.setText("R");
                                 break;
                             case 1:
                             case 6:
-                                field.setText("wN");
+                                field.setText("N");
                                 break;
                             case 2:
                             case 5:
-                                field.setText("wB");
+                                field.setText("B");
                                 break;
                             case 3:
-                                field.setText("wQ");
+                                field.setText("Q");
                                 break;
                             case 4:
-                                field.setText("wK");
+                                field.setText("K");
                                 break;
                         }
                         break;

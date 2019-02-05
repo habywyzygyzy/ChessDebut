@@ -1,9 +1,9 @@
 package singletons;
 
 public class ChessBoardSingleton {
-    private static String[][] state;
+    private static String state;
 
-    private ChessBoardSingleton(String[][] state) {
+    private ChessBoardSingleton(String state) {
         ChessBoardSingleton.state = state;
     }
 
@@ -15,11 +15,11 @@ public class ChessBoardSingleton {
         private static final ChessBoardSingleton INSTANCE = new ChessBoardSingleton(state);
     }
 
-    public void setState(String[][] boardState) {
+    public void setState(String boardState) {
         ChessBoardSingleton.state = boardState;
     }
 
-    public String[][] getState() {
+    public String getState() {
         return ChessBoardSingleton.state;
     }
 }

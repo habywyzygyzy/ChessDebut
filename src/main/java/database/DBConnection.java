@@ -18,9 +18,7 @@ public class DBConnection {
             System.out.println("Connecting to database...");
             setConn(DriverManager.getConnection(DB_URL, USER, PASS));
             setStmt(getConn().createStatement());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }

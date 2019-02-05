@@ -6,7 +6,7 @@
 CREATE TABLE [dbo].[MetaData]
 (
  [MetaId]    int IDENTITY (1, 1) NOT NULL ,
- [Result]    nvarchar(10) NULL ,
+ [Result]    nvarchar(5) NULL ,
  [EventDate] datetime NOT NULL CONSTRAINT [DF_MetaData_EventDate] DEFAULT (getdate()) ,
 
  CONSTRAINT [PK_Order] PRIMARY KEY CLUSTERED ([MetaId] ASC),
@@ -31,7 +31,7 @@ CREATE TABLE [dbo].[Hit]
 (
  [HitId]          int IDENTITY (1, 1) NOT NULL ,
  [Hit]            nvarchar(10) NOT NULL ,
- [StateBeforeHit] nvarchar(40) NOT NULL ,
+ [StateBeforeHit] nvarchar(32) NOT NULL ,
  [MetaId]         int NOT NULL ,
 
  CONSTRAINT [PK_Customer] PRIMARY KEY CLUSTERED ([HitId] ASC),

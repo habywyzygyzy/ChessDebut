@@ -6,11 +6,9 @@ import static singletons.DatabaseConfigSingleton.*;
 
 public class PrintData {
     public static void printData() {
-        String sql;
-        sql = "SELECT id, first, last, age FROM REGISTRATION";
+        String sql = "SELECT id, first, last, age FROM REGISTRATION";
         try {
             setRs(getStmt().executeQuery(sql));
-            System.out.println("Result set");
             while (getRs().next()) {
                 //Retrieve by column name
                 int id = getRs().getInt("id");
@@ -23,7 +21,6 @@ public class PrintData {
                 System.out.print(", First: " + first);
                 System.out.println(", Last: " + last);
             }
-            System.out.println("After While");
         } catch (SQLException e) {
             e.printStackTrace();
         }
