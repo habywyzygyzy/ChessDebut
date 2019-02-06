@@ -23,7 +23,6 @@ DROP TABLE IF EXISTS `mydb`.`MetaData` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`MetaData` (
   `MetaId` INT NOT NULL,
   `Result` VARCHAR(5) NULL,
-  `EventDate` DATE NULL,
   PRIMARY KEY (`MetaId`))
 ENGINE = InnoDB;
 
@@ -36,7 +35,7 @@ DROP TABLE IF EXISTS `mydb`.`Hit` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Hit` (
   `HitId` INT NOT NULL,
   `Hit` VARCHAR(10) NULL,
-  `StateBeforeHit` VARCHAR(32) NULL,
+  `StateBeforeHit` VARCHAR(40) NULL,
   `MetaId` INT NULL,
   PRIMARY KEY (`HitId`),
   INDEX `MetaId_idx` (`MetaId` ASC) VISIBLE,
