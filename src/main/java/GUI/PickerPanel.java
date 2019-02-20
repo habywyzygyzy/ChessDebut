@@ -17,7 +17,7 @@ import static tools.LoadFolder.loadFolder;
 public class PickerPanel extends JPanel {
 
     public PickerPanel(int width, int height) {
-        final File[] selectedFolder = {new File("C:\\Users\\Kamil\\Desktop\\Politechnika\\INZ\\ChessDebut\\example")};
+        final File[] selectedFolder = {new File("C:\\Users\\Kamil\\Desktop\\INZ\\ChessDebut\\example")};
         getInstance().setFiles(loadFolder(selectedFolder[0].getAbsolutePath()));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setPreferredSize(new Dimension(width, height));
