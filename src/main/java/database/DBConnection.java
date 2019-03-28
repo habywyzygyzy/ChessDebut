@@ -1,5 +1,7 @@
 package database;
 
+import singletons.DatabaseConfigSingleton;
+
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -32,16 +34,15 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            //finally block used to close resources
             try {
                 if (getStmt() != null) getStmt().close();
             } catch (SQLException se2) {
-            } // nothing we can do
+            }
             try {
                 if (getStmt() != null) getStmt().close();
             } catch (SQLException se) {
                 se.printStackTrace();
-            } //end finally try
+            }
         }
     }
 }
