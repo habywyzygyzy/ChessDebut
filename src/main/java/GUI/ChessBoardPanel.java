@@ -12,7 +12,7 @@ import static tools.FenCreator.translateBoardToFEN;
 
 public class ChessBoardPanel extends JPanel {
 
-    public ChessBoardPanel() {
+    public ChessBoardPanel(int width, int height) {
         final JTextField[][] chessBoardSquares = new JTextField[8][8];
         FlowLayout topLayout = new FlowLayout();
         GridLayout chessBoardLayout = new GridLayout(0, 9);
@@ -69,7 +69,7 @@ public class ChessBoardPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(chessBoard, BorderLayout.CENTER);
         this.add(topPanel, BorderLayout.NORTH);
-        //this.setPreferredSize(new Dimension(width, height));
+        this.setPreferredSize(new Dimension(width, height));
         this.setVisible(true);
     }
 
@@ -108,6 +108,17 @@ public class ChessBoardPanel extends JPanel {
     }
 
     private void printCurrentBoardState() {
+        //System.out.println(ChessBoardSingleton.getInstance().getState() + " " + ChessBoardSingleton.getInstance().getState().hashCode());
+        //BigInteger bi = new BigInteger(ChessBoardSingleton.getInstance().getState().getBytes());
+        //System.out.println(ChessBoardSingleton.getInstance().getState() + " " + bi + new String(bi.toByteArray()));
+        /*try {
+            System.out.println(ChessBoardSingleton.getInstance().getState() + " " + Coding.makeSHA1Hash(ChessBoardSingleton.getInstance().getState()));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }*/
+        //System.out.println(ChessBoardSingleton.getInstance().getState() + " " + Coding.scoreDepthHash(ChessBoardSingleton.getInstance().getState()));
         System.out.println(getInstance().getState());
     }
 
@@ -136,6 +147,7 @@ public class ChessBoardPanel extends JPanel {
         for (int i = 0; i < chessBoardSquares.length; i++) {
             for (int j = 0; j < chessBoardSquares[i].length; j++) {
                 JTextField field = new JTextField();
+                //field.setText(" ");
                 field.setMargin(margin);
                 field.setHorizontalAlignment(JTextField.CENTER);
                 field.setFont(font);

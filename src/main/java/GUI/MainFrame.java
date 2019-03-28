@@ -9,6 +9,9 @@ import java.awt.event.WindowEvent;
 
 public class MainFrame extends JFrame {
 
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 1200;
+
     public MainFrame(String[][] data) {
         super("Chess Debut");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -20,33 +23,15 @@ public class MainFrame extends JFrame {
                 System.exit(0);
             }
         });
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 2;
-        gbc.gridheight = 1;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 100;
-        gbc.weighty = 10;
+        setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setVisible(true);
-        PickerPanel pickerPanel = new PickerPanel();
-        gbc.anchor = GridBagConstraints.SOUTH;
-        add(pickerPanel, gbc);
-        StatisticsTablePanel statisticsTablePanel = new StatisticsTablePanel(data);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.weightx = 50;
-        gbc.weighty = 90;
-        gbc.anchor = GridBagConstraints.WEST;
-        add(statisticsTablePanel, gbc);
-        ChessBoardPanel chessBoardPanel = new ChessBoardPanel();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.EAST;
-        add(chessBoardPanel, gbc);
+        PickerPanel pickerPanel = new PickerPanel(300, 100);
+        StatisticsTablePanel statisticsTablePanel = new StatisticsTablePanel(700, HEIGHT, data);
+        ChessBoardPanel chessBoardPanel = new ChessBoardPanel(700, HEIGHT);
+        getContentPane().add(pickerPanel, BorderLayout.SOUTH);
+        getContentPane().add(statisticsTablePanel, BorderLayout.WEST);
+        getContentPane().add(chessBoardPanel, BorderLayout.EAST);
         setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 }
