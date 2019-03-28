@@ -16,7 +16,9 @@ import static tools.LoadFolder.loadFolder;
 
 public class PickerPanel extends JPanel {
 
-        final File[] selectedFolder = {new File("C:\\Users\\Kamil\\Desktop\\Politechnika\\INZ\\ChessDebut\\example")};        getInstance().setFiles(loadFolder(selectedFolder[0].getAbsolutePath()));
+    public PickerPanel() {
+        File[] selectedFolder = {new File("C:\\Users\\Kamil\\Desktop\\Politechnika\\INZ\\ChessDebut\\example")};
+        getInstance().setFiles(loadFolder(selectedFolder[0].getAbsolutePath()));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         final JLabel dirLabel = new JLabel("Directory", JLabel.CENTER);
         dirLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
