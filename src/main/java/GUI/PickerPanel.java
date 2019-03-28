@@ -16,14 +16,11 @@ import static tools.LoadFolder.loadFolder;
 
 public class PickerPanel extends JPanel {
 
-    public PickerPanel(int width, int height) {
-        final File[] selectedFolder = {new File("C:\\Users\\Kamil\\Desktop\\ChessDebut\\example")};
+    public PickerPanel() {
+        final File[] selectedFolder = {new File("C:\\Users\\Kamil\\Desktop\\Politechnika\\INZ\\ChessDebut\\example")};
         getInstance().setFiles(loadFolder(selectedFolder[0].getAbsolutePath()));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setPreferredSize(new Dimension(width, height));
         final JLabel dirLabel = new JLabel("Directory", JLabel.CENTER);
-        dirLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        final JLabel testLabel = new JLabel("Test", JLabel.CENTER);
         dirLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         JButton dirPickerButton = new JButton("Select Folder");
         dirPickerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -48,19 +45,20 @@ public class PickerPanel extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 PgnHolder pgn = null;
                 ArrayList<Game> games = new ArrayList<Game>();
-                long start = System.nanoTime();
+
                 for (int i = 0; i < getInstance().getFiles().length; i++) {
                     pgn = new PgnHolder(getInstance().getFiles()[i].getAbsolutePath());
                     try {
+                        long start = System.nanoTime();
                         pgn.loadPgn();
                         games.addAll(pgn.getGame());
+                        long end = System.nanoTime() - start;
+                        System.out.println("Czas parsowania w ms " + end / 1000000);
+                        System.out.println(games.size());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-                long end = System.nanoTime() - start;
-                System.out.println("Czas parsowania w ms " + end / 1000000);
-                System.out.println(games.size());
 
                 /*for (Game game : games) {
                     try {
