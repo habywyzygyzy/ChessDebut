@@ -32,7 +32,7 @@ public class ChessBoardPanel extends JPanel {
                     state += " b";
                 getInstance().setState(state);
                 printCurrentBoardState();
-                //test();
+                test();
             }
         });
 
