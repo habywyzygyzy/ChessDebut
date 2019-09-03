@@ -27,12 +27,11 @@ public class ChessBoardPanel extends JPanel {
                 }
                 String state = new String(translateBoardToFEN(stringBoard));
                 if (getIsWhiteMove())
-                    state += " w";
+                    state += "w";
                 else
-                    state += " b";
+                    state += "b";
                 getInstance().setState(state);
                 printCurrentBoardState();
-                test();
             }
         });
 
@@ -71,40 +70,6 @@ public class ChessBoardPanel extends JPanel {
         this.add(topPanel, BorderLayout.NORTH);
         //this.setPreferredSize(new Dimension(width, height));
         this.setVisible(true);
-    }
-
-    private void test() {
-        Double random = 1 + Math.random() * (2 - 1);
-        long start = System.nanoTime();
-        for (int i = 0; i < 10000; i++) {
-            for (int j = 0; j < 10000; j++) {
-                if (random == 1)
-                    System.out.println(random);
-            }
-        }
-        int x = random.shortValue();
-        long end = System.nanoTime() - start;
-        System.out.println("zmiennoprzecinkowe " + end / 1000);
-        start = System.nanoTime();
-        for (int i = 0; i < 10000; i++) {
-            for (int j = 0; j < 10000; j++) {
-                if (x == -1)
-                    System.out.println(x);
-            }
-        }
-        end = System.nanoTime() - start;
-        System.out.println("całkowite " + end / 1000);
-
-        String s = new String("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        start = System.nanoTime();
-        for (int i = 0; i < 10000; i++) {
-            for (int j = 0; j < 10000; j++) {
-                if (s.equals("fsdffsdffsdffsdffsdffsdffsdffsdf"))
-                    System.out.println("af");
-            }
-        }
-        end = System.nanoTime() - start;
-        System.out.println("napisy " + end / 1000);
     }
 
     private void printCurrentBoardState() {

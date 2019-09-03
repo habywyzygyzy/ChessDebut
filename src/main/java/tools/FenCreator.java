@@ -28,8 +28,6 @@ public class FenCreator {
             if (!(rank == board.length-1)) {
                 String RANK_SEPARATOR = "/";
                 fen += RANK_SEPARATOR;
-            } else {
-                fen += " ";
             }
         }
         return fen;

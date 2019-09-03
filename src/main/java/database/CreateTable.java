@@ -11,7 +11,7 @@ public class CreateTable {
     public static void createTable() {
         System.out.println("Creating table in given database...");
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Kamil\\Desktop\\ChessDebut\\mySQLWorkbench.sql"));
+            BufferedReader reader = new BufferedReader(new FileReader("mySQLWorkbench.sql"));
             StringBuilder sql = new StringBuilder(new String(""));
             String line;
             while ((line = reader.readLine()) != null) {
