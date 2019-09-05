@@ -1,8 +1,9 @@
 package GUI;
 
+import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.game.Game;
 import com.github.bhlangonijr.chesslib.pgn.PgnHolder;
-import database.DBExecutor;
+import database.InsertData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static singletons.ParseFolderPathSingleton.getInstance;
 import static tools.LoadFolder.loadFolder;
@@ -47,14 +49,29 @@ public class PickerPanel extends JPanel {
                 ArrayList<Game> games = new ArrayList<Game>();
 
                 for (int i = 0; i < getInstance().getFiles().length; i++) {
+                    games = new ArrayList<Game>();
                     pgn = new PgnHolder(getInstance().getFiles()[i].getAbsolutePath());
+                    System.out.println(getInstance().getFiles()[i].getAbsolutePath());
                     try {
                         long start = System.nanoTime();
                         pgn.loadPgn();
                         games.addAll(pgn.getGame());
+                        System.out.println("Wnetrze pętli nr" + i);
                         long end = System.nanoTime() - start;
                         System.out.println("Czas parsowania w ms " + end / 1000000);
                         System.out.println(games.size());
+                        Game game = games.get(0);
+                        Board board = new Board();
+                        System.out.println(board.getFen());
+
+                        //System.out.println(game.getMoveText().toString()); !!!WAŻNE
+
+                        /*for (Game game : games) {
+                            System.out.println(game.getResult().toString());
+                            //InsertData.insertIntoMetaData(game.getResult().toString());
+                            System.out.println(game.getOpening());
+                        }*/
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -79,8 +96,6 @@ public class PickerPanel extends JPanel {
                 /*Games games = new Games();
                 for (int i = 0; i < ParseFolderPathSingleton.getInstance().getFiles().length; i++)
                     games = parser.parseFile(ParseFolderPathSingleton.getInstance().getFiles()[i]);*/
-                DBExecutor db = new DBExecutor();
-                db.Test();
             }
         });
         this.add(dirPickerButton);

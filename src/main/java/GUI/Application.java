@@ -1,8 +1,11 @@
 package GUI;
 
+import database.ExecuteSQL;
+
 import javax.swing.*;
 
 import static database.DBConnection.openConnection;
+import static database.ExecuteSQL.*;
 import static java.lang.Boolean.TRUE;
 import static singletons.ChessBoardSingleton.setIsWhiteMove;
 
@@ -13,6 +16,7 @@ public class Application {
             public void run() {
                 openConnection();
                 setIsWhiteMove(TRUE);
+                executeSQL();
                 String[][] data = new String[20][];
                 String[] row;
 

@@ -25,19 +25,19 @@ public class ChessBoardPanel extends JPanel {
                         stringBoard[j][i] = chessBoardSquares[i][j].getText();
                     }
                 }
-                String state = new String(translateBoardToFEN(stringBoard));
-                if (getIsWhiteMove())
-                    state += "w";
-                else
-                    state += "b";
+                String state = translateBoardToFEN(stringBoard);
                 getInstance().setState(state);
                 printCurrentBoardState();
+                if (getWhiteCastlingDone())
+                    System.out.println("White castling not possible");
+                if (getBlackCastlingDone())
+                    System.out.println("Black castling not possible");
             }
         });
 
-        ButtonGroup radioGroup = new ButtonGroup();
+        ButtonGroup currentMoveRadioGroup = new ButtonGroup();
         JRadioButton whiteMove = new JRadioButton("White Move", true);
-        radioGroup.add(whiteMove);
+        currentMoveRadioGroup.add(whiteMove);
         whiteMove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -45,7 +45,7 @@ public class ChessBoardPanel extends JPanel {
             }
         });
         JRadioButton blackMove = new JRadioButton("Black Move", false);
-        radioGroup.add(blackMove);
+        currentMoveRadioGroup.add(blackMove);
         blackMove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,10 +53,29 @@ public class ChessBoardPanel extends JPanel {
             }
         });
 
+        setBlackCastlingDone(FALSE);
+        setWhiteCastlingDone(FALSE);
+        JCheckBox whiteCastling = new JCheckBox("White castling done", false);
+        whiteCastling.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setWhiteCastlingDone(!getWhiteCastlingDone());
+            }
+        });
+        JCheckBox blackCastling = new JCheckBox("Black castling done", false);
+        blackCastling.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setBlackCastlingDone(!getBlackCastlingDone());
+            }
+        });
+
         JPanel topPanel = new JPanel();
         topPanel.setLayout(topLayout);
         topPanel.add(whiteMove);
         topPanel.add(blackMove);
+        topPanel.add(whiteCastling);
+        topPanel.add(blackCastling);
         topPanel.add(submitButton);
 
         JPanel chessBoard = new JPanel();
@@ -68,7 +87,6 @@ public class ChessBoardPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(chessBoard, BorderLayout.CENTER);
         this.add(topPanel, BorderLayout.NORTH);
-        //this.setPreferredSize(new Dimension(width, height));
         this.setVisible(true);
     }
 
