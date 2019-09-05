@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import static singletons.ChessBoardSingleton.*;
 
-public class FenCreator {
+public class FenHandler {
     public static String translateBoardToFEN(String[][] board) {
         String fen = "";
         Boolean whiteShortCastling, whiteLongCastling, blackShortCastling, blackLongCastling;
@@ -70,5 +70,24 @@ public class FenCreator {
         if(!blackLongCastling && !whiteLongCastling && !blackShortCastling && !whiteShortCastling)
             fen += "-";
         return fen;
+    }
+    public static String removeWhiteSpaces(String fen) {
+        String newStr = "";
+        if (fen.contains("-"))
+            newStr = fen.substring(0, fen.indexOf("-")+1);
+        else if (fen.contains("Qq"))
+            newStr = fen.substring(0, fen.lastIndexOf("Qq"));
+        else if (fen.contains("Kk"))
+            newStr = fen.substring(0, fen.lastIndexOf("Kk"));
+        else if (fen.contains("Qk"))
+            newStr = fen.substring(0, fen.lastIndexOf("Qk"));
+        else if (fen.contains("Kq"))
+            newStr = fen.substring(0, fen.lastIndexOf("Kq"));
+        else if (fen.contains("KQ"))
+            newStr = fen.substring(0, fen.lastIndexOf("KQ"));
+        else if (fen.contains("kq"))
+            newStr = fen.substring(0, fen.lastIndexOf("kq"));
+        String stringWithoutSpaces = newStr.replaceAll("\\s+", "");
+        return stringWithoutSpaces;
     }
 }

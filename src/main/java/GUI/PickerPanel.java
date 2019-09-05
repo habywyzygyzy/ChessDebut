@@ -2,8 +2,12 @@ package GUI;
 
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.game.Game;
+import com.github.bhlangonijr.chesslib.move.Move;
+import com.github.bhlangonijr.chesslib.move.MoveList;
 import com.github.bhlangonijr.chesslib.pgn.PgnHolder;
 import database.InsertData;
+import tools.FenHandler;
+import tools.StringToDouble;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,6 +67,7 @@ public class PickerPanel extends JPanel {
                         Game game = games.get(0);
                         Board board = new Board();
                         System.out.println(board.getFen());
+                        InsertData.insertIntoHitTest("e4", StringToDouble.convert("r1bq1rk1/pppnppbp/5np1/3p4/1P1P4/4PN2/PBPN1PPP/R2QKB1RwKQ"));
 
                         //System.out.println(game.getMoveText().toString()); !!!WAŻNE
 
@@ -77,7 +82,7 @@ public class PickerPanel extends JPanel {
                     }
                 }
 
-                /*for (Game game : games) {
+                for (Game game : games) {
                     try {
                         game.loadMoveText();
                     } catch (Exception e) {
@@ -90,7 +95,9 @@ public class PickerPanel extends JPanel {
                         board.doMove(move);
                     }
                     System.out.println("FEN: " + board.getFen());
-                }*/
+
+                    System.out.println("FEN: " + FenHandler.removeWhiteSpaces(board.getFen()));
+                }
 
                 //                PGNParser parser = new PGNParser();
                 /*Games games = new Games();

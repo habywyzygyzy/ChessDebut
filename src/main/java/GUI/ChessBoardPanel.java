@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static singletons.ChessBoardSingleton.*;
-import static tools.FenCreator.translateBoardToFEN;
+import static tools.FenHandler.translateBoardToFEN;
 
 public class ChessBoardPanel extends JPanel {
 
