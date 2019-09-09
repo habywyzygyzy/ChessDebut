@@ -63,6 +63,7 @@ public class StatisticsTablePanel extends JPanel {
         });
         mainTable = new JTable(model);
         JTableHeader header = mainTable.getTableHeader();
+        mainTable.setAutoCreateRowSorter(true);
         this.setLayout(new BorderLayout());
         this.add(header, BorderLayout.NORTH);
         this.add(mainTable, BorderLayout.CENTER);
