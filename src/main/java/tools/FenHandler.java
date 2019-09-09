@@ -47,18 +47,6 @@ public class FenHandler {
         if (getBlackCastlingDone())
             blackShortCastling = blackLongCastling = Boolean.FALSE;
 
-        if (!board[0][0].equals("r") || !board[0][1].isEmpty() || !board[0][2].isEmpty() || !board[0][3].isEmpty() || !board[0][4].equals("k")) {
-            blackLongCastling = Boolean.FALSE;
-        }
-        if (!board[7][0].equals("R") || !board[7][1].isEmpty() || !board[7][2].isEmpty() || !board[7][3].isEmpty() || !board[7][4].equals("K")) {
-            whiteLongCastling = Boolean.FALSE;
-        }
-        if (!board[0][7].equals("r") || !board[0][6].isEmpty() || !board[0][5].isEmpty() || !board[0][4].equals("k")) {
-            blackShortCastling = Boolean.FALSE;
-        }
-        if (!board[7][7].equals("R") || !board[7][6].isEmpty() || !board[7][5].isEmpty() || !board[7][4].equals("K")) {
-            whiteShortCastling = Boolean.FALSE;
-        }
         if (blackShortCastling)
             fen += "K";
         if (blackLongCastling)
@@ -75,18 +63,13 @@ public class FenHandler {
         String newStr = "";
         if (fen.contains("-"))
             newStr = fen.substring(0, fen.indexOf("-")+1);
-        else if (fen.contains("Qq"))
-            newStr = fen.substring(0, fen.lastIndexOf("Qq"));
-        else if (fen.contains("Kk"))
-            newStr = fen.substring(0, fen.lastIndexOf("Kk"));
-        else if (fen.contains("Qk"))
-            newStr = fen.substring(0, fen.lastIndexOf("Qk"));
-        else if (fen.contains("Kq"))
-            newStr = fen.substring(0, fen.lastIndexOf("Kq"));
+        if (fen.contains("KQkq"))
+            newStr = fen.substring(0, fen.lastIndexOf("KQkq")+4);
         else if (fen.contains("KQ"))
-            newStr = fen.substring(0, fen.lastIndexOf("KQ"));
+            newStr = fen.substring(0, fen.lastIndexOf("KQ")+2);
         else if (fen.contains("kq"))
-            newStr = fen.substring(0, fen.lastIndexOf("kq"));
+            newStr = fen.substring(0, fen.lastIndexOf("kq")+2);
+
         String stringWithoutSpaces = newStr.replaceAll("\\s+", "");
         return stringWithoutSpaces;
     }

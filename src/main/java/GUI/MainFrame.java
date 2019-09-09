@@ -9,7 +9,7 @@ import java.awt.event.WindowEvent;
 
 public class MainFrame extends JFrame {
 
-    public MainFrame(String[][] data) {
+    public MainFrame() {
         super("Chess Debut");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -33,7 +33,7 @@ public class MainFrame extends JFrame {
         PickerPanel pickerPanel = new PickerPanel();
         gbc.anchor = GridBagConstraints.SOUTH;
         add(pickerPanel, gbc);
-        StatisticsTablePanel statisticsTablePanel = new StatisticsTablePanel(data);
+        StatisticsTablePanel statisticsTablePanel = new StatisticsTablePanel();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 1;

@@ -25,10 +25,11 @@ public class InsertData {
             e.printStackTrace();
         }
     }
+
     public static void insertIntoHit(String hit, double stateBeforeHit, int metaId) {
         String sql;
         try {
-            sql = "INSERT INTO `Hit`(Hit,StateBeforeHit, MetaId) VALUES ('" + hit + "','" + stateBeforeHit + "','" + metaId + "')";
+            sql = "INSERT INTO `Hit`(Hit, StateBeforeHit, MetaId) VALUES ('" + hit + "','" + stateBeforeHit + "','" + metaId + "')";
             getStmt().executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();

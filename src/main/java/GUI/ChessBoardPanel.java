@@ -1,14 +1,20 @@
 package GUI;
 
+import models.Statistics;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import static database.SelectData.selectHitsWithTheSameFEN;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static singletons.ChessBoardSingleton.*;
+import static singletons.StatisticsSingleton.setStats;
 import static tools.FenHandler.translateBoardToFEN;
+import static tools.StringToDouble.convert;
 
 public class ChessBoardPanel extends JPanel {
 
@@ -28,10 +34,10 @@ public class ChessBoardPanel extends JPanel {
                 String state = translateBoardToFEN(stringBoard);
                 getInstance().setState(state);
                 printCurrentBoardState();
-                if (getWhiteCastlingDone())
-                    System.out.println("White castling not possible");
-                if (getBlackCastlingDone())
-                    System.out.println("Black castling not possible");
+                double doubleFENValue = convert(getInstance().getState());
+                ArrayList<Statistics> stats = new ArrayList<Statistics>();
+                stats = selectHitsWithTheSameFEN(doubleFENValue);
+                setStats(stats);
             }
         });
 

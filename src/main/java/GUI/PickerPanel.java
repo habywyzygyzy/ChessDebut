@@ -2,11 +2,10 @@ package GUI;
 
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.game.Game;
-import com.github.bhlangonijr.chesslib.move.Move;
 import com.github.bhlangonijr.chesslib.move.MoveList;
 import com.github.bhlangonijr.chesslib.pgn.PgnHolder;
 import database.InsertData;
-import tools.FenHandler;
+import tools.MovesListToStringList;
 import tools.StringToDouble;
 
 import javax.swing.*;
@@ -15,9 +14,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static singletons.ParseFolderPathSingleton.getInstance;
+import static tools.FenHandler.removeWhiteSpaces;
 import static tools.LoadFolder.loadFolder;
 
 public class PickerPanel extends JPanel {
@@ -49,60 +48,43 @@ public class PickerPanel extends JPanel {
         parsePGNFromFolder.setAlignmentX(Component.CENTER_ALIGNMENT);
         parsePGNFromFolder.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                PgnHolder pgn = null;
-                ArrayList<Game> games = new ArrayList<Game>();
-
+                PgnHolder pgn;
+                ArrayList<Game> games;
                 for (int i = 0; i < getInstance().getFiles().length; i++) {
                     games = new ArrayList<Game>();
                     pgn = new PgnHolder(getInstance().getFiles()[i].getAbsolutePath());
                     System.out.println(getInstance().getFiles()[i].getAbsolutePath());
                     try {
                         long start = System.nanoTime();
-                        pgn.loadPgn();
+                        try {
+                            pgn.loadPgn();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         games.addAll(pgn.getGame());
-                        System.out.println("Wnetrze pętli nr" + i);
                         long end = System.nanoTime() - start;
                         System.out.println("Czas parsowania w ms " + end / 1000000);
                         System.out.println(games.size());
-                        Game game = games.get(0);
-                        Board board = new Board();
-                        System.out.println(board.getFen());
-                        InsertData.insertIntoHitTest("e4", StringToDouble.convert("r1bq1rk1/pppnppbp/5np1/3p4/1P1P4/4PN2/PBPN1PPP/R2QKB1RwKQ"));
-
-                        //System.out.println(game.getMoveText().toString()); !!!WAŻNE
-
-                        /*for (Game game : games) {
-                            System.out.println(game.getResult().toString());
-                            //InsertData.insertIntoMetaData(game.getResult().toString());
-                            System.out.println(game.getOpening());
-                        }*/
+                        for (int j = 0; j < games.size(); j++) {
+                            try {
+                                games.get(j).loadMoveText();
+                                InsertData.insertIntoMetaData(games.get(j).getResult().toString());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            MoveList moves = games.get(j).getHalfMoves();
+                            ArrayList<String> movesList = MovesListToStringList.saveMovesToList(games.get(j).getMoveText());
+                            Board board = new Board();
+                            for (int k = 0; k < moves.size(); k++) {
+                                InsertData.insertIntoHit(movesList.get(k), StringToDouble.convert(removeWhiteSpaces(board.getFen())), j+1);
+                                board.doMove(moves.get(k));
+                            }
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-
-                for (Game game : games) {
-                    try {
-                        game.loadMoveText();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    MoveList moves = game.getHalfMoves();
-                    Board board = new Board();
-                    //Replay all the moves from the game and print the final position in FEN format
-                    for (Move move : moves) {
-                        board.doMove(move);
-                    }
-                    System.out.println("FEN: " + board.getFen());
-
-                    System.out.println("FEN: " + FenHandler.removeWhiteSpaces(board.getFen()));
-                }
-
-                //                PGNParser parser = new PGNParser();
-                /*Games games = new Games();
-                for (int i = 0; i < ParseFolderPathSingleton.getInstance().getFiles().length; i++)
-                    games = parser.parseFile(ParseFolderPathSingleton.getInstance().getFiles()[i]);*/
             }
         });
         this.add(dirPickerButton);
