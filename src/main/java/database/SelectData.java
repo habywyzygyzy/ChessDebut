@@ -9,29 +9,15 @@ import java.util.ArrayList;
 import static singletons.DatabaseConfigSingleton.getConn;
 
 public class SelectData {
-    /*public static ArrayList<String> testSelect() {
-        ArrayList<String> test = new ArrayList<String>();
-        java.sql.PreparedStatement preparedStatement = null;
-        String sql = "SELECT Result FROM MetaData";
-        try {
-            preparedStatement = getConn().prepareStatement(sql);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next())
-                test.add(rs.getString(1));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return test;
-    }*/
 
     public static ArrayList<Statistics> selectHitsWithTheSameFEN(double FEN) {
         ArrayList<String> test = new ArrayList<String>();
         ArrayList<Statistics> stats = new ArrayList<Statistics>();
         java.sql.PreparedStatement preparedStatement = null;
-        String select = "SELECT Hit.MetaId, Hit.Hit, MetaData.Result ";
-        String from = "FROM Hit ";
-        String join = "JOIN MetaData ";
-        String on = "ON (Hit.MetaId = MetaData.MetaId) ";
+        String select = "SELECT `Hit`.MetaId, `Hit`.Hit, `MetaData`.Result ";
+        String from = "FROM `Hit` ";
+        String join = "JOIN `MetaData` ";
+        String on = "ON (`Hit`.MetaId = `MetaData`.MetaId) ";
         String where = "WHERE StateBeforeHit  = '" + FEN + "'";
         String sql = select + from + join + on + where;
         try {

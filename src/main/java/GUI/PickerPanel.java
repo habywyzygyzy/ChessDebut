@@ -75,7 +75,7 @@ public class PickerPanel extends JPanel {
                             MoveList moves = games.get(j).getHalfMoves();
                             ArrayList<String> movesList = MovesListToStringList.saveMovesToList(games.get(j).getMoveText());
                             Board board = new Board();
-                            for (int k = 0; k < moves.size(); k++) {
+                            for (int k = 0; k < moves.size()-1; k++) {
                                 InsertData.insertIntoHit(movesList.get(k), StringToDouble.convert(removeWhiteSpaces(board.getFen())), j+1);
                                 board.doMove(moves.get(k));
                             }

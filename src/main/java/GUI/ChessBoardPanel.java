@@ -1,17 +1,24 @@
 package GUI;
 
 import models.Statistics;
+import singletons.ChessBoardSingleton;
+import singletons.StatisticsSingleton;
+import tools.SortForBlacks;
+import tools.SortForWhites;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static database.SelectData.selectHitsWithTheSameFEN;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static singletons.ChessBoardSingleton.*;
+import static singletons.StatisticsSingleton.*;
+import static singletons.StatisticsSingleton.getStats;
 import static singletons.StatisticsSingleton.setStats;
 import static tools.FenHandler.translateBoardToFEN;
 import static tools.StringToDouble.convert;
@@ -32,11 +39,16 @@ public class ChessBoardPanel extends JPanel {
                     }
                 }
                 String state = translateBoardToFEN(stringBoard);
-                getInstance().setState(state);
+                ChessBoardSingleton.getInstance().setState(state);
                 printCurrentBoardState();
-                double doubleFENValue = convert(getInstance().getState());
+                double doubleFENValue = convert(ChessBoardSingleton.getInstance().getState());
                 ArrayList<Statistics> stats = new ArrayList<Statistics>();
                 stats = selectHitsWithTheSameFEN(doubleFENValue);
+                if (getIsWhiteMove())
+                    Collections.sort(stats, new SortForWhites());
+                else
+                    Collections.sort(stats, new SortForBlacks());
+                Collections.reverse(stats);
                 setStats(stats);
             }
         });
@@ -97,7 +109,7 @@ public class ChessBoardPanel extends JPanel {
     }
 
     private void printCurrentBoardState() {
-        System.out.println(getInstance().getState());
+        System.out.println(ChessBoardSingleton.getInstance().getState());
     }
 
     private static void addSquaresToBoard(JPanel chessBoardPanel, JTextField[][] chessBoardSquares) {

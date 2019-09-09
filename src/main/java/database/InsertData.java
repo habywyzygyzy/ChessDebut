@@ -16,16 +16,6 @@ public class InsertData {
         }
     }
 
-    public static void insertIntoHitTest(String hit, double stateBeforeHit) {
-        String sql;
-        try {
-            sql = "INSERT INTO `Hit`(Hit,StateBeforeHit) VALUES ('" + hit + "','" + stateBeforeHit + "')";
-            getStmt().executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void insertIntoHit(String hit, double stateBeforeHit, int metaId) {
         String sql;
         try {

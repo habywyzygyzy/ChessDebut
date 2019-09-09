@@ -13,7 +13,7 @@ public class StatisticsSingleton {
     }
 
     public static StatisticsSingleton getInstance() {
-        return StatisticsSingleton.SingletonHolder.INSTANCE;
+        return SingletonHolder.INSTANCE;
     }
 
     private static class SingletonHolder {
@@ -21,11 +21,10 @@ public class StatisticsSingleton {
     }
 
     public static ArrayList<Statistics> getStats() {
-        return stats;
+        return StatisticsSingleton.stats;
     }
 
     public static void setStats(ArrayList<Statistics> stats) {
         StatisticsSingleton.stats = stats;
     }
-
 }
