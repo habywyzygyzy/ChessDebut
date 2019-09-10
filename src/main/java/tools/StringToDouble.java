@@ -122,89 +122,151 @@ public class StringToDouble {
     }*/
 
     public static ArrayList<Long> convert(String fen) {
-        Long first, second, third, fourth;
-        first = second = third = fourth = new Long(0);
+        Long first, second, third, fourth, fifth, sixth;
+        first = second = third = fourth = fifth = sixth = new Long(0);
         ArrayList<Long> converted = new ArrayList<Long>();
         int base = 16;
         char c;
         int i = 0;
         if (fen.endsWith("-")) {
-            for (i = 0; i < base && i < fen.length() - 1; i++) {
+            int j = 0;
+            for (i = 0; i < base && j < fen.length() - 1; i++) {
                 c = fen.charAt(i);
                 first += (long) pow(fenValue(c), i);
+                j++;
             }
-            for (i = 0; i < 2 * base && i < fen.length() - 1; i++) {
+            for (i = 0; i < base && j < fen.length() - 1; i++) {
                 c = fen.charAt(i);
                 second += (long) pow(fenValue(c), i);
+                j++;
             }
-            for (i = 0; i < 3 * base && i < fen.length() - 1; i++) {
+            for (i = 0; i < base && j < fen.length() - 1; i++) {
                 c = fen.charAt(i);
                 third += (long) pow(fenValue(c), i);
+                j++;
             }
-            for (i = 0; i < 4 * base && i < fen.length() - 1; i++) {
+            for (i = 0; i < base && j < fen.length() - 1; i++) {
                 c = fen.charAt(i);
                 fourth += (long) pow(fenValue(c), i);
+                j++;
             }
+            /*for (i = 0; i < base && j < fen.length() - 1; i++) {
+                c = fen.charAt(i);
+                fifth += (long) pow(fenValue(c), i);
+                j++;
+            }
+            for (i = 0; i < base && j < fen.length() - 1; i++) {
+                c = fen.charAt(i);
+                sixth += (long) pow(fenValue(c), i);
+                j++;
+            }*/
             fourth += (long) pow(23, i);
         } else if (fen.endsWith("KQkq")) {
-            for (i = 0; i < base && i < fen.length() - 4; i++) {
+            int j = 0;
+            for (i = 0; i < base && j < fen.length() - 4; i++) {
                 c = fen.charAt(i);
                 first += (long) pow(fenValue(c), i);
+                j++;
             }
-            for (i = 0; i < 2 * base && i < fen.length() - 4; i++) {
+            for (i = 0; i < base && j < fen.length() - 4; i++) {
                 c = fen.charAt(i);
                 second += (long) pow(fenValue(c), i);
+                j++;
             }
-            for (i = 0; i < 3 * base && i < fen.length() - 4; i++) {
+            for (i = 0; i < base && j < fen.length() - 4; i++) {
                 c = fen.charAt(i);
                 third += (long) pow(fenValue(c), i);
+                j++;
             }
-            for (i = 0; i < 4 * base && i < fen.length() - 4; i++) {
+            for (i = 0; i < base && j < fen.length() - 4; i++) {
                 c = fen.charAt(i);
                 fourth += (long) pow(fenValue(c), i);
+                j++;
             }
+            /*for (i = 0; i < base && j < fen.length() - 4; i++) {
+                c = fen.charAt(i);
+                fifth += (long) pow(fenValue(c), i);
+                j++;
+            }
+            for (i = 0; i < base && j < fen.length() - 4; i++) {
+                c = fen.charAt(i);
+                sixth += (long) pow(fenValue(c), i);
+                j++;
+            }*/
             fourth += (long) pow(24, i);
         } else if (fen.endsWith("KQ")) {
-            for (i = 0; i < base && i < fen.length() - 2; i++) {
+            int j = 0;
+            for (i = 0; i < base && j < fen.length() - 2; i++) {
                 c = fen.charAt(i);
                 first += (long) pow(fenValue(c), i);
+                j++;
             }
-            for (i = 0; i < 2 * base && i < fen.length() - 2; i++) {
+            for (i = 0; i < base && j < fen.length() - 2; i++) {
                 c = fen.charAt(i);
                 second += (long) pow(fenValue(c), i);
+                j++;
             }
-            for (i = 0; i < 3 * base && i < fen.length() - 2; i++) {
+            for (i = 0; i < base && j < fen.length() - 2; i++) {
                 c = fen.charAt(i);
                 third += (long) pow(fenValue(c), i);
+                j++;
             }
-            for (i = 0; i < 4 * base && i < fen.length() - 2; i++) {
+            for (i = 0; i < base && j < fen.length() - 2; i++) {
                 c = fen.charAt(i);
                 fourth += (long) pow(fenValue(c), i);
+                j++;
             }
+            /*for (i = 0; i < base && j < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                fifth += (long) pow(fenValue(c), i);
+                j++;
+            }
+            for (i = 0; i < base && j < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                sixth += (long) pow(fenValue(c), i);
+                j++;
+            }*/
             fourth += (long) pow(25, i);
         } else if (fen.endsWith("kq")) {
-            for (i = 0; i < base && i < fen.length() - 2; i++) {
+            int j = 0;
+            for (i = 0; i < base && j < fen.length() - 2; i++) {
                 c = fen.charAt(i);
                 first += (long) pow(fenValue(c), i);
+                j++;
             }
-            for (i = 0; i < 2 * base && i < fen.length() - 2; i++) {
+            for (i = 0; i < base && j < fen.length() - 2; i++) {
                 c = fen.charAt(i);
                 second += (long) pow(fenValue(c), i);
+                j++;
             }
-            for (i = 0; i < 3 * base && i < fen.length() - 2; i++) {
+            for (i = 0; i < base && j < fen.length() - 2; i++) {
                 c = fen.charAt(i);
                 third += (long) pow(fenValue(c), i);
+                j++;
             }
-            for (i = 0; i < 4 * base && i < fen.length() - 2; i++) {
+            for (i = 0; i < base && j < fen.length() - 2; i++) {
                 c = fen.charAt(i);
                 fourth += (long) pow(fenValue(c), i);
+                j++;
             }
+            /*for (i = 0; i < base && j < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                fifth += (long) pow(fenValue(c), i);
+                j++;
+            }
+            for (i = 0; i < base && j < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                sixth += (long) pow(fenValue(c), i);
+                j++;
+            }*/
             fourth += (long) pow(26, i);
         }
         converted.add(first);
         converted.add(second);
         converted.add(third);
         converted.add(fourth);
+        //converted.add(fifth);
+        //converted.add(sixth);
         return converted;
     }
 
