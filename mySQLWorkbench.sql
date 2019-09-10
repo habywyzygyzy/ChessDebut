@@ -10,8 +10,11 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS Hit (
   HitId INT NOT NULL AUTO_INCREMENT,
-  Hit VARCHAR(10) NULL,
-  StateBeforeHit DOUBLE NULL,
+  Hit VARCHAR(7) NULL,
+  StateBeforeHit BIGINT NULL,
+  StateBeforeHit2 BIGINT NULL,
+  StateBeforeHit3 BIGINT NULL,
+  StateBeforeHit4 BIGINT NULL,
   MetaId INT NULL,
   PRIMARY KEY (HitId),
   /*INDEX MetaId_idx (MetaId ASC) VISIBLE,*/

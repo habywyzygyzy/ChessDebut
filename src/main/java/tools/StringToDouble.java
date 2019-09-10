@@ -1,10 +1,11 @@
 package tools;
 
-import static java.lang.Math.abs;
+import java.util.ArrayList;
+
 import static java.lang.Math.pow;
 
 public class StringToDouble {
-    public static double convert(String fen) {
+    /*public static double convert(String fen) {
         double converted = 0;
         int positive = 1;
         int negative = -1;
@@ -80,7 +81,130 @@ public class StringToDouble {
                 converted += pow(26, negative);
             }
         }
+        return converted;
+    }*/
 
+    /*public static double convert2(String fen) {
+        double converted = 0;
+        char c;
+        int i = 0;
+        if (fen.endsWith("-")) {
+            for (i = 0; i < fen.length() - 1; i++) {
+                c = fen.charAt(i);
+                converted += pow(fenValue(c), i);
+                converted += pow(23, i);
+            }
+        } else if (fen.endsWith("KQkq")) {
+            for (i = 0; i < fen.length() - 4; i++) {
+                c = fen.charAt(i);
+                converted += pow(fenValue(c), i);
+            }
+            converted += pow(24, i);
+        } else if (fen.endsWith("KQ")) {
+            for (i = 0; i < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                converted += pow(fenValue(c), i);
+            }
+            converted += pow(25, i);
+        } else if (fen.endsWith("kq")) {
+            for (i = 0; i < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                converted += pow(fenValue(c), i);
+            }
+            converted += pow(26, i);
+        }
+        BigDecimal value = new BigDecimal(converted);
+        value.setScale(400);
+        System.out.println(value);
+        System.out.println(fen);
+        System.out.println(fen.length());
+        return converted;
+    }*/
+
+    public static ArrayList<Long> convert(String fen) {
+        Long first, second, third, fourth;
+        first = second = third = fourth = new Long(0);
+        ArrayList<Long> converted = new ArrayList<Long>();
+        int base = 16;
+        char c;
+        int i = 0;
+        if (fen.endsWith("-")) {
+            for (i = 0; i < base && i < fen.length() - 1; i++) {
+                c = fen.charAt(i);
+                first += (long) pow(fenValue(c), i);
+            }
+            for (i = 0; i < 2 * base && i < fen.length() - 1; i++) {
+                c = fen.charAt(i);
+                second += (long) pow(fenValue(c), i);
+            }
+            for (i = 0; i < 3 * base && i < fen.length() - 1; i++) {
+                c = fen.charAt(i);
+                third += (long) pow(fenValue(c), i);
+            }
+            for (i = 0; i < 4 * base && i < fen.length() - 1; i++) {
+                c = fen.charAt(i);
+                fourth += (long) pow(fenValue(c), i);
+            }
+            fourth += (long) pow(23, i);
+        } else if (fen.endsWith("KQkq")) {
+            for (i = 0; i < base && i < fen.length() - 4; i++) {
+                c = fen.charAt(i);
+                first += (long) pow(fenValue(c), i);
+            }
+            for (i = 0; i < 2 * base && i < fen.length() - 4; i++) {
+                c = fen.charAt(i);
+                second += (long) pow(fenValue(c), i);
+            }
+            for (i = 0; i < 3 * base && i < fen.length() - 4; i++) {
+                c = fen.charAt(i);
+                third += (long) pow(fenValue(c), i);
+            }
+            for (i = 0; i < 4 * base && i < fen.length() - 4; i++) {
+                c = fen.charAt(i);
+                fourth += (long) pow(fenValue(c), i);
+            }
+            fourth += (long) pow(24, i);
+        } else if (fen.endsWith("KQ")) {
+            for (i = 0; i < base && i < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                first += (long) pow(fenValue(c), i);
+            }
+            for (i = 0; i < 2 * base && i < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                second += (long) pow(fenValue(c), i);
+            }
+            for (i = 0; i < 3 * base && i < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                third += (long) pow(fenValue(c), i);
+            }
+            for (i = 0; i < 4 * base && i < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                fourth += (long) pow(fenValue(c), i);
+            }
+            fourth += (long) pow(25, i);
+        } else if (fen.endsWith("kq")) {
+            for (i = 0; i < base && i < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                first += (long) pow(fenValue(c), i);
+            }
+            for (i = 0; i < 2 * base && i < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                second += (long) pow(fenValue(c), i);
+            }
+            for (i = 0; i < 3 * base && i < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                third += (long) pow(fenValue(c), i);
+            }
+            for (i = 0; i < 4 * base && i < fen.length() - 2; i++) {
+                c = fen.charAt(i);
+                fourth += (long) pow(fenValue(c), i);
+            }
+            fourth += (long) pow(26, i);
+        }
+        converted.add(first);
+        converted.add(second);
+        converted.add(third);
+        converted.add(fourth);
         return converted;
     }
 

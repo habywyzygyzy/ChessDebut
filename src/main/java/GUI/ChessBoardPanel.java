@@ -2,7 +2,6 @@ package GUI;
 
 import models.Statistics;
 import singletons.ChessBoardSingleton;
-import singletons.StatisticsSingleton;
 import tools.SortForBlacks;
 import tools.SortForWhites;
 
@@ -17,8 +16,6 @@ import static database.SelectData.selectHitsWithTheSameFEN;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static singletons.ChessBoardSingleton.*;
-import static singletons.StatisticsSingleton.*;
-import static singletons.StatisticsSingleton.getStats;
 import static singletons.StatisticsSingleton.setStats;
 import static tools.FenHandler.translateBoardToFEN;
 import static tools.StringToDouble.convert;
@@ -32,24 +29,37 @@ public class ChessBoardPanel extends JPanel {
         Button submitButton = new Button("Submit");
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                long start = System.nanoTime();
                 String[][] stringBoard = new String[8][8];
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
                         stringBoard[j][i] = chessBoardSquares[i][j].getText();
                     }
                 }
+
                 String state = translateBoardToFEN(stringBoard);
                 ChessBoardSingleton.getInstance().setState(state);
                 printCurrentBoardState();
-                double doubleFENValue = convert(ChessBoardSingleton.getInstance().getState());
+                long end = System.nanoTime() - start;
+                System.out.println("Przenoszenie szachownicy do stringa " + end / 1000000);
+                start = System.nanoTime();
+                ArrayList<Long> longListFen = convert(ChessBoardSingleton.getInstance().getState());
+                end = System.nanoTime() - start;
+                System.out.println("Konwersja " + end / 1000000);
                 ArrayList<Statistics> stats = new ArrayList<Statistics>();
-                stats = selectHitsWithTheSameFEN(doubleFENValue);
+                start = System.nanoTime();
+                stats = selectHitsWithTheSameFEN(longListFen);
+                end = System.nanoTime() - start;
+                System.out.println("Wyszukiwanie " + end / 1000000);
+                start = System.nanoTime();
                 if (getIsWhiteMove())
                     Collections.sort(stats, new SortForWhites());
                 else
                     Collections.sort(stats, new SortForBlacks());
                 Collections.reverse(stats);
                 setStats(stats);
+                end = System.nanoTime() - start;
+                System.out.println("Sortowanie " + end / 1000000);
             }
         });
 
