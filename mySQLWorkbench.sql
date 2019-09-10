@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS Hit
             ON UPDATE NO ACTION
 )
     ENGINE = InnoDB;
-CREATE INDEX index_name
-    on Hit (StateBeforeHit, StateBeforeHit2, StateBeforeHit3, StateBeforeHit4);
+CREATE UNIQUE INDEX index_name
+    on Hit (StateBeforeHit, StateBeforeHit2, StateBeforeHit3, StateBeforeHit4, Hit);
 /*
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
