@@ -65,6 +65,7 @@ public class PickerPanel extends JPanel {
                         long end = System.nanoTime() - start;
                         System.out.println("Czas parsowania w ms " + end / 1000000);
                         System.out.println(games.size());
+                        start = System.nanoTime();
                         for (int j = 0; j < games.size(); j++) {
                             try {
                                 games.get(j).loadMoveText();
@@ -75,12 +76,14 @@ public class PickerPanel extends JPanel {
                             MoveList moves = games.get(j).getHalfMoves();
                             ArrayList<String> movesList = MovesListToStringList.saveMovesToList(games.get(j).getMoveText());
                             Board board = new Board();
-                            for (int k = 0; k < moves.size()-1; k++) {
-                                InsertData.insertIntoHit(movesList.get(k), StringToDouble.convert(removeWhiteSpaces(board.getFen())), j+1);
+                            for (int k = 0; k < moves.size() - 1 && k < movesList.size(); k++) {
+                                InsertData.insertIntoHit(movesList.get(k), StringToDouble.convert(removeWhiteSpaces(board.getFen())), j + 1);
                                 board.doMove(moves.get(k));
                             }
                         }
-
+                        end = System.nanoTime() - start;
+                        System.out.println("Zakończono zapisywanie " + getInstance().getFiles()[i].getAbsolutePath());
+                        System.out.println("Czas zapisu w ms " + end / 1000000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

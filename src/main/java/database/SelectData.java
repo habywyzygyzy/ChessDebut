@@ -10,16 +10,18 @@ import static singletons.DatabaseConfigSingleton.getConn;
 
 public class SelectData {
 
-    public static ArrayList<Statistics> selectHitsWithTheSameFEN(double FEN) {
-        ArrayList<String> test = new ArrayList<String>();
+    public static ArrayList<Statistics> selectHitsWithTheSameFEN(ArrayList<Long> FEN) {
         ArrayList<Statistics> stats = new ArrayList<Statistics>();
         java.sql.PreparedStatement preparedStatement = null;
         String select = "SELECT `Hit`.MetaId, `Hit`.Hit, `MetaData`.Result ";
         String from = "FROM `Hit` ";
         String join = "JOIN `MetaData` ";
         String on = "ON (`Hit`.MetaId = `MetaData`.MetaId) ";
-        String where = "WHERE StateBeforeHit  = '" + FEN + "'";
-        String sql = select + from + join + on + where;
+        String where = "WHERE StateBeforeHit  = '" + FEN.get(0) + "'";
+        String and = "AND StateBeforeHit2  = '" + FEN.get(1) + "'";
+        String and2 = "AND StateBeforeHit3  = '" + FEN.get(2) + "'";
+        String and3 = "AND StateBeforeHit4  = '" + FEN.get(3) + "'";
+        String sql = select + from + join + on + where + and + and2 + and3;
         try {
             preparedStatement = getConn().prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();

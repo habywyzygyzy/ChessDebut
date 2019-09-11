@@ -26,6 +26,7 @@ public class StatisticsTablePanel extends JPanel {
         searchButton.addActionListener(new ActionListener() {
             String[] row;
             public void actionPerformed(ActionEvent e) {
+                long start = System.nanoTime();
                 String hit;
                 Double percentDraws, percentWhite, percentBlack;
                 Integer nrOfGames;
@@ -57,6 +58,8 @@ public class StatisticsTablePanel extends JPanel {
                     row = new String[]{hit, nrOfGames.toString(), percentWhite.toString(), percentBlack.toString(), percentDraws.toString()};
                     model.addRow(row);
                 }
+                long end = System.nanoTime() - start;
+                System.out.println("Czas potwierdzenia w ms " + end / 1000000);
             }
         });
         mainTable = new JTable(model);
