@@ -6,7 +6,7 @@ import com.github.bhlangonijr.chesslib.move.MoveList;
 import com.github.bhlangonijr.chesslib.pgn.PgnHolder;
 import database.InsertData;
 import tools.MovesListToStringList;
-import tools.StringToDouble;
+import tools.ConvertFen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,7 +77,7 @@ public class PickerPanel extends JPanel {
                             ArrayList<String> movesList = MovesListToStringList.saveMovesToList(games.get(j).getMoveText());
                             Board board = new Board();
                             for (int k = 0; k < moves.size() - 1 && k < movesList.size(); k++) {
-                                InsertData.insertIntoHit(movesList.get(k), StringToDouble.convert(removeWhiteSpaces(board.getFen())), j + 1);
+                                InsertData.insertIntoHit(movesList.get(k), ConvertFen.convert(removeWhiteSpaces(board.getFen())), j + 1);
                                 board.doMove(moves.get(k));
                             }
                         }

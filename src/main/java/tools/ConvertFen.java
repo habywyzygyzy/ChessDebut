@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import static java.lang.Math.pow;
 
-public class StringToDouble {
+public class ConvertFen {
     /*public static double convert(String fen) {
         double converted = 0;
         int positive = 1;

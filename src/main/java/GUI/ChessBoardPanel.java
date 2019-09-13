@@ -18,7 +18,7 @@ import static java.lang.Boolean.TRUE;
 import static singletons.ChessBoardSingleton.*;
 import static singletons.StatisticsSingleton.setStats;
 import static tools.FenHandler.translateBoardToFEN;
-import static tools.StringToDouble.convert;
+import static tools.ConvertFen.convert;
 
 public class ChessBoardPanel extends JPanel {
 
