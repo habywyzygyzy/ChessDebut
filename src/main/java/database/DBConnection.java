@@ -1,7 +1,5 @@
 package database;
 
-import singletons.DatabaseConfigSingleton;
-
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
