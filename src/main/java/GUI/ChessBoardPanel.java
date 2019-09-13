@@ -36,7 +36,6 @@ public class ChessBoardPanel extends JPanel {
                         stringBoard[j][i] = chessBoardSquares[i][j].getText();
                     }
                 }
-
                 String state = translateBoardToFEN(stringBoard);
                 ChessBoardSingleton.getInstance().setState(state);
                 printCurrentBoardState();
