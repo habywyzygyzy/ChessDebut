@@ -7,9 +7,9 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class MainFrame extends JFrame {
+class MainFrame extends JFrame {
 
-    public MainFrame() {
+    MainFrame() {
         super("Chess Debut");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {

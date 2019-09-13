@@ -5,8 +5,8 @@ import com.github.bhlangonijr.chesslib.game.Game;
 import com.github.bhlangonijr.chesslib.move.MoveList;
 import com.github.bhlangonijr.chesslib.pgn.PgnHolder;
 import database.InsertData;
-import tools.MovesListToStringList;
 import tools.ConvertFen;
+import tools.MovesListToStringList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,9 +19,9 @@ import static singletons.ParseFolderPathSingleton.getInstance;
 import static tools.FenHandler.removeWhiteSpaces;
 import static tools.LoadFolder.loadFolder;
 
-public class PickerPanel extends JPanel {
+class PickerPanel extends JPanel {
 
-    public PickerPanel() {
+    PickerPanel() {
         final File[] selectedFolder = {new File("example")};
         getInstance().setFiles(loadFolder(selectedFolder[0].getAbsolutePath()));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
