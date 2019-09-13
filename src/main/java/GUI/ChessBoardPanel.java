@@ -1,7 +1,6 @@
 package GUI;
 
 import models.Statistics;
-import singletons.ChessBoardSingleton;
 import tools.SortForBlacks;
 import tools.SortForWhites;
 
@@ -23,9 +22,27 @@ import static tools.FenHandler.translateBoardToFEN;
 class ChessBoardPanel extends JPanel {
 
     ChessBoardPanel() {
-        final JLabel[][] chessBoardSquares = new JLabel[8][8];
+        final JTextField[][] chessBoardSquares = new JTextField[8][8];
+        Point[][] currentLocation = new Point[8][8];
         FlowLayout topLayout = new FlowLayout();
         GridLayout chessBoardLayout = new GridLayout(0, 9);
+        final ButtonGroup currentMoveRadioGroup = new ButtonGroup();
+        final JRadioButton whiteMove = new JRadioButton("White Move", true);
+        currentMoveRadioGroup.add(whiteMove);
+        whiteMove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setIsWhiteMove(TRUE);
+            }
+        });
+        final JRadioButton blackMove = new JRadioButton("Black Move", false);
+        currentMoveRadioGroup.add(blackMove);
+        blackMove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setIsWhiteMove(FALSE);
+            }
+        });
         Button submitButton = new Button("Submit");
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -38,12 +55,12 @@ class ChessBoardPanel extends JPanel {
                 }
 
                 String state = translateBoardToFEN(stringBoard);
-                ChessBoardSingleton.getInstance().setState(state);
+                getInstance().setState(state);
                 printCurrentBoardState();
                 long end = System.nanoTime() - start;
                 System.out.println("Przenoszenie szachownicy do stringa " + end / 1000000);
                 start = System.nanoTime();
-                ArrayList<Long> longListFen = convert(ChessBoardSingleton.getInstance().getState());
+                ArrayList<Long> longListFen = convert(getInstance().getState());
                 end = System.nanoTime() - start;
                 System.out.println("Konwersja " + end / 1000000);
                 ArrayList<Statistics> stats = new ArrayList<Statistics>();
@@ -60,24 +77,12 @@ class ChessBoardPanel extends JPanel {
                 setStats(stats);
                 end = System.nanoTime() - start;
                 System.out.println("Sortowanie " + end / 1000000);
-            }
-        });
-
-        ButtonGroup currentMoveRadioGroup = new ButtonGroup();
-        JRadioButton whiteMove = new JRadioButton("White Move", true);
-        currentMoveRadioGroup.add(whiteMove);
-        whiteMove.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setIsWhiteMove(TRUE);
-            }
-        });
-        JRadioButton blackMove = new JRadioButton("Black Move", false);
-        currentMoveRadioGroup.add(blackMove);
-        blackMove.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setIsWhiteMove(FALSE);
+                currentMoveRadioGroup.clearSelection();
+                setIsWhiteMove(!getIsWhiteMove());
+                if (getIsWhiteMove())
+                    whiteMove.setSelected(true);
+                else
+                    blackMove.setSelected(true);
             }
         });
 
@@ -97,7 +102,12 @@ class ChessBoardPanel extends JPanel {
                 setBlackCastlingDone(!getBlackCastlingDone());
             }
         });
-
+        JButton filtersPanelButton = new JButton("Add filters");
+        filtersPanelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new FiltersFrame();
+            }
+        });
         JPanel topPanel = new JPanel();
         topPanel.setLayout(topLayout);
         topPanel.add(whiteMove);
@@ -105,10 +115,10 @@ class ChessBoardPanel extends JPanel {
         topPanel.add(whiteCastling);
         topPanel.add(blackCastling);
         topPanel.add(submitButton);
-
+        topPanel.add(filtersPanelButton);
         JPanel chessBoard = new JPanel();
         chessBoard.setLayout(chessBoardLayout);
-        prepareChessBoardSquares(chessBoardSquares);
+        prepareChessBoardSquares(chessBoardSquares, currentLocation);
         addColumnLabel(chessBoard);
         addSquaresToBoard(chessBoard, chessBoardSquares);
 
@@ -119,10 +129,10 @@ class ChessBoardPanel extends JPanel {
     }
 
     private void printCurrentBoardState() {
-        System.out.println(ChessBoardSingleton.getInstance().getState());
+        System.out.println(getInstance().getState());
     }
 
-    private static void addSquaresToBoard(JPanel chessBoardPanel, JLabel[][] chessBoardSquares) {
+    private static void addSquaresToBoard(JPanel chessBoardPanel, JTextField[][] chessBoardSquares) {
         int k = 8;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -141,13 +151,15 @@ class ChessBoardPanel extends JPanel {
         }
     }
 
-    private static void prepareChessBoardSquares(JLabel[][] chessBoardSquares) {
+    private static void prepareChessBoardSquares(JTextField[][] chessBoardSquares, Point[][] currentLocation) {
         Font font = new Font("Arial", Font.BOLD, 28);
         Insets margin = new Insets(0, 0, 0, 0);
         for (int i = 0; i < chessBoardSquares.length; i++) {
             for (int j = 0; j < chessBoardSquares[i].length; j++) {
-                JLabel field = new JLabel();
-                //field.setMargin(margin);
+                ImageIcon image = new ImageIcon();
+                JTextField field = new JTextField();
+                field.setMargin(margin);
+
                 field.setHorizontalAlignment(JTextField.CENTER);
                 field.setFont(font);
                 field.setForeground(Color.lightGray);
@@ -157,20 +169,25 @@ class ChessBoardPanel extends JPanel {
                             case 0:
                             case 7:
                                 field.setText("r");
+                                //image = new ImageIcon("simple//BR.gif");
                                 break;
                             case 1:
                             case 6:
                                 field.setText("n");
+                                //image = new ImageIcon("simple//BN.gif");
                                 break;
                             case 2:
                             case 5:
                                 field.setText("b");
+                                //image = new ImageIcon("simple//BB.gif");
                                 break;
                             case 3:
                                 field.setText("q");
+                                //image = new ImageIcon("simple//BQ.gif");
                                 break;
                             case 4:
                                 field.setText("k");
+                                //image = new ImageIcon("simple//BK.gif");
                                 break;
                         }
 
@@ -178,29 +195,36 @@ class ChessBoardPanel extends JPanel {
                     }
                     case 1:
                         field.setText("p");
+                        //image = new ImageIcon("simple//BP.gif");
                         break;
                     case 6:
                         field.setText("P");
+                        //image = new ImageIcon("simple//WP.gif");
                         break;
                     case 7: {
                         switch (j) {
                             case 0:
                             case 7:
                                 field.setText("R");
+                                //image = new ImageIcon("simple//WR.gif");
                                 break;
                             case 1:
                             case 6:
                                 field.setText("N");
+                                //image = new ImageIcon("simple//WN.gif");
                                 break;
                             case 2:
                             case 5:
                                 field.setText("B");
+                                //image = new ImageIcon("simple//WB.gif");
                                 break;
                             case 3:
                                 field.setText("Q");
+                                //image = new ImageIcon("simple//WQ.gif");
                                 break;
                             case 4:
                                 field.setText("K");
+                                //image = new ImageIcon("simple//WK.gif");
                                 break;
                         }
                         break;
@@ -211,9 +235,26 @@ class ChessBoardPanel extends JPanel {
                 } else {
                     field.setBackground(Color.BLACK);
                 }
-                field.setOpaque(true);
+                //field.setIcon(image);
+                //System.out.println(field.getIcon());
+                //field.setOpaque(true);
                 chessBoardSquares[j][i] = field;
+                //currentLocation[j][i] = chessBoardSquares[j][i].getLocation();
             }
         }
     }
+    /*@Override
+    public void mouseDragged(MouseEvent e) {
+
+        Point p = e.getPoint();
+        currentLocation.x = (int) p.getX();
+        currentLocation.y = (int) p.getY() - 250; // Height/2
+
+        .setLocation(currentLocation);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }*/
 }
