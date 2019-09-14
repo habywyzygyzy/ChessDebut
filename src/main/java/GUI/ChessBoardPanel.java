@@ -1,6 +1,7 @@
 package GUI;
 
 import models.Statistics;
+import singletons.FiltersSingleton;
 import tools.SortForBlacks;
 import tools.SortForWhites;
 
@@ -46,7 +47,6 @@ class ChessBoardPanel extends JPanel {
         Button submitButton = new Button("Submit");
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                long start = System.nanoTime();
                 String[][] stringBoard = new String[8][8];
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
@@ -57,26 +57,18 @@ class ChessBoardPanel extends JPanel {
                 String state = translateBoardToFEN(stringBoard);
                 getInstance().setState(state);
                 printCurrentBoardState();
-                long end = System.nanoTime() - start;
-                System.out.println("Przenoszenie szachownicy do stringa " + end / 1000000);
-                start = System.nanoTime();
                 ArrayList<Long> longListFen = convert(getInstance().getState());
-                end = System.nanoTime() - start;
-                System.out.println("Konwersja " + end / 1000000);
                 ArrayList<Statistics> stats = new ArrayList<Statistics>();
-                start = System.nanoTime();
+                long start = System.nanoTime();
                 stats = selectHitsWithTheSameFEN(longListFen);
-                end = System.nanoTime() - start;
+                long end = System.nanoTime() - start;
                 System.out.println("Wyszukiwanie " + end / 1000000);
-                start = System.nanoTime();
                 if (getIsWhiteMove())
                     Collections.sort(stats, new SortForWhites());
                 else
                     Collections.sort(stats, new SortForBlacks());
                 Collections.reverse(stats);
                 setStats(stats);
-                end = System.nanoTime() - start;
-                System.out.println("Sortowanie " + end / 1000000);
                 currentMoveRadioGroup.clearSelection();
                 setIsWhiteMove(!getIsWhiteMove());
                 if (getIsWhiteMove())
@@ -108,6 +100,16 @@ class ChessBoardPanel extends JPanel {
                 new FiltersFrame();
             }
         });
+        JButton filtersResetButton = new JButton("Reset filters");
+        filtersPanelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                FiltersSingleton.setMinELO(0);
+                FiltersSingleton.setMinELO(0);
+                FiltersSingleton.setName("");
+                FiltersSingleton.setOpening("");
+                FiltersSingleton.setYear(0);
+            }
+        });
         JPanel topPanel = new JPanel();
         topPanel.setLayout(topLayout);
         topPanel.add(whiteMove);
@@ -116,6 +118,7 @@ class ChessBoardPanel extends JPanel {
         topPanel.add(blackCastling);
         topPanel.add(submitButton);
         topPanel.add(filtersPanelButton);
+        topPanel.add(filtersResetButton);
         JPanel chessBoard = new JPanel();
         chessBoard.setLayout(chessBoardLayout);
         prepareChessBoardSquares(chessBoardSquares, currentLocation);

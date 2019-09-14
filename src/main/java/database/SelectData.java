@@ -6,14 +6,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static singletons.ChessBoardSingleton.getIsWhiteMove;
 import static singletons.DatabaseConfigSingleton.getConn;
+import static singletons.FiltersSingleton.*;
 
 public class SelectData {
 
     public static ArrayList<Statistics> selectHitsWithTheSameFEN(ArrayList<Long> FEN) {
         ArrayList<Statistics> stats = new ArrayList<Statistics>();
         java.sql.PreparedStatement preparedStatement = null;
-        String select = "SELECT `Hit`.MetaId, `Hit`.Hit, `MetaData`.Result ";
+        String minELO;
+        String maxELO = "";
+        String gameYear = "";
+        String name = "";
+        String opening = "";
+        String select = "SELECT `Hit`.MetaId," +
+                " `Hit`.Hit," +
+                " `MetaData`.Result," +
+                " `MetaData`.WhiteELO," +
+                " `MetaData`.BlackELO," +
+                " `MetaData`.GameYear," +
+                " `MetaData`.WhiteName," +
+                " `MetaData`.BlackName," +
+                " `MetaData`.Opening ";
         String from = "FROM `Hit` ";
         String join = "JOIN `MetaData` ";
         String on = "ON (`Hit`.MetaId = `MetaData`.MetaId) ";
@@ -21,7 +36,27 @@ public class SelectData {
         String and = "AND StateBeforeHit2  = '" + FEN.get(1) + "'";
         String and2 = "AND StateBeforeHit3  = '" + FEN.get(2) + "'";
         String and3 = "AND StateBeforeHit4  = '" + FEN.get(3) + "'";
-        String sql = select + from + join + on + where + and + and2 + and3;
+        if (getIsWhiteMove()) {
+            minELO = "AND `MetaData`.WhiteELO > '" + getMinELO() + "'";
+            if (getMaxELO() > getMinELO())
+                maxELO = "AND `MetaData`.WhiteELO < '" + getMaxELO() + "'";
+        } else {
+            minELO = "AND `MetaData`.BlackELO > '" + getMinELO() + "'";
+            if (getMaxELO() > getMinELO())
+                maxELO = "AND `MetaData`.BlackELO < '" + getMaxELO() + "'";
+        }
+        if (getYear() > 0)
+            gameYear = "AND `MetaData`.GameYear > '" + getYear() + "'";
+        if (!getName().isEmpty())
+            if (getIsWhiteMove())
+                name = "AND `MetaData`.WhiteName = '" + getName() + "'";
+            else
+                name = "AND `MetaData`.BlackName = '" + getName() + "'";
+        if (!getOpening().isEmpty())
+            opening = "AND `MetaData`.Opening = '" + getOpening() + "'";
+
+        String sql = select + from + join + on + where + and + and2 + and3 + minELO + maxELO + gameYear + name + opening;
+        System.out.println(sql);
         try {
             preparedStatement = getConn().prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
