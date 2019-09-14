@@ -15,22 +15,22 @@ public class ConvertFen {
         int i;
         int j = 0;
         for (i = 0; i < base && j < fen.length(); i++) {
-            c = fen.charAt(i);
+            c = fen.charAt(j);
             first += (long) pow(fenValue(c), i);
             j++;
         }
         for (i = 0; i < base && j < fen.length(); i++) {
-            c = fen.charAt(i);
+            c = fen.charAt(j);
             second += (long) pow(fenValue(c), i);
             j++;
         }
         for (i = 0; i < base && j < fen.length(); i++) {
-            c = fen.charAt(i);
+            c = fen.charAt(j);
             third += (long) pow(fenValue(c), i);
             j++;
         }
         for (i = 0; i < base && j < fen.length(); i++) {
-            c = fen.charAt(i);
+            c = fen.charAt(j);
             fourth += (long) pow(fenValue(c), i);
             j++;
         }
