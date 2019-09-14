@@ -49,16 +49,57 @@ public class FenHandler {
     }
 
     public static String removeWhiteSpaces(String fen) {
-        String newStr = "";
-        if (fen.contains("-"))
-            newStr = fen.substring(0, fen.indexOf("-") + 1);
-        if (fen.contains("KQkq"))
-            newStr = fen.substring(0, fen.lastIndexOf("KQkq") + 4);
-        else if (fen.contains("KQ"))
-            newStr = fen.substring(0, fen.lastIndexOf("KQ") + 2);
-        else if (fen.contains("kq"))
-            newStr = fen.substring(0, fen.lastIndexOf("kq") + 2);
+        String newString = fen;
+        String board;
+        String meta;
+        int spaceIndex = newString.indexOf(" ");
+        board = newString.substring(0, spaceIndex);
+        meta = newString.substring(spaceIndex);
 
-        return newStr.replaceAll("\\s+", "");
+        if (meta.contains("-"))
+            meta = meta.substring(0, meta.indexOf("-") + 1);
+
+        if (meta.contains("KQkq"))
+            meta = meta.substring(0, meta.indexOf("KQkq") + 4);
+
+        else if (meta.contains("KQk"))
+            meta = meta.substring(0, meta.indexOf("KQk") + 3);
+
+        else if (meta.contains("KQq"))
+            meta = meta.substring(0, meta.indexOf("KQq") + 3);
+
+        else if (meta.contains("Qkq"))
+            meta = meta.substring(0, meta.indexOf("Qkq") + 3);
+
+        else if (meta.contains("Kk"))
+            meta = meta.substring(0, meta.indexOf("Kk") + 2);
+
+        else if (meta.contains("Qq"))
+            meta = meta.substring(0, meta.indexOf("Qq") + 2);
+
+        else if (meta.contains("Kq"))
+            meta = meta.substring(0, meta.indexOf("Kq") + 2);
+
+        else if (meta.contains("Qk"))
+            meta = meta.substring(0, meta.indexOf("Qk") + 2);
+
+        else if (meta.contains("KQ"))
+            meta = meta.substring(0, meta.indexOf("KQ") + 2);
+
+        else if (meta.contains("k"))
+            meta = meta.substring(0, meta.indexOf("k") + 1);
+
+        else if (meta.contains("q"))
+            meta = meta.substring(0, meta.indexOf("q") + 1);
+
+        else if (meta.contains("K"))
+            meta = meta.substring(0, meta.indexOf("K") + 1);
+
+        else if (meta.contains("Q"))
+            meta = meta.substring(0, meta.indexOf("Q") + 1);
+
+        meta = meta.replaceAll("\\s", "");
+        newString = board + meta;
+        return newString;
     }
 }
