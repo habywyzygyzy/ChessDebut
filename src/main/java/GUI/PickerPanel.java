@@ -4,7 +4,7 @@ import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.game.Game;
 import com.github.bhlangonijr.chesslib.move.MoveList;
 import com.github.bhlangonijr.chesslib.pgn.PgnHolder;
-import database.InsertData;
+import tools.CheckingNulls;
 import tools.ConvertFen;
 import tools.MovesListToStringList;
 
@@ -15,7 +15,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
+import static database.InsertData.insertIntoHit;
+import static database.InsertData.insertIntoMetaData;
 import static singletons.ParseFolderPathSingleton.getInstance;
+import static tools.CheckingNulls.*;
 import static tools.FenHandler.removeWhiteSpaces;
 import static tools.LoadFolder.loadFolder;
 
@@ -69,7 +72,17 @@ class PickerPanel extends JPanel {
                         for (int j = 0; j < games.size(); j++) {
                             try {
                                 games.get(j).loadMoveText();
-                                InsertData.insertIntoMetaData(games.get(j).getResult().toString());
+                                insertIntoMetaData
+                                        (
+                                                games.get(j).getResult().toString(),
+                                                Integer.parseInt(games.get(j).getDate().substring(0, 4)),
+                                                checkString(games.get(j).getOpening()).replace("'", ""),
+                                                games.get(j).getWhitePlayer().toString().replace("'", ""),
+                                                games.get(j).getBlackPlayer().toString().replace("'", ""),
+                                                games.get(j).getWhitePlayer().getElo(),
+                                                games.get(j).getBlackPlayer().getElo()
+                                        );
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -77,7 +90,7 @@ class PickerPanel extends JPanel {
                             ArrayList<String> movesList = MovesListToStringList.saveMovesToList(games.get(j).getMoveText());
                             Board board = new Board();
                             for (int k = 0; k < moves.size() - 1 && k < movesList.size(); k++) {
-                                InsertData.insertIntoHit(movesList.get(k), ConvertFen.convert(removeWhiteSpaces(board.getFen())), j + 1);
+                                insertIntoHit(movesList.get(k), ConvertFen.convert(removeWhiteSpaces(board.getFen())), j + 1);
                                 board.doMove(moves.get(k));
                             }
                         }
