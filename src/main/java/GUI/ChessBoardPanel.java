@@ -54,10 +54,43 @@ class ChessBoardPanel extends JPanel {
                     }
                 }
 
-                String state = translateBoardToFEN(stringBoard);
-                ChessBoardSingleton.getInstance().setState(state);
+                System.out.println("Singleton");
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        System.out.print(ChessBoardSingleton.getInstance().getState()[i][j] + " ");
+                    }
+                    System.out.println();
+                }
+                System.out.println("Current");
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        System.out.print(stringBoard[i][j] + " ");
+                    }
+                    System.out.println();
+                }
+                ArrayList<String> differences = new ArrayList<String>();
+                ArrayList<Integer> rowIndex = new ArrayList<Integer>();
+                ArrayList<Integer> columnIndex = new ArrayList<Integer>();
+                System.out.println("Different elements");
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        if (!ChessBoardSingleton.getInstance().getState()[i][j].equals(stringBoard[i][j])
+                                && !ChessBoardSingleton.getInstance().getState()[i][j].isEmpty()
+                                && !stringBoard[i][j].isEmpty()) {
+                            differences.add(stringBoard[i][j]);
+                            rowIndex.add(i);
+                            columnIndex.add(j);
+                        }
+                    }
+                }
+                for (int i = 0; i < differences.size(); i++) {
+                    System.out.println(differences.get(i) + " " + rowIndex.get(i) + " " + columnIndex.get(i));
+                }
+                System.out.println("END");
+                ChessBoardSingleton.getInstance().setState(stringBoard);
+                String stateFEN = translateBoardToFEN(ChessBoardSingleton.getInstance().getState());
                 printCurrentBoardState();
-                ArrayList<Long> longListFen = convert(ChessBoardSingleton.getInstance().getState());
+                ArrayList<Long> longListFen = convert(stateFEN);
                 ArrayList<Statistics> stats = new ArrayList<Statistics>();
                 long start = System.nanoTime();
                 stats = selectHitsWithTheSameFEN(longListFen);
@@ -132,7 +165,12 @@ class ChessBoardPanel extends JPanel {
     }
 
     private void printCurrentBoardState() {
-        System.out.println(ChessBoardSingleton.getInstance().getState());
+        for (String[] strings : ChessBoardSingleton.getInstance().getState()) {
+            for (String string : strings) {
+                System.out.print(string + " ");
+            }
+            System.out.println();
+        }
     }
 
     private static void addSquaresToBoard(JPanel chessBoardPanel, JTextField[][] chessBoardSquares) {

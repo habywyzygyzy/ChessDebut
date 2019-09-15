@@ -2,12 +2,12 @@ package singletons;
 
 public class ChessBoardSingleton {
 
-    private static String state;
+    private static String[][] state;
     private static Boolean isWhiteMove;
     private static Boolean whiteCastlingDone;
     private static Boolean blackCastlingDone;
 
-    private ChessBoardSingleton(String state, Boolean isWhiteMove, Boolean whiteCastlingDone, Boolean blackCastlingDone) {
+    private ChessBoardSingleton(String[][] state, Boolean isWhiteMove, Boolean whiteCastlingDone, Boolean blackCastlingDone) {
         ChessBoardSingleton.state = state;
         ChessBoardSingleton.isWhiteMove = isWhiteMove;
     }
@@ -21,11 +21,11 @@ public class ChessBoardSingleton {
         private static final ChessBoardSingleton INSTANCE = new ChessBoardSingleton(state, isWhiteMove, whiteCastlingDone, blackCastlingDone);
     }
 
-    public void setState(String boardState) {
+    public void setState(String[][] boardState) {
         ChessBoardSingleton.state = boardState;
     }
 
-    public String getState() {
+    public String[][] getState() {
         return ChessBoardSingleton.state;
     }
 
