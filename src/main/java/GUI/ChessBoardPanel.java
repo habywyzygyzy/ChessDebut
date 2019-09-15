@@ -1,7 +1,9 @@
 package GUI;
 
 import models.Statistics;
+import singletons.ChessBoardSingleton;
 import singletons.FiltersSingleton;
+import singletons.StatisticsSingleton;
 import tools.SortForBlacks;
 import tools.SortForWhites;
 
@@ -15,8 +17,6 @@ import java.util.Collections;
 import static database.SelectData.selectHitsWithTheSameFEN;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static singletons.ChessBoardSingleton.*;
-import static singletons.StatisticsSingleton.setStats;
 import static tools.ConvertFen.convert;
 import static tools.FenHandler.translateBoardToFEN;
 
@@ -33,7 +33,7 @@ class ChessBoardPanel extends JPanel {
         whiteMove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setIsWhiteMove(TRUE);
+                ChessBoardSingleton.getInstance().setIsWhiteMove(TRUE);
             }
         });
         final JRadioButton blackMove = new JRadioButton("Black Move", false);
@@ -41,7 +41,7 @@ class ChessBoardPanel extends JPanel {
         blackMove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setIsWhiteMove(FALSE);
+                ChessBoardSingleton.getInstance().setIsWhiteMove(FALSE);
             }
         });
         Button submitButton = new Button("Submit");
@@ -55,43 +55,43 @@ class ChessBoardPanel extends JPanel {
                 }
 
                 String state = translateBoardToFEN(stringBoard);
-                getInstance().setState(state);
+                ChessBoardSingleton.getInstance().setState(state);
                 printCurrentBoardState();
-                ArrayList<Long> longListFen = convert(getInstance().getState());
+                ArrayList<Long> longListFen = convert(ChessBoardSingleton.getInstance().getState());
                 ArrayList<Statistics> stats = new ArrayList<Statistics>();
                 long start = System.nanoTime();
                 stats = selectHitsWithTheSameFEN(longListFen);
                 long end = System.nanoTime() - start;
                 System.out.println("Wyszukiwanie " + end / 1000000);
-                if (getIsWhiteMove())
+                if (ChessBoardSingleton.getInstance().getIsWhiteMove())
                     Collections.sort(stats, new SortForWhites());
                 else
                     Collections.sort(stats, new SortForBlacks());
                 Collections.reverse(stats);
-                setStats(stats);
+                StatisticsSingleton.getInstance().setStats(stats);
                 currentMoveRadioGroup.clearSelection();
-                setIsWhiteMove(!getIsWhiteMove());
-                if (getIsWhiteMove())
+                ChessBoardSingleton.getInstance().setIsWhiteMove(!ChessBoardSingleton.getInstance().getIsWhiteMove());
+                if (ChessBoardSingleton.getInstance().getIsWhiteMove())
                     whiteMove.setSelected(true);
                 else
                     blackMove.setSelected(true);
             }
         });
 
-        setBlackCastlingDone(FALSE);
-        setWhiteCastlingDone(FALSE);
+        ChessBoardSingleton.getInstance().setBlackCastlingDone(FALSE);
+        ChessBoardSingleton.getInstance().setWhiteCastlingDone(FALSE);
         JCheckBox whiteCastling = new JCheckBox("White castling done", false);
         whiteCastling.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setWhiteCastlingDone(!getWhiteCastlingDone());
+                ChessBoardSingleton.getInstance().setWhiteCastlingDone(!ChessBoardSingleton.getInstance().getWhiteCastlingDone());
             }
         });
         JCheckBox blackCastling = new JCheckBox("Black castling done", false);
         blackCastling.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setBlackCastlingDone(!getBlackCastlingDone());
+                ChessBoardSingleton.getInstance().setBlackCastlingDone(!ChessBoardSingleton.getInstance().getBlackCastlingDone());
             }
         });
         JButton filtersPanelButton = new JButton("Add filters");
@@ -101,13 +101,13 @@ class ChessBoardPanel extends JPanel {
             }
         });
         JButton filtersResetButton = new JButton("Reset filters");
-        filtersPanelButton.addActionListener(new ActionListener() {
+        filtersResetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                FiltersSingleton.setMinELO(0);
-                FiltersSingleton.setMinELO(0);
-                FiltersSingleton.setName("");
-                FiltersSingleton.setOpening("");
-                FiltersSingleton.setYear(0);
+                FiltersSingleton.getInstance().setMinELO(0);
+                FiltersSingleton.getInstance().setMaxELO(0);
+                FiltersSingleton.getInstance().setName("");
+                FiltersSingleton.getInstance().setOpening("");
+                FiltersSingleton.getInstance().setYear(0);
             }
         });
         JPanel topPanel = new JPanel();
@@ -132,7 +132,7 @@ class ChessBoardPanel extends JPanel {
     }
 
     private void printCurrentBoardState() {
-        System.out.println(getInstance().getState());
+        System.out.println(ChessBoardSingleton.getInstance().getState());
     }
 
     private static void addSquaresToBoard(JPanel chessBoardPanel, JTextField[][] chessBoardSquares) {

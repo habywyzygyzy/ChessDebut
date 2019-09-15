@@ -17,7 +17,7 @@ public class FiltersSingleton {
     }
 
     public static FiltersSingleton getInstance() {
-        return FiltersSingleton.SingletonHolder.INSTANCE;
+        return SingletonHolder.INSTANCE;
     }
 
     private static class SingletonHolder {

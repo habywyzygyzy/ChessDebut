@@ -45,6 +45,7 @@ class MainFrame extends JFrame {
         ChessBoardPanel chessBoardPanel = new ChessBoardPanel();
         gbc.gridx = 1;
         gbc.gridy = 0;
+        gbc.gridx = 5;
         gbc.anchor = GridBagConstraints.EAST;
         add(chessBoardPanel, gbc);
         setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);

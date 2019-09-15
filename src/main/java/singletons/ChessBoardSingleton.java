@@ -1,6 +1,7 @@
 package singletons;
 
 public class ChessBoardSingleton {
+
     private static String state;
     private static Boolean isWhiteMove;
     private static Boolean whiteCastlingDone;
