@@ -28,7 +28,7 @@ class MainFrame extends JFrame {
         gbc.gridheight = 1;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 100;
-        gbc.weighty = 5;
+        gbc.weighty = 10;
         setVisible(true);
         PickerPanel pickerPanel = new PickerPanel();
         gbc.anchor = GridBagConstraints.SOUTH;
@@ -39,14 +39,16 @@ class MainFrame extends JFrame {
         gbc.gridwidth = 1;
         gbc.gridheight = 1;
         gbc.weightx = 50;
-        gbc.weighty = 95;
-        gbc.anchor = GridBagConstraints.WEST;
+        gbc.weighty = 90;
+        gbc.anchor = GridBagConstraints.LINE_END;
         add(statisticsTablePanel, gbc);
         ChessBoardPanel chessBoardPanel = new ChessBoardPanel();
         gbc.gridx = 1;
         gbc.gridy = 0;
-        gbc.gridx = 5;
+        gbc.weightx = 50;
+        gbc.weighty = 90;
         gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.VERTICAL;
         add(chessBoardPanel, gbc);
         setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }

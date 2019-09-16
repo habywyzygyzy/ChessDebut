@@ -25,13 +25,14 @@ public class StatisticsTablePanel extends JPanel {
         final JButton searchButton = new JButton("Search");
         searchButton.addActionListener(new ActionListener() {
             String[] row;
+
             public void actionPerformed(ActionEvent e) {
                 long start = System.nanoTime();
                 String hit;
                 Double percentDraws, percentWhite, percentBlack;
                 Integer nrOfGames;
                 model.setRowCount(0);
-                for (int i = 0; i < getStats().size() && i < 40; i++) {
+                for (int i = 0; i < getStats().size(); i++) {
                     hit = getStats().get(i).getHit();
                     nrOfGames = getStats().get(i).getWhiteWins() + getStats().get(i).getBlackWins() + getStats().get(i).getDraws();
                     if (getStats().get(i).getDraws() != 0)
