@@ -15,7 +15,6 @@ public class DBConnection {
     public static void openConnection() {
         try {
             Class.forName(JDBC_DRIVER);
-            System.out.println("Connecting to database...");
             setConn(DriverManager.getConnection(DB_URL, USER, PASS));
             setStmt(getConn().createStatement());
         } catch (ClassNotFoundException | SQLException e) {
@@ -23,7 +22,7 @@ public class DBConnection {
         }
     }
 
-    public static void closeConnection() {
+    public static void closeConnection() throws SQLException {
         try {
             if (getRs() != null)
                 getRs().close();
@@ -32,10 +31,7 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (getStmt() != null) getStmt().close();
-            } catch (SQLException se2) {
-            }
+            if (getStmt() != null) getStmt().close();
             try {
                 if (getStmt() != null) getStmt().close();
             } catch (SQLException se) {

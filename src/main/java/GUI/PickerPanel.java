@@ -4,9 +4,7 @@ import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.game.Game;
 import com.github.bhlangonijr.chesslib.move.MoveList;
 import com.github.bhlangonijr.chesslib.pgn.PgnHolder;
-import tools.CheckingNulls;
 import tools.ConvertFen;
-import tools.MovesListToStringList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,9 +16,10 @@ import java.util.ArrayList;
 import static database.InsertData.insertIntoHit;
 import static database.InsertData.insertIntoMetaData;
 import static singletons.ParseFolderPathSingleton.getInstance;
-import static tools.CheckingNulls.*;
+import static tools.CheckingNulls.checkString;
 import static tools.FenHandler.removeWhiteSpaces;
 import static tools.LoadFolder.loadFolder;
+import static tools.MovesListToStringList.saveMovesToList;
 
 class PickerPanel extends JPanel {
 
@@ -53,6 +52,7 @@ class PickerPanel extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 PgnHolder pgn;
                 ArrayList<Game> games;
+                ConvertFen converter = new ConvertFen();
                 for (int i = 0; i < getInstance().getFiles().length; i++) {
                     games = new ArrayList<Game>();
                     pgn = new PgnHolder(getInstance().getFiles()[i].getAbsolutePath());
@@ -87,10 +87,10 @@ class PickerPanel extends JPanel {
                                 e.printStackTrace();
                             }
                             MoveList moves = games.get(j).getHalfMoves();
-                            ArrayList<String> movesList = MovesListToStringList.saveMovesToList(games.get(j).getMoveText());
+                            ArrayList<String> movesList = saveMovesToList(games.get(j).getMoveText());
                             Board board = new Board();
                             for (int k = 0; k < moves.size() - 1 && k < movesList.size(); k++) {
-                                insertIntoHit(movesList.get(k), ConvertFen.convert(removeWhiteSpaces(board.getFen())), j + 1);
+                                insertIntoHit(movesList.get(k), converter.convert(removeWhiteSpaces(board.getFen())), j + 1);
                                 board.doMove(moves.get(k));
                             }
                         }

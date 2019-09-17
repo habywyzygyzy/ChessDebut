@@ -1,4 +1,4 @@
-//DROP TABLE IF EXISTS MetaData;
+DROP TABLE IF EXISTS MetaData;
 
 CREATE TABLE IF NOT EXISTS MetaData
 (
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS MetaData
 )
     ENGINE = InnoDB;
 
-//DROP TABLE IF EXISTS Hit;
+DROP TABLE IF EXISTS Hit;
 
 CREATE TABLE IF NOT EXISTS Hit
 (
@@ -27,11 +27,11 @@ CREATE TABLE IF NOT EXISTS Hit
     MetaId          INT        NULL,
     PRIMARY KEY (HitId),
     /*INDEX MetaId_idx (MetaId ASC) VISIBLE,*/
-    /*CONSTRAINT MetaId
+    CONSTRAINT MetaId
         FOREIGN KEY (MetaId)
             REFERENCES MetaData (MetaId)
             ON DELETE NO ACTION
-            ON UPDATE NO ACTION*/
+            ON UPDATE NO ACTION
 )
     ENGINE = InnoDB;
 CREATE INDEX IF NOT EXISTS index_name

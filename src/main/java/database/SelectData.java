@@ -12,7 +12,7 @@ import static singletons.FiltersSingleton.*;
 
 public class SelectData {
 
-    public static ArrayList<Statistics> selectHitsWithTheSameFEN(ArrayList<Long> FEN) {
+    public static ArrayList<Statistics> selectHitsWithTheSameFEN(long[] FEN) {
         ArrayList<Statistics> stats = new ArrayList<Statistics>();
         java.sql.PreparedStatement preparedStatement = null;
         String minELO;
@@ -32,10 +32,10 @@ public class SelectData {
         String from = "FROM `Hit` ";
         String join = "JOIN `MetaData` ";
         String on = "ON (`Hit`.MetaId = `MetaData`.MetaId) ";
-        String where = "WHERE StateBeforeHit  = '" + FEN.get(0) + "'";
-        String and = "AND StateBeforeHit2  = '" + FEN.get(1) + "'";
-        String and2 = "AND StateBeforeHit3  = '" + FEN.get(2) + "'";
-        String and3 = "AND StateBeforeHit4  = '" + FEN.get(3) + "'";
+        String where = "WHERE StateBeforeHit  = '" + FEN[0] + "'";
+        String and = "AND StateBeforeHit2  = '" + FEN[1] + "'";
+        String and2 = "AND StateBeforeHit3  = '" + FEN[2] + "'";
+        String and3 = "AND StateBeforeHit4  = '" + FEN[3] + "'";
         if (getIsWhiteMove()) {
             minELO = "AND `MetaData`.WhiteELO > '" + getMinELO() + "'";
             if (getMaxELO() > getMinELO())

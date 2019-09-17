@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 
 class MainFrame extends JFrame {
 
@@ -15,7 +16,11 @@ class MainFrame extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
-                DBConnection.closeConnection();
+                try {
+                    DBConnection.closeConnection();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 dispose();
                 System.exit(0);
             }
@@ -28,7 +33,7 @@ class MainFrame extends JFrame {
         gbc.gridheight = 1;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 100;
-        gbc.weighty = 10;
+        gbc.weighty = 5;
         setVisible(true);
         PickerPanel pickerPanel = new PickerPanel();
         gbc.anchor = GridBagConstraints.SOUTH;
@@ -39,16 +44,15 @@ class MainFrame extends JFrame {
         gbc.gridwidth = 1;
         gbc.gridheight = 1;
         gbc.weightx = 50;
-        gbc.weighty = 90;
+        gbc.weighty = 95;
         gbc.anchor = GridBagConstraints.LINE_END;
         add(statisticsTablePanel, gbc);
         ChessBoardPanel chessBoardPanel = new ChessBoardPanel();
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weightx = 50;
-        gbc.weighty = 90;
-        gbc.anchor = GridBagConstraints.EAST;
-        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.weighty = 95;
+        gbc.anchor = GridBagConstraints.WEST;
         add(chessBoardPanel, gbc);
         setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }

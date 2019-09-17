@@ -4,6 +4,7 @@ import models.Statistics;
 import singletons.ChessBoardSingleton;
 import singletons.FiltersSingleton;
 import singletons.StatisticsSingleton;
+import tools.ConvertFen;
 import tools.SortForBlacks;
 import tools.SortForWhites;
 
@@ -17,7 +18,7 @@ import java.util.Collections;
 import static database.SelectData.selectHitsWithTheSameFEN;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static tools.ConvertFen.convert;
+import static tools.ConvertFen.*;
 import static tools.FenHandler.translateBoardToFEN;
 
 class ChessBoardPanel extends JPanel {
@@ -90,10 +91,11 @@ class ChessBoardPanel extends JPanel {
                 ChessBoardSingleton.getInstance().setState(stringBoard);
                 String stateFEN = translateBoardToFEN(ChessBoardSingleton.getInstance().getState());
                 printCurrentBoardState();
-                ArrayList<Long> longListFen = convert(stateFEN);
+                ConvertFen converter = new ConvertFen();
+                long[] longArrayFEN = converter.convert(stateFEN);
                 ArrayList<Statistics> stats = new ArrayList<Statistics>();
                 long start = System.nanoTime();
-                stats = selectHitsWithTheSameFEN(longListFen);
+                stats = selectHitsWithTheSameFEN(longArrayFEN);
                 long end = System.nanoTime() - start;
                 System.out.println("Wyszukiwanie " + end / 1000000);
                 if (ChessBoardSingleton.getInstance().getIsWhiteMove())

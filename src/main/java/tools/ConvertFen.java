@@ -1,119 +1,76 @@
 package tools;
 
 import java.util.ArrayList;
-
-import static java.lang.Math.pow;
+import java.util.Arrays;
 
 public class ConvertFen {
 
-    public static ArrayList<Long> convert(String fen) {
-        Long first, second, third, fourth;
-        first = second = third = fourth = 0L;
-        ArrayList<Long> converted = new ArrayList<Long>();
+    private int[] map = new int[128];
+
+    public ConvertFen() {
+        Arrays.fill(map, 0);
+        map[(byte) 'p'] = 1;
+        map[(byte) 'P'] = 2;
+        map[(byte) '/'] = 3;
+        map[(byte) 'k'] = 4;
+        map[(byte) 'q'] = 5;
+        map[(byte) 'K'] = 6;
+        map[(byte) 'Q'] = 7;
+        map[(byte) 'b'] = 8;
+        map[(byte) 'n'] = 9;
+        map[(byte) 'r'] = 10;
+        map[(byte) 'R'] = 11;
+        map[(byte) 'N'] = 12;
+        map[(byte) 'B'] = 13;
+        map[(byte) '1'] = 14;
+        map[(byte) '2'] = 15;
+        map[(byte) '3'] = 16;
+        map[(byte) '4'] = 17;
+        map[(byte) '5'] = 18;
+        map[(byte) '6'] = 19;
+        map[(byte) '7'] = 20;
+        map[(byte) '8'] = 21;
+    }
+
+    public long[] convert(String fen) {
+
+        long[] converted = new long[4];
         int base = 16;
         char c;
         int i;
         int j = 0;
         for (i = 0; i < base && j < fen.length(); i++) {
             c = fen.charAt(j);
-            first += (long) pow(fenValue(c), i);
+            converted[0] += powLong(fenValue(c), i);
             j++;
         }
         for (i = 0; i < base && j < fen.length(); i++) {
             c = fen.charAt(j);
-            second += (long) pow(fenValue(c), i);
+            converted[1] += powLong(fenValue(c), i);
             j++;
         }
         for (i = 0; i < base && j < fen.length(); i++) {
             c = fen.charAt(j);
-            third += (long) pow(fenValue(c), i);
+            converted[2] += powLong(fenValue(c), i);
             j++;
         }
         for (i = 0; i < base && j < fen.length(); i++) {
             c = fen.charAt(j);
-            fourth += (long) pow(fenValue(c), i);
+            converted[3] += powLong(fenValue(c), i);
             j++;
         }
-        converted.add(first);
-        converted.add(second);
-        converted.add(third);
-        converted.add(fourth);
         return converted;
     }
 
-    private static int fenValue(char c) {
-        int value;
-        switch (c) {
-            case 'p':
-                value = 1;
-                break;
-            case 'P':
-                value = 2;
-                break;
-            case '/':
-                value = 3;
-                break;
-            case 'r':
-                value = 4;
-                break;
-            case 'n':
-                value = 5;
-                break;
-            case 'b':
-                value = 6;
-                break;
-            case 'R':
-                value = 7;
-                break;
-            case 'N':
-                value = 8;
-                break;
-            case 'B':
-                value = 9;
-                break;
-            case 'q':
-                value = 10;
-                break;
-            case 'Q':
-                value = 11;
-                break;
-            case 'k':
-                value = 12;
-                break;
-            case 'K':
-                value = 13;
-                break;
-            case '1':
-                value = 14;
-                break;
-            case '2':
-                value = 15;
-                break;
-            case '3':
-                value = 16;
-                break;
-            case '4':
-                value = 17;
-                break;
-            case '5':
-                value = 18;
-                break;
-            case '6':
-                value = 19;
-                break;
-            case '7':
-                value = 20;
-                break;
-            case '8':
-                value = 21;
-                break;
-            case 'w':
-                value = 22;
-                break;
-            default:
-                value = 0;
-                break;
+    private int fenValue(char c) {
+        return this.map[(byte) c];
+    }
+
+    private static long powLong(int value, int exponent) {
+        long ret = value;
+        for (int i = 0; i < exponent; i++) {
+            ret *= ret;
         }
-        return value;
+        return ret;
     }
 }
