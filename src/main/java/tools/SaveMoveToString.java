@@ -38,6 +38,8 @@ public class SaveMoveToString {
                 }
             }
         }
+        if (MovesHistorySingleton.getFullMovesCounter() % 5 == 0)
+            stringMove.append("/n");
         return stringMove.toString();
     }
 }
