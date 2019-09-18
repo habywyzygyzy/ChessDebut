@@ -2,8 +2,10 @@ package GUI;
 
 import models.Statistics;
 import singletons.FiltersSingleton;
+import singletons.MovesHistorySingleton;
 import singletons.StatisticsSingleton;
 import tools.ConvertFen;
+import tools.SaveMoveToString;
 import tools.SortForBlacks;
 import tools.SortForWhites;
 
@@ -53,43 +55,24 @@ class ChessBoardPanel extends JPanel {
                         stringBoard[j][i] = chessBoardSquares[i][j].getText();
                     }
                 }
-
-                System.out.println("Singleton");
-                for (int i = 0; i < 8; i++) {
-                    for (int j = 0; j < 8; j++) {
-                        System.out.print(getInstance().getState()[i][j] + " ");
-                    }
-                    System.out.println();
-                }
-                System.out.println("Current");
-                for (int i = 0; i < 8; i++) {
-                    for (int j = 0; j < 8; j++) {
-                        System.out.print(stringBoard[i][j] + " ");
-                    }
-                    System.out.println();
-                }
                 ArrayList<String> differences = new ArrayList<>();
                 ArrayList<Integer> rowIndex = new ArrayList<>();
                 ArrayList<Integer> columnIndex = new ArrayList<>();
-                System.out.println("Different elements");
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
                         if (!getInstance().getState()[i][j].equals(stringBoard[i][j])) {
-                            //&& !ChessBoardSingleton.getInstance().getState()[i][j].isEmpty()
-                            // && !stringBoard[i][j].isEmpty()) {
                             differences.add(stringBoard[i][j]);
                             rowIndex.add(i);
                             columnIndex.add(j);
                         }
                     }
                 }
-                for (int i = 0; i < differences.size(); i++) {
-                    System.out.println(differences.get(i) + " " + rowIndex.get(i) + " " + columnIndex.get(i));
-                }
-                System.out.println("END");
+                MovesHistorySingleton.setMoves(MovesHistorySingleton.getMoves().
+                        append(SaveMoveToString.saveMoveToString(differences, rowIndex, columnIndex)));
+                System.out.println(MovesHistorySingleton.getMoves().toString());
                 getInstance().setState(stringBoard);
                 String stateFEN = translateBoardToFEN(getInstance().getState());
-                printCurrentBoardState();
+                //printCurrentBoardState();
                 ConvertFen converter = new ConvertFen();
                 long[] longArrayFEN = converter.convert(stateFEN);
                 ArrayList<Statistics> stats;
