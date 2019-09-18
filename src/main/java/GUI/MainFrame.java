@@ -54,6 +54,7 @@ class MainFrame extends JFrame {
         gbc.weighty = 95;
         gbc.anchor = GridBagConstraints.WEST;
         add(chessBoardPanel, gbc);
+        pack();
         setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 }

@@ -1,7 +1,6 @@
 package GUI;
 
 import models.Statistics;
-import singletons.ChessBoardSingleton;
 import singletons.FiltersSingleton;
 import singletons.StatisticsSingleton;
 import tools.ConvertFen;
@@ -18,7 +17,7 @@ import java.util.Collections;
 import static database.SelectData.selectHitsWithTheSameFEN;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static tools.ConvertFen.*;
+import static singletons.ChessBoardSingleton.*;
 import static tools.FenHandler.translateBoardToFEN;
 
 class ChessBoardPanel extends JPanel {
@@ -34,7 +33,7 @@ class ChessBoardPanel extends JPanel {
         whiteMove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ChessBoardSingleton.getInstance().setIsWhiteMove(TRUE);
+                setIsWhiteMove(TRUE);
             }
         });
         final JRadioButton blackMove = new JRadioButton("Black Move", false);
@@ -42,7 +41,7 @@ class ChessBoardPanel extends JPanel {
         blackMove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ChessBoardSingleton.getInstance().setIsWhiteMove(FALSE);
+                setIsWhiteMove(FALSE);
             }
         });
         Button submitButton = new Button("Submit");
@@ -58,7 +57,7 @@ class ChessBoardPanel extends JPanel {
                 System.out.println("Singleton");
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
-                        System.out.print(ChessBoardSingleton.getInstance().getState()[i][j] + " ");
+                        System.out.print(getInstance().getState()[i][j] + " ");
                     }
                     System.out.println();
                 }
@@ -69,15 +68,15 @@ class ChessBoardPanel extends JPanel {
                     }
                     System.out.println();
                 }
-                ArrayList<String> differences = new ArrayList<String>();
-                ArrayList<Integer> rowIndex = new ArrayList<Integer>();
-                ArrayList<Integer> columnIndex = new ArrayList<Integer>();
+                ArrayList<String> differences = new ArrayList<>();
+                ArrayList<Integer> rowIndex = new ArrayList<>();
+                ArrayList<Integer> columnIndex = new ArrayList<>();
                 System.out.println("Different elements");
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
-                        if (!ChessBoardSingleton.getInstance().getState()[i][j].equals(stringBoard[i][j])
-                                && !ChessBoardSingleton.getInstance().getState()[i][j].isEmpty()
-                                && !stringBoard[i][j].isEmpty()) {
+                        if (!getInstance().getState()[i][j].equals(stringBoard[i][j])) {
+                            //&& !ChessBoardSingleton.getInstance().getState()[i][j].isEmpty()
+                            // && !stringBoard[i][j].isEmpty()) {
                             differences.add(stringBoard[i][j]);
                             rowIndex.add(i);
                             columnIndex.add(j);
@@ -88,45 +87,45 @@ class ChessBoardPanel extends JPanel {
                     System.out.println(differences.get(i) + " " + rowIndex.get(i) + " " + columnIndex.get(i));
                 }
                 System.out.println("END");
-                ChessBoardSingleton.getInstance().setState(stringBoard);
-                String stateFEN = translateBoardToFEN(ChessBoardSingleton.getInstance().getState());
+                getInstance().setState(stringBoard);
+                String stateFEN = translateBoardToFEN(getInstance().getState());
                 printCurrentBoardState();
                 ConvertFen converter = new ConvertFen();
                 long[] longArrayFEN = converter.convert(stateFEN);
-                ArrayList<Statistics> stats = new ArrayList<Statistics>();
+                ArrayList<Statistics> stats;
                 long start = System.nanoTime();
                 stats = selectHitsWithTheSameFEN(longArrayFEN);
                 long end = System.nanoTime() - start;
                 System.out.println("Wyszukiwanie " + end / 1000000);
-                if (ChessBoardSingleton.getInstance().getIsWhiteMove())
+                if (getIsWhiteMove())
                     Collections.sort(stats, new SortForWhites());
                 else
                     Collections.sort(stats, new SortForBlacks());
                 Collections.reverse(stats);
-                StatisticsSingleton.getInstance().setStats(stats);
+                StatisticsSingleton.setStats(stats);
                 currentMoveRadioGroup.clearSelection();
-                ChessBoardSingleton.getInstance().setIsWhiteMove(!ChessBoardSingleton.getInstance().getIsWhiteMove());
-                if (ChessBoardSingleton.getInstance().getIsWhiteMove())
+                setIsWhiteMove(!getIsWhiteMove());
+                if (getIsWhiteMove())
                     whiteMove.setSelected(true);
                 else
                     blackMove.setSelected(true);
             }
         });
 
-        ChessBoardSingleton.getInstance().setBlackCastlingDone(FALSE);
-        ChessBoardSingleton.getInstance().setWhiteCastlingDone(FALSE);
+        setBlackCastlingDone(FALSE);
+        setWhiteCastlingDone(FALSE);
         JCheckBox whiteCastling = new JCheckBox("White castling done", false);
         whiteCastling.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ChessBoardSingleton.getInstance().setWhiteCastlingDone(!ChessBoardSingleton.getInstance().getWhiteCastlingDone());
+                setWhiteCastlingDone(!getWhiteCastlingDone());
             }
         });
         JCheckBox blackCastling = new JCheckBox("Black castling done", false);
         blackCastling.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ChessBoardSingleton.getInstance().setBlackCastlingDone(!ChessBoardSingleton.getInstance().getBlackCastlingDone());
+                setBlackCastlingDone(!getBlackCastlingDone());
             }
         });
         JButton filtersPanelButton = new JButton("Add filters");
@@ -138,11 +137,11 @@ class ChessBoardPanel extends JPanel {
         JButton filtersResetButton = new JButton("Reset filters");
         filtersResetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                FiltersSingleton.getInstance().setMinELO(0);
-                FiltersSingleton.getInstance().setMaxELO(0);
-                FiltersSingleton.getInstance().setName("");
-                FiltersSingleton.getInstance().setOpening("");
-                FiltersSingleton.getInstance().setYear(0);
+                FiltersSingleton.setMinELO(0);
+                FiltersSingleton.setMaxELO(0);
+                FiltersSingleton.setName("");
+                FiltersSingleton.setOpening("");
+                FiltersSingleton.setYear(0);
             }
         });
         JPanel topPanel = new JPanel();
@@ -159,7 +158,6 @@ class ChessBoardPanel extends JPanel {
         prepareChessBoardSquares(chessBoardSquares, currentLocation);
         addColumnLabel(chessBoard);
         addSquaresToBoard(chessBoard, chessBoardSquares);
-
         this.setLayout(new BorderLayout());
         this.add(chessBoard, BorderLayout.CENTER);
         this.add(topPanel, BorderLayout.NORTH);
@@ -167,7 +165,7 @@ class ChessBoardPanel extends JPanel {
     }
 
     private void printCurrentBoardState() {
-        for (String[] strings : ChessBoardSingleton.getInstance().getState()) {
+        for (String[] strings : getInstance().getState()) {
             for (String string : strings) {
                 System.out.print(string + " ");
             }
