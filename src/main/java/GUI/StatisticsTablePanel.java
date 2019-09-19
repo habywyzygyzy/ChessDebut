@@ -1,7 +1,5 @@
 package GUI;
 
-import singletons.StatisticsSingleton;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -11,8 +9,6 @@ import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static java.lang.Boolean.FALSE;
-import static singletons.StatisticsSingleton.*;
 import static singletons.StatisticsSingleton.getStats;
 
 class StatisticsTablePanel extends JPanel {
@@ -21,13 +17,6 @@ class StatisticsTablePanel extends JPanel {
         final String[] columns = {"Next Move", "# of Games", "% of White Victories", "% of Black Victories", "% of Draws"};
         final String[][] data = new String[0][];
         final DefaultTableModel model = new DefaultTableModel(data, columns);
-        final JButton movesHistoryButton = new JButton("Moves History");
-        movesHistoryButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new MovesHistoryFrame();
-            }
-        });
 
         final JButton searchButton = new JButton("Search");
         searchButton.addActionListener(new ActionListener() {
@@ -73,14 +62,13 @@ class StatisticsTablePanel extends JPanel {
         mainTable = new JTable(model);
         JTableHeader header = mainTable.getTableHeader();
         mainTable.setAutoCreateRowSorter(true);
-        JPanel bottomPanel = new JPanel();
+        /*JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout());
-        bottomPanel.add(searchButton);
-        bottomPanel.add(movesHistoryButton);
+        bottomPanel.add(searchButton);*/
         this.setLayout(new BorderLayout());
         this.add(header, BorderLayout.NORTH);
         this.add(mainTable, BorderLayout.CENTER);
-        this.add(bottomPanel, BorderLayout.SOUTH);
+        //this.add(bottomPanel, BorderLayout.SOUTH);
         this.setVisible(true);
     }
 }

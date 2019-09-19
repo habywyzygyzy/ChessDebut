@@ -22,11 +22,11 @@ import static tools.FenHandler.translateBoardToFEN;
 class ChessBoardPanel extends JPanel {
 
     ChessBoardPanel() {
-        final JTextField[][] chessBoardSquares = new JTextField[8][8];
-        Point[][] currentLocation = new Point[8][8];
-        FlowLayout topLayout = new FlowLayout();
-        GridLayout chessBoardLayout = new GridLayout(0, 9);
-        final ButtonGroup currentMoveRadioGroup = new ButtonGroup();
+        //final JTextField[][] chessBoardSquares = new JTextField[8][8];
+        //Point[][] currentLocation = new Point[8][8];
+        //FlowLayout topLayout = new FlowLayout();
+        //GridLayout chessBoardLayout = new GridLayout(0, 9);
+        /*final ButtonGroup currentMoveRadioGroup = new ButtonGroup();
         final JRadioButton whiteMove = new JRadioButton("White Move", true);
         currentMoveRadioGroup.add(whiteMove);
         whiteMove.addActionListener(new ActionListener() {
@@ -135,15 +135,15 @@ class ChessBoardPanel extends JPanel {
         topPanel.add(blackCastling);
         topPanel.add(submitButton);
         topPanel.add(filtersPanelButton);
-        topPanel.add(filtersResetButton);
-        JPanel chessBoard = new JPanel();
+        topPanel.add(filtersResetButton);*/
+        /*JPanel chessBoard = new JPanel();
         chessBoard.setLayout(chessBoardLayout);
         prepareChessBoardSquares(chessBoardSquares, currentLocation);
         addColumnLabel(chessBoard);
         addSquaresToBoard(chessBoard, chessBoardSquares);
         this.setLayout(new BorderLayout());
-        this.add(chessBoard, BorderLayout.CENTER);
-        this.add(topPanel, BorderLayout.NORTH);
+        this.add(chessBoard, BorderLayout.CENTER);*/
+        //this.add(topPanel, BorderLayout.NORTH);
         this.setVisible(true);
     }
 
@@ -156,7 +156,7 @@ class ChessBoardPanel extends JPanel {
         }
     }
 
-    private static void addSquaresToBoard(JPanel chessBoardPanel, JTextField[][] chessBoardSquares) {
+    static void addSquaresToBoard(JPanel chessBoardPanel, JTextField[][] chessBoardSquares) {
         int k = 8;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -168,14 +168,14 @@ class ChessBoardPanel extends JPanel {
         }
     }
 
-    private static void addColumnLabel(JPanel chessBoardPanel) {
+    static void addColumnLabel(JPanel chessBoardPanel) {
         chessBoardPanel.add(new JLabel(""));
         for (int i = 0; i < 8; i++) {
             chessBoardPanel.add(new JLabel("ABCDEFGH".substring(i, i + 1), SwingConstants.CENTER));
         }
     }
 
-    private static void prepareChessBoardSquares(JTextField[][] chessBoardSquares, Point[][] currentLocation) {
+    static void prepareChessBoardSquares(JTextField[][] chessBoardSquares, Point[][] currentLocation) {
         Font font = new Font("Arial", Font.BOLD, 28);
         Insets margin = new Insets(0, 0, 0, 0);
         for (int i = 0; i < chessBoardSquares.length; i++) {

@@ -57,7 +57,7 @@ public class SaveMoveToString {
                 }
             }
         }
-        if (MovesHistorySingleton.getFullMovesCounter() % 5 == 0)
+        if (MovesHistorySingleton.getFullMovesCounter() % 10 == 0)
             stringMove.append("/n");
         return stringMove.toString();
     }
