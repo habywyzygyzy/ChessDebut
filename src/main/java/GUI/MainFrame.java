@@ -4,14 +4,28 @@ import database.DBConnection;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.sql.SQLException;
 
 class MainFrame extends JFrame {
 
     MainFrame() {
         super("Chess Debut");
+        JMenuBar menuBar;
+        JMenu menu;
+        JMenuItem menuItem;
+        menuBar = new JMenuBar();
+        menu = new JMenu("A Menu");
+        menuBar.add(menu);
+        menuItem = new JMenuItem("Parse PGN Folder");
+        menu.add(menuItem);
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PickerFrame();
+            }
+        });
+        setJMenuBar(menuBar);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -35,9 +49,9 @@ class MainFrame extends JFrame {
         gbc.weightx = 100;
         gbc.weighty = 5;
         setVisible(true);
-        PickerPanel pickerPanel = new PickerPanel();
-        gbc.anchor = GridBagConstraints.SOUTH;
-        add(pickerPanel, gbc);
+        //PickerPanel pickerPanel = new PickerPanel();
+        //gbc.anchor = GridBagConstraints.SOUTH;
+        //add(pickerPanel, gbc);
         StatisticsTablePanel statisticsTablePanel = new StatisticsTablePanel();
         gbc.gridx = 0;
         gbc.gridy = 0;
