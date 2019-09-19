@@ -1,149 +1,15 @@
 package GUI;
 
-import models.Statistics;
-import singletons.FiltersSingleton;
-import singletons.MovesHistorySingleton;
-import singletons.StatisticsSingleton;
-import tools.*;
+import singletons.ChessBoardSingleton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collections;
 
-import static database.SelectData.selectHitsWithTheSameFEN;
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-import static singletons.ChessBoardSingleton.*;
-import static tools.FenHandler.translateBoardToFEN;
+import static singletons.ChessBoardSingleton.getInstance;
 
 class ChessBoardPanel extends JPanel {
 
     ChessBoardPanel() {
-        //final JTextField[][] chessBoardSquares = new JTextField[8][8];
-        //Point[][] currentLocation = new Point[8][8];
-        //FlowLayout topLayout = new FlowLayout();
-        //GridLayout chessBoardLayout = new GridLayout(0, 9);
-        /*final ButtonGroup currentMoveRadioGroup = new ButtonGroup();
-        final JRadioButton whiteMove = new JRadioButton("White Move", true);
-        currentMoveRadioGroup.add(whiteMove);
-        whiteMove.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setIsWhiteMove(TRUE);
-            }
-        });
-        final JRadioButton blackMove = new JRadioButton("Black Move", false);
-        currentMoveRadioGroup.add(blackMove);
-        blackMove.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setIsWhiteMove(FALSE);
-            }
-        });
-        Button submitButton = new Button("Submit");
-        submitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String[][] stringBoard = new String[8][8];
-                for (int i = 0; i < 8; i++) {
-                    for (int j = 0; j < 8; j++) {
-                        stringBoard[j][i] = chessBoardSquares[i][j].getText();
-                    }
-                }
-                ArrayList<String> differences = new ArrayList<>();
-                ArrayList<Integer> rowIndex = new ArrayList<>();
-                ArrayList<Integer> columnIndex = new ArrayList<>();
-                for (int i = 0; i < 8; i++) {
-                    for (int j = 0; j < 8; j++) {
-                        if (!getInstance().getState()[i][j].equals(stringBoard[i][j])) {
-                            differences.add(stringBoard[i][j]);
-                            rowIndex.add(i);
-                            columnIndex.add(j);
-                        }
-                    }
-                }
-                boolean capture;
-                capture = CaptureCheck.wasCaptured(stringBoard, getInstance().getState());
-                getInstance().setState(stringBoard);
-                MovesHistorySingleton.setMoves(MovesHistorySingleton.getMoves().
-                        append(SaveMoveToString.saveMoveToString(differences, rowIndex, columnIndex, capture)));
-                System.out.println(MovesHistorySingleton.getMoves().toString());
-
-                String stateFEN = translateBoardToFEN(getInstance().getState());
-                //printCurrentBoardState();
-                ConvertFen converter = new ConvertFen();
-                long[] longArrayFEN = converter.convert(stateFEN);
-                ArrayList<Statistics> stats;
-                long start = System.nanoTime();
-                stats = selectHitsWithTheSameFEN(longArrayFEN);
-                long end = System.nanoTime() - start;
-                System.out.println("Wyszukiwanie " + end / 1000000);
-                if (getIsWhiteMove())
-                    Collections.sort(stats, new SortForWhites());
-                else
-                    Collections.sort(stats, new SortForBlacks());
-                Collections.reverse(stats);
-                StatisticsSingleton.setStats(stats);
-                currentMoveRadioGroup.clearSelection();
-                setIsWhiteMove(!getIsWhiteMove());
-                if (getIsWhiteMove())
-                    whiteMove.setSelected(true);
-                else
-                    blackMove.setSelected(true);
-            }
-        });
-
-        setBlackCastlingDone(FALSE);
-        setWhiteCastlingDone(FALSE);
-        JCheckBox whiteCastling = new JCheckBox("White castling done", false);
-        whiteCastling.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setWhiteCastlingDone(!getWhiteCastlingDone());
-            }
-        });
-        JCheckBox blackCastling = new JCheckBox("Black castling done", false);
-        blackCastling.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setBlackCastlingDone(!getBlackCastlingDone());
-            }
-        });
-        JButton filtersPanelButton = new JButton("Add filters");
-        filtersPanelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new FiltersFrame();
-            }
-        });
-        JButton filtersResetButton = new JButton("Reset filters");
-        filtersResetButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                FiltersSingleton.setMinELO(0);
-                FiltersSingleton.setMaxELO(0);
-                FiltersSingleton.setName("");
-                FiltersSingleton.setOpening("");
-                FiltersSingleton.setYear(0);
-            }
-        });
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(topLayout);
-        topPanel.add(whiteMove);
-        topPanel.add(blackMove);
-        topPanel.add(whiteCastling);
-        topPanel.add(blackCastling);
-        topPanel.add(submitButton);
-        topPanel.add(filtersPanelButton);
-        topPanel.add(filtersResetButton);*/
-        /*JPanel chessBoard = new JPanel();
-        chessBoard.setLayout(chessBoardLayout);
-        prepareChessBoardSquares(chessBoardSquares, currentLocation);
-        addColumnLabel(chessBoard);
-        addSquaresToBoard(chessBoard, chessBoardSquares);
-        this.setLayout(new BorderLayout());
-        this.add(chessBoard, BorderLayout.CENTER);*/
-        //this.add(topPanel, BorderLayout.NORTH);
         this.setVisible(true);
     }
 
@@ -180,105 +46,75 @@ class ChessBoardPanel extends JPanel {
         Insets margin = new Insets(0, 0, 0, 0);
         for (int i = 0; i < chessBoardSquares.length; i++) {
             for (int j = 0; j < chessBoardSquares[i].length; j++) {
-                ImageIcon image = new ImageIcon();
-                JTextField field = new JTextField();
+                final ImageIcon imageIcon = new ImageIcon("simple//BB.gif");
+                final int finalJ = j;
+                final int finalI = i;
+                JTextField field = new JTextField() {
+                    Image image = checkIcon()[finalI][finalJ].getImage();
+
+                    {
+                        setOpaque(false);
+                    }
+
+                    public void paintComponent(Graphics g) {
+                        if ((finalJ % 2 == 1 && finalI % 2 == 1) || (finalJ % 2 == 0 && finalI % 2 == 0)) {
+                            g.setColor(Color.BLACK);
+                        } else {
+                            g.setColor(Color.WHITE);
+                        }
+                        g.fillRect(1, 1, 600, 600);
+                        g.drawImage(image, 10, 30, this);
+                        super.paintComponent(g);
+                    }
+                };
                 field.setMargin(margin);
 
                 field.setHorizontalAlignment(JTextField.CENTER);
                 field.setFont(font);
                 field.setForeground(Color.lightGray);
-                switch (i) {
-                    case 0: {
-                        switch (j) {
-                            case 0:
-                            case 7:
-                                field.setText("r");
-                                //image = new ImageIcon("simple//BR.gif");
-                                break;
-                            case 1:
-                            case 6:
-                                field.setText("n");
-                                //image = new ImageIcon("simple//BN.gif");
-                                break;
-                            case 2:
-                            case 5:
-                                field.setText("b");
-                                //image = new ImageIcon("simple//BB.gif");
-                                break;
-                            case 3:
-                                field.setText("q");
-                                //image = new ImageIcon("simple//BQ.gif");
-                                break;
-                            case 4:
-                                field.setText("k");
-                                //image = new ImageIcon("simple//BK.gif");
-                                break;
-                        }
-
-                        break;
-                    }
-                    case 1:
-                        field.setText("p");
-                        //image = new ImageIcon("simple//BP.gif");
-                        break;
-                    case 6:
-                        field.setText("P");
-                        //image = new ImageIcon("simple//WP.gif");
-                        break;
-                    case 7: {
-                        switch (j) {
-                            case 0:
-                            case 7:
-                                field.setText("R");
-                                //image = new ImageIcon("simple//WR.gif");
-                                break;
-                            case 1:
-                            case 6:
-                                field.setText("N");
-                                //image = new ImageIcon("simple//WN.gif");
-                                break;
-                            case 2:
-                            case 5:
-                                field.setText("B");
-                                //image = new ImageIcon("simple//WB.gif");
-                                break;
-                            case 3:
-                                field.setText("Q");
-                                //image = new ImageIcon("simple//WQ.gif");
-                                break;
-                            case 4:
-                                field.setText("K");
-                                //image = new ImageIcon("simple//WK.gif");
-                                break;
-                        }
-                        break;
-                    }
-                }
+                field.setText(ChessBoardSingleton.getInstance().getState()[i][j]);
                 if ((j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0)) {
                     field.setBackground(Color.WHITE);
                 } else {
                     field.setBackground(Color.BLACK);
                 }
-                //field.setIcon(image);
-                //System.out.println(field.getIcon());
-                //field.setOpaque(true);
                 chessBoardSquares[j][i] = field;
-                //currentLocation[j][i] = chessBoardSquares[j][i].getLocation();
             }
         }
     }
-    /*@Override
-    public void mouseDragged(MouseEvent e) {
 
-        Point p = e.getPoint();
-        currentLocation.x = (int) p.getX();
-        currentLocation.y = (int) p.getY() - 250; // Height/2
-
-        .setLocation(currentLocation);
+    static ImageIcon[][] checkIcon() {
+        ImageIcon icons[][] = new ImageIcon[8][8];
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (ChessBoardSingleton.getInstance().getState()[i][j].contains("p")) {
+                    icons[i][j] = new ImageIcon("simple//BP.gif");
+                } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("P")) {
+                    icons[i][j] = new ImageIcon("simple//WP.gif");
+                } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("q")) {
+                    icons[i][j] = new ImageIcon("simple//BQ.gif");
+                } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("Q")) {
+                    icons[i][j] = new ImageIcon("simple//WQ.gif");
+                } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("k")) {
+                    icons[i][j] = new ImageIcon("simple//BK.gif");
+                } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("K")) {
+                    icons[i][j] = new ImageIcon("simple//WK.gif");
+                } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("b")) {
+                    icons[i][j] = new ImageIcon("simple//BB.gif");
+                } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("B")) {
+                    icons[i][j] = new ImageIcon("simple//WB.gif");
+                } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("r")) {
+                    icons[i][j] = new ImageIcon("simple//BR.gif");
+                } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("R")) {
+                    icons[i][j] = new ImageIcon("simple//WR.gif");
+                } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("n")) {
+                    icons[i][j] = new ImageIcon("simple//BN.gif");
+                } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("N")) {
+                    icons[i][j] = new ImageIcon("simple//WN.gif");
+                } else
+                    icons[i][j] = new ImageIcon();
+            }
+        }
+        return icons;
     }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
-    }*/
 }

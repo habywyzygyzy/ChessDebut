@@ -33,7 +33,7 @@ class MainFrame extends JFrame {
         JMenu menu;
         JMenuItem menuItem;
         menuBar = new JMenuBar();
-        menu = new JMenu("A Menu");
+        menu = new JMenu("Menu");
         menuBar.add(menu);
         menuItem = new JMenuItem("Parse PGN Folder");
         menu.add(menuItem);
@@ -60,6 +60,8 @@ class MainFrame extends JFrame {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         setVisible(true);
+
+        final JPanel chessBoard = new JPanel();
 
         final JLabel movesLabel = new JLabel(MovesHistorySingleton.getMoves().toString());
         movesLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -128,7 +130,6 @@ class MainFrame extends JFrame {
                 System.out.println(MovesHistorySingleton.getMoves().toString());
 
                 String stateFEN = translateBoardToFEN(getInstance().getState());
-                //printCurrentBoardState();
                 ConvertFen converter = new ConvertFen();
                 long[] longArrayFEN = converter.convert(stateFEN);
                 ArrayList<Statistics> stats;
@@ -185,6 +186,11 @@ class MainFrame extends JFrame {
                     mainTable[0] = new JTable(model);
                     statisticsTablePanel.remove(1);
                     statisticsTablePanel.add(mainTable[0]);
+                    chessBoard.setLayout(new GridLayout(0, 9));
+                    chessBoard.removeAll();
+                    prepareChessBoardSquares(chessBoardSquares, new Point[8][8]);
+                    addColumnLabel(chessBoard);
+                    addSquaresToBoard(chessBoard, chessBoardSquares);
                 }
             }
         });
@@ -230,7 +236,6 @@ class MainFrame extends JFrame {
         topPanel.add(submitButton);
         topPanel.add(filtersPanelButton);
         topPanel.add(filtersResetButton);
-        JPanel chessBoard = new JPanel();
         chessBoard.setLayout(chessBoardLayout);
         prepareChessBoardSquares(chessBoardSquares, currentLocation);
         addColumnLabel(chessBoard);

@@ -62,13 +62,9 @@ class StatisticsTablePanel extends JPanel {
         mainTable = new JTable(model);
         JTableHeader header = mainTable.getTableHeader();
         mainTable.setAutoCreateRowSorter(true);
-        /*JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout());
-        bottomPanel.add(searchButton);*/
         this.setLayout(new BorderLayout());
         this.add(header, BorderLayout.NORTH);
         this.add(mainTable, BorderLayout.CENTER);
-        //this.add(bottomPanel, BorderLayout.SOUTH);
         this.setVisible(true);
     }
 }
