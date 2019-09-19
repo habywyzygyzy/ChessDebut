@@ -17,7 +17,7 @@ class MovesHistoryFrame extends JFrame {
         mainPanel.setVisible(true);
         Dimension buttonSize = new Dimension(200, 50);
         setPreferredSize(new Dimension(500, 300));
-        JLabel history = new JLabel(MovesHistorySingleton.getMoves().toString());
+        final JLabel history = new JLabel(MovesHistorySingleton.getMoves().toString());
         mainPanel.setBorder(new EmptyBorder(10, 10, 0, 0));
         mainPanel.add(history, BorderLayout.NORTH);
         JButton closeButton = new JButton("Close");
@@ -33,9 +33,7 @@ class MovesHistoryFrame extends JFrame {
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                invalidate();
-                validate();
-                repaint();
+                history.setText(MovesHistorySingleton.getMoves().toString());
             }
         });
         JPanel bottomPanel = new JPanel();

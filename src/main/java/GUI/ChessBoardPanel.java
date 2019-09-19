@@ -4,10 +4,7 @@ import models.Statistics;
 import singletons.FiltersSingleton;
 import singletons.MovesHistorySingleton;
 import singletons.StatisticsSingleton;
-import tools.ConvertFen;
-import tools.SaveMoveToString;
-import tools.SortForBlacks;
-import tools.SortForWhites;
+import tools.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,10 +64,13 @@ class ChessBoardPanel extends JPanel {
                         }
                     }
                 }
-                MovesHistorySingleton.setMoves(MovesHistorySingleton.getMoves().
-                        append(SaveMoveToString.saveMoveToString(differences, rowIndex, columnIndex)));
-                System.out.println(MovesHistorySingleton.getMoves().toString());
+                boolean capture;
+                capture = CaptureCheck.wasCaptured(stringBoard, getInstance().getState());
                 getInstance().setState(stringBoard);
+                MovesHistorySingleton.setMoves(MovesHistorySingleton.getMoves().
+                        append(SaveMoveToString.saveMoveToString(differences, rowIndex, columnIndex, capture)));
+                System.out.println(MovesHistorySingleton.getMoves().toString());
+
                 String stateFEN = translateBoardToFEN(getInstance().getState());
                 //printCurrentBoardState();
                 ConvertFen converter = new ConvertFen();

@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS MetaData
     Result    VARCHAR(10) NULL,
     GameYear  SMALLINT    NULL,
     Opening   VARCHAR(70) NULL,
-    WhiteName VARCHAR(30) NULL,
-    BlackName VARCHAR(30) NULL,
+    WhiteName VARCHAR(50) NULL,
+    BlackName VARCHAR(50) NULL,
     WhiteELO  SMALLINT    NULL,
     BlackELO  SMALLINT    NULL,
     PRIMARY KEY (MetaId)
@@ -27,11 +27,11 @@ CREATE TABLE IF NOT EXISTS Hit
     MetaId          INT        NULL,
     PRIMARY KEY (HitId),
     /*INDEX MetaId_idx (MetaId ASC) VISIBLE,*/
-    CONSTRAINT MetaId
+    /*CONSTRAINT MetaId
         FOREIGN KEY (MetaId)
             REFERENCES MetaData (MetaId)
             ON DELETE NO ACTION
-            ON UPDATE NO ACTION
+            ON UPDATE NO ACTION*/
 )
     ENGINE = InnoDB;
 CREATE INDEX IF NOT EXISTS index_name
