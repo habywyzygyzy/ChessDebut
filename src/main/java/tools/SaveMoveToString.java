@@ -54,6 +54,7 @@ public class SaveMoveToString {
                                 append(rowLabel[rows.get(i)]).
                                 append(" ");
                     MovesHistorySingleton.setFullMovesCounter(MovesHistorySingleton.getFullMovesCounter() + 1);
+                    System.out.println(MovesHistorySingleton.getFullMovesCounter());
                 }
             }
         }
