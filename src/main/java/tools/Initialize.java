@@ -16,8 +16,8 @@ import static singletons.MovesHistorySingleton.*;
 public class Initialize {
     public static void initialize() {
         openConnection();
-        setIsWhiteMove(TRUE);
         executeSQL();
+        setIsWhiteMove(TRUE);
         setMinELO(0);
         setMaxELO(0);
         setName("");

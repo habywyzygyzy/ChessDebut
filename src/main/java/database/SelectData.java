@@ -20,40 +20,41 @@ public class SelectData {
         String gameYear = "";
         String name = "";
         String opening = "";
-        String select = "SELECT `Hit`.MetaId," +
-                " `Hit`.Hit," +
-                " `MetaData`.Result," +
-                " `MetaData`.WhiteELO," +
-                " `MetaData`.BlackELO," +
-                " `MetaData`.GameYear," +
-                " `MetaData`.WhiteName," +
-                " `MetaData`.BlackName," +
-                " `MetaData`.Opening ";
+        String select =
+                "SELECT `Hit`.MetaId," +
+                        " `Hit`.Hit," +
+                        " `MetaData`.`Result`," +
+                        " `MetaData`.`WhiteELO`," +
+                        " `MetaData`.`BlackELO`," +
+                        " `MetaData`.`GameYear`," +
+                        " `MetaData`.`WhiteName`," +
+                        " `MetaData`.`BlackName`," +
+                        " `MetaData`.`Opening` ";
         String from = "FROM `Hit` ";
         String join = "JOIN `MetaData` ";
-        String on = "ON (`Hit`.MetaId = `MetaData`.MetaId) ";
-        String where = "WHERE StateBeforeHit  = '" + FEN[0] + "'";
-        String and = "AND StateBeforeHit2  = '" + FEN[1] + "'";
-        String and2 = "AND StateBeforeHit3  = '" + FEN[2] + "'";
-        String and3 = "AND StateBeforeHit4  = '" + FEN[3] + "'";
+        String on = "ON (`Hit`.`MetaId` = `MetaData`.`MetaId`) ";
+        String where = "WHERE `StateBeforeHit`  = '" + FEN[0] + "'";
+        String and = "AND `StateBeforeHit2`  = '" + FEN[1] + "'";
+        String and2 = "AND `StateBeforeHit3`  = '" + FEN[2] + "'";
+        String and3 = "AND `StateBeforeHit4`  = '" + FEN[3] + "'";
         if (getIsWhiteMove()) {
-            minELO = "AND `MetaData`.WhiteELO > '" + getMinELO() + "'";
+            minELO = "AND `MetaData`.`WhiteELO` > '" + getMinELO() + "'";
             if (getMaxELO() > getMinELO())
-                maxELO = "AND `MetaData`.WhiteELO < '" + getMaxELO() + "'";
+                maxELO = "AND `MetaData`.`WhiteELO` < '" + getMaxELO() + "'";
         } else {
-            minELO = "AND `MetaData`.BlackELO > '" + getMinELO() + "'";
+            minELO = "AND `MetaData`.`BlackELO` > '" + getMinELO() + "'";
             if (getMaxELO() > getMinELO())
-                maxELO = "AND `MetaData`.BlackELO < '" + getMaxELO() + "'";
+                maxELO = "AND `MetaData`.`BlackELO` < '" + getMaxELO() + "'";
         }
         if (getYear() > 0)
-            gameYear = "AND `MetaData`.GameYear > '" + getYear() + "'";
+            gameYear = "AND `MetaData`.`GameYear` > '" + getYear() + "'";
         if (!getName().isEmpty())
             if (getIsWhiteMove())
-                name = "AND `MetaData`.WhiteName = '" + getName() + "'";
+                name = "AND `MetaData`.`WhiteName` = '" + getName() + "'";
             else
-                name = "AND `MetaData`.BlackName = '" + getName() + "'";
+                name = "AND `MetaData`.`BlackName` = '" + getName() + "'";
         if (!getOpening().isEmpty())
-            opening = "AND `MetaData`.Opening = '" + getOpening() + "'";
+            opening = "AND `MetaData`.`Opening` = '" + getOpening() + "'";
 
         String sql = select + from + join + on + where + and + and2 + and3 + minELO + maxELO + gameYear + name + opening;
         System.out.println(sql);

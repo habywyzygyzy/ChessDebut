@@ -5,12 +5,18 @@ import models.Statistics;
 import singletons.FiltersSingleton;
 import singletons.MovesHistorySingleton;
 import singletons.StatisticsSingleton;
-import tools.*;
+import tools.ConvertFen;
+import tools.SaveMoveToString;
+import tools.SortForBlacks;
+import tools.SortForWhites;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
@@ -23,6 +29,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static singletons.ChessBoardSingleton.*;
 import static singletons.StatisticsSingleton.getStats;
+import static tools.CaptureCheck.wasCaptured;
 import static tools.FenHandler.translateBoardToFEN;
 
 class MainFrame extends JFrame {
@@ -105,11 +112,9 @@ class MainFrame extends JFrame {
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String[][] stringBoard = new String[8][8];
-                for (int i = 0; i < 8; i++) {
-                    for (int j = 0; j < 8; j++) {
+                for (int i = 0; i < 8; i++)
+                    for (int j = 0; j < 8; j++)
                         stringBoard[j][i] = chessBoardSquares[i][j].getText();
-                    }
-                }
                 ArrayList<String> differences = new ArrayList<>();
                 ArrayList<Integer> rowIndex = new ArrayList<>();
                 ArrayList<Integer> columnIndex = new ArrayList<>();
@@ -123,7 +128,7 @@ class MainFrame extends JFrame {
                     }
                 }
                 boolean capture;
-                capture = CaptureCheck.wasCaptured(stringBoard, getInstance().getState());
+                capture = wasCaptured(stringBoard, getInstance().getState());
                 getInstance().setState(stringBoard);
                 MovesHistorySingleton.setMoves(MovesHistorySingleton.getMoves().
                         append(SaveMoveToString.saveMoveToString(differences, rowIndex, columnIndex, capture)));
@@ -131,6 +136,7 @@ class MainFrame extends JFrame {
 
                 String stateFEN = translateBoardToFEN(getInstance().getState());
                 ConvertFen converter = new ConvertFen();
+                System.out.println(stateFEN);
                 long[] longArrayFEN = converter.convert(stateFEN);
                 ArrayList<Statistics> stats;
                 long start = System.nanoTime();

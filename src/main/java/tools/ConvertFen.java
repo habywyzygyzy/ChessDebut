@@ -1,6 +1,5 @@
 package tools;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ConvertFen {
@@ -34,30 +33,18 @@ public class ConvertFen {
 
     public long[] convert(String fen) {
 
-        long[] converted = new long[4];
+        int arrLength = 4;
+        long[] converted = new long[arrLength];
         int base = 16;
         char c;
         int i;
         int j = 0;
-        for (i = 0; i < base && j < fen.length(); i++) {
-            c = fen.charAt(j);
-            converted[0] += powLong(fenValue(c), i);
-            j++;
-        }
-        for (i = 0; i < base && j < fen.length(); i++) {
-            c = fen.charAt(j);
-            converted[1] += powLong(fenValue(c), i);
-            j++;
-        }
-        for (i = 0; i < base && j < fen.length(); i++) {
-            c = fen.charAt(j);
-            converted[2] += powLong(fenValue(c), i);
-            j++;
-        }
-        for (i = 0; i < base && j < fen.length(); i++) {
-            c = fen.charAt(j);
-            converted[3] += powLong(fenValue(c), i);
-            j++;
+        for (int k = 0; k < arrLength; k++) {
+            for (i = 0; i < base && j < fen.length(); i++) {
+                c = fen.charAt(j);
+                converted[k] += powLong(fenValue(c), i);
+                j++;
+            }
         }
         return converted;
     }
@@ -67,9 +54,9 @@ public class ConvertFen {
     }
 
     private static long powLong(int value, int exponent) {
-        long ret = value;
+        long ret = 1;
         for (int i = 0; i < exponent; i++) {
-            ret *= ret;
+            ret *= value;
         }
         return ret;
     }

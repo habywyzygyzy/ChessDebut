@@ -2,6 +2,7 @@ package GUI;
 
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.game.Game;
+import com.github.bhlangonijr.chesslib.move.Move;
 import com.github.bhlangonijr.chesslib.move.MoveList;
 import com.github.bhlangonijr.chesslib.pgn.PgnHolder;
 import tools.ConvertFen;
@@ -36,7 +37,6 @@ class PickerFrame extends JFrame {
         dirPickerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 JFileChooser fileChooser = new JFileChooser();
-                File[] files = new File[0];
                 fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fileChooser.setAcceptAllFileFilterUsed(false);
                 int returnValue = fileChooser.showOpenDialog(null);
@@ -59,7 +59,7 @@ class PickerFrame extends JFrame {
                 Board board;
                 ConvertFen converter = new ConvertFen();
                 for (int i = 0; i < getInstance().getFiles().length; i++) {
-                    games = new ArrayList<Game>();
+                    games = new ArrayList<>();
                     pgn = new PgnHolder(getInstance().getFiles()[i].getAbsolutePath());
                     System.out.println(getInstance().getFiles()[i].getAbsolutePath());
                     try {
@@ -94,7 +94,7 @@ class PickerFrame extends JFrame {
                             moves = games.get(j).getHalfMoves();
                             movesList = saveMovesToList(games.get(j).getMoveText());
                             board = new Board();
-                            for (int k = 0; k < moves.size() - 1 && k < movesList.size(); k++) {
+                            for (int k = 0; k < moves.size() && k < movesList.size(); k++) {
                                 insertIntoHit(movesList.get(k), converter.convert(removeWhiteSpaces(board.getFen())), j + 1);
                                 board.doMove(moves.get(k));
                             }
@@ -106,6 +106,7 @@ class PickerFrame extends JFrame {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+
                 }
             }
         });
