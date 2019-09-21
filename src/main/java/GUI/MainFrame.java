@@ -91,23 +91,6 @@ class MainFrame extends JFrame {
         Point[][] currentLocation = new Point[8][8];
         GridLayout chessBoardLayout = new GridLayout(0, 9);
         FlowLayout topLayout = new FlowLayout();
-        final ButtonGroup currentMoveRadioGroup = new ButtonGroup();
-        final JRadioButton whiteMove = new JRadioButton("White Move", true);
-        currentMoveRadioGroup.add(whiteMove);
-        whiteMove.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setIsWhiteMove(TRUE);
-            }
-        });
-        final JRadioButton blackMove = new JRadioButton("Black Move", false);
-        currentMoveRadioGroup.add(blackMove);
-        blackMove.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setIsWhiteMove(FALSE);
-            }
-        });
         Button submitButton = new Button("Submit");
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -149,12 +132,7 @@ class MainFrame extends JFrame {
                     Collections.sort(stats, new SortForBlacks());
                 Collections.reverse(stats);
                 StatisticsSingleton.setStats(stats);
-                currentMoveRadioGroup.clearSelection();
                 setIsWhiteMove(!getIsWhiteMove());
-                if (getIsWhiteMove())
-                    whiteMove.setSelected(true);
-                else
-                    blackMove.setSelected(true);
                 movesLabel.setText(MovesHistorySingleton.getMoves().toString());
                 movesHistoryPanel.remove(movesLabel);
                 movesHistoryPanel.add(movesLabel);
@@ -235,8 +213,6 @@ class MainFrame extends JFrame {
         });
         JPanel topPanel = new JPanel();
         topPanel.setLayout(topLayout);
-        topPanel.add(whiteMove);
-        topPanel.add(blackMove);
         topPanel.add(whiteCastling);
         topPanel.add(blackCastling);
         topPanel.add(submitButton);

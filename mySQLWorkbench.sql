@@ -24,16 +24,5 @@ CREATE TABLE IF NOT EXISTS `Hit`
     `MetaId`          INT        NULL,
     PRIMARY KEY (`HitId`)
 );
-    //INDEX             `MetaId_idx` (`MetaId` ASC) INVISIBLE,
-    //INDEX             `StateHitIndex` (`Hit` ASC, `StateBeforeHit` ASC, `StateBeforeHit2` ASC, `StateBeforeHit3` ASC, `StateBeforeHit4` ASC) VISIBLE,
-/*CONSTRAINT `MetaId`
-    FOREIGN KEY (`MetaId`)
-        REFERENCES `MetaData` (`MetaId`)
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION);*/
-CREATE INDEX IF NOT EXISTS index_name
-  on `Hit` (`StateBeforeHit`, `StateBeforeHit2`, `StateBeforeHit3`, `StateBeforeHit4`, `Hit`);
-/*
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;*/
+DROP INDEX IF EXISTS index_name;
+CREATE INDEX IF NOT EXISTS index_name ON `Hit` (`Hit`, `StateBeforeHit`, `StateBeforeHit2`, `StateBeforeHit3`, `StateBeforeHit4`);
