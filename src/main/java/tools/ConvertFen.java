@@ -32,7 +32,6 @@ public class ConvertFen {
     }
 
     public long[] convert(String fen) {
-
         int arrLength = 4;
         long[] converted = new long[arrLength];
         int base = 16;
