@@ -169,15 +169,16 @@ class MainFrame extends JFrame {
                             .doubleValue();
                     row = new String[]{hit, Integer.toString(nrOfGames), String.valueOf(percentWhite), String.valueOf(percentBlack), String.valueOf(percentDraws)};
                     model.addRow(row);
+                    mainTable[0] = new JTable(model);
+                    statisticsTablePanel.remove(1);
+                    statisticsTablePanel.add(mainTable[0]);
+                    chessBoard.setLayout(new GridLayout(0, 9));
+                    chessBoard.removeAll();
+                    prepareChessBoardSquares(chessBoardSquares, new Point[8][8]);
+                    addColumnLabel(chessBoard);
+                    addSquaresToBoard(chessBoard, chessBoardSquares);
                 }
-                mainTable[0] = new JTable(model);
-                statisticsTablePanel.remove(1);
-                statisticsTablePanel.add(mainTable[0]);
-                chessBoard.setLayout(new GridLayout(0, 9));
-                chessBoard.removeAll();
-                prepareChessBoardSquares(chessBoardSquares, new Point[8][8]);
-                addColumnLabel(chessBoard);
-                addSquaresToBoard(chessBoard, chessBoardSquares);
+
             }
         });
 
