@@ -19,14 +19,14 @@ public class SaveMoveToString {
                     || differences.get(i).toUpperCase().contains("K")) {
                 if (differences.get(i).toUpperCase().contains("P"))
                     differences.set(i, differences.get(i).replaceAll("[Pp]", ""));
-                if (!ChessBoardSingleton.getIsWhiteMove()) {
+                if (ChessBoardSingleton.getIsWhiteMove()) {
                     if (capture)
                         stringMove.
                                 append(" ").
                                 append(MovesHistorySingleton.getFullMovesCounter()).
                                 append(".").
                                 append(" ").
-                                append(differences.get(i).toUpperCase()).
+                                append(differences.get(i)).
                                 append("x").
                                 append(colLabel[cols.get(i)]).
                                 append(rowLabel[rows.get(i)]).
@@ -37,25 +37,24 @@ public class SaveMoveToString {
                                 append(MovesHistorySingleton.getFullMovesCounter()).
                                 append(".").
                                 append(" ").
-                                append(differences.get(i).toUpperCase()).
+                                append(differences.get(i)).
+                                append(colLabel[cols.get(i)]).
+                                append(rowLabel[rows.get(i)]).
+                                append(" ");
+                } else {
+                    if (capture)
+                        stringMove.append(differences.get(i)).
+                                append("x").
+                                append(colLabel[cols.get(i)]).
+                                append(rowLabel[rows.get(i)]).
+                                append(" ");
+                    else
+                        stringMove.append(differences.get(i)).
                                 append(colLabel[cols.get(i)]).
                                 append(rowLabel[rows.get(i)]).
                                 append(" ");
                     MovesHistorySingleton.setFullMovesCounter(MovesHistorySingleton.getFullMovesCounter() + 1);
-                } else {
-                    if (capture)
-                        stringMove.
-                                append(differences.get(i).toUpperCase()).
-                                append("x").
-                                append(colLabel[cols.get(i)]).
-                                append(rowLabel[rows.get(i)]).
-                                append(" ");
-                    else
-                        stringMove.
-                                append(differences.get(i).toUpperCase()).
-                                append(colLabel[cols.get(i)]).
-                                append(rowLabel[rows.get(i)]).
-                                append(" ");
+                    System.out.println(MovesHistorySingleton.getFullMovesCounter());
                 }
             }
         }

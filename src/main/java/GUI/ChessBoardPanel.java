@@ -41,12 +41,11 @@ class ChessBoardPanel extends JPanel {
         }
     }
 
-    static void prepareChessBoardSquares(JTextField[][] chessBoardSquares, Point[][] currentLocation) {
+    static void prepareChessBoardSquares(JTextField[][] chessBoardSquares) {
         Font font = new Font("Arial", Font.BOLD, 28);
         Insets margin = new Insets(0, 0, 0, 0);
         for (int i = 0; i < chessBoardSquares.length; i++) {
             for (int j = 0; j < chessBoardSquares[i].length; j++) {
-                final ImageIcon imageIcon = new ImageIcon("simple//BB.gif");
                 final int finalJ = j;
                 final int finalI = i;
                 JTextField field = new JTextField() {

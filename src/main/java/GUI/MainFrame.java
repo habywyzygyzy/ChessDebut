@@ -88,7 +88,6 @@ class MainFrame extends JFrame {
 
         ChessBoardPanel chessBoardPanel = new ChessBoardPanel();
         final JTextField[][] chessBoardSquares = new JTextField[8][8];
-        Point[][] currentLocation = new Point[8][8];
         GridLayout chessBoardLayout = new GridLayout(0, 9);
         FlowLayout topLayout = new FlowLayout();
         Button submitButton = new Button("Submit");
@@ -114,9 +113,8 @@ class MainFrame extends JFrame {
                 boolean capture;
                 capture = wasCaptured(stringBoard, getInstance().getState());
                 getInstance().setState(stringBoard);
-                if (!differences.isEmpty())
-                    MovesHistorySingleton.setMoves(MovesHistorySingleton.getMoves().
-                            append(SaveMoveToString.saveMoveToString(differences, rowIndex, columnIndex, capture)));
+                MovesHistorySingleton.setMoves(MovesHistorySingleton.getMoves().
+                        append(SaveMoveToString.saveMoveToString(differences, rowIndex, columnIndex, capture)));
                 System.out.println(MovesHistorySingleton.getMoves().toString());
 
                 String stateFEN = translateBoardToFEN(getInstance().getState());
@@ -174,11 +172,10 @@ class MainFrame extends JFrame {
                     statisticsTablePanel.add(mainTable[0]);
                     chessBoard.setLayout(new GridLayout(0, 9));
                     chessBoard.removeAll();
-                    prepareChessBoardSquares(chessBoardSquares, new Point[8][8]);
+                    prepareChessBoardSquares(chessBoardSquares);
                     addColumnLabel(chessBoard);
                     addSquaresToBoard(chessBoard, chessBoardSquares);
                 }
-
             }
         });
 
@@ -222,7 +219,7 @@ class MainFrame extends JFrame {
         topPanel.add(filtersPanelButton);
         topPanel.add(filtersResetButton);
         chessBoard.setLayout(chessBoardLayout);
-        prepareChessBoardSquares(chessBoardSquares, currentLocation);
+        prepareChessBoardSquares(chessBoardSquares);
         addColumnLabel(chessBoard);
         addSquaresToBoard(chessBoard, chessBoardSquares);
         chessBoardPanel.setLayout(new BorderLayout());
