@@ -19,7 +19,7 @@ public class SaveMoveToString {
                     || differences.get(i).toUpperCase().contains("K")) {
                 if (differences.get(i).toUpperCase().contains("P"))
                     differences.set(i, differences.get(i).replaceAll("[Pp]", ""));
-                if (ChessBoardSingleton.getIsWhiteMove()) {
+                if (!ChessBoardSingleton.getIsWhiteMove()) {
                     if (capture)
                         stringMove.
                                 append(" ").
@@ -38,23 +38,24 @@ public class SaveMoveToString {
                                 append(".").
                                 append(" ").
                                 append(differences.get(i)).
-                                append(colLabel[cols.get(i)]).
-                                append(rowLabel[rows.get(i)]).
-                                append(" ");
-                } else {
-                    if (capture)
-                        stringMove.append(differences.get(i)).
-                                append("x").
-                                append(colLabel[cols.get(i)]).
-                                append(rowLabel[rows.get(i)]).
-                                append(" ");
-                    else
-                        stringMove.append(differences.get(i)).
                                 append(colLabel[cols.get(i)]).
                                 append(rowLabel[rows.get(i)]).
                                 append(" ");
                     MovesHistorySingleton.setFullMovesCounter(MovesHistorySingleton.getFullMovesCounter() + 1);
-                    System.out.println(MovesHistorySingleton.getFullMovesCounter());
+                } else {
+                    if (capture)
+                        stringMove.
+                                append(differences.get(i)).
+                                append("x").
+                                append(colLabel[cols.get(i)]).
+                                append(rowLabel[rows.get(i)]).
+                                append(" ");
+                    else
+                        stringMove.
+                                append(differences.get(i)).
+                                append(colLabel[cols.get(i)]).
+                                append(rowLabel[rows.get(i)]).
+                                append(" ");
                 }
             }
         }

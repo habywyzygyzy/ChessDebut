@@ -113,8 +113,9 @@ class MainFrame extends JFrame {
                 boolean capture;
                 capture = wasCaptured(stringBoard, getInstance().getState());
                 getInstance().setState(stringBoard);
-                MovesHistorySingleton.setMoves(MovesHistorySingleton.getMoves().
-                        append(SaveMoveToString.saveMoveToString(differences, rowIndex, columnIndex, capture)));
+                if (!differences.isEmpty())
+                    MovesHistorySingleton.setMoves(MovesHistorySingleton.getMoves().
+                            append(SaveMoveToString.saveMoveToString(differences, rowIndex, columnIndex, capture)));
                 System.out.println(MovesHistorySingleton.getMoves().toString());
 
                 String stateFEN = translateBoardToFEN(getInstance().getState());
