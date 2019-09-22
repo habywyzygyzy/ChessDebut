@@ -2,7 +2,6 @@ package GUI;
 
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.game.Game;
-import com.github.bhlangonijr.chesslib.move.Move;
 import com.github.bhlangonijr.chesslib.move.MoveList;
 import com.github.bhlangonijr.chesslib.pgn.PgnHolder;
 import tools.ConvertFen;
@@ -29,7 +28,7 @@ class PickerFrame extends JFrame {
         final File[] selectedFolder = {new File("example")};
         getInstance().setFiles(loadFolder(selectedFolder[0].getAbsolutePath()));
         setPreferredSize(new Dimension(400, 200));
-        setLayout(new GridLayout(3,1));
+        setLayout(new GridLayout(3, 1));
         final JLabel dirLabel = new JLabel("Directory", JLabel.CENTER);
         dirLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         JButton dirPickerButton = new JButton("Select Folder");
@@ -53,6 +52,7 @@ class PickerFrame extends JFrame {
         parsePGNFromFolder.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 PgnHolder pgn;
+                long start;
                 ArrayList<Game> games;
                 MoveList moves;
                 ArrayList<String> movesList;
@@ -63,15 +63,14 @@ class PickerFrame extends JFrame {
                     pgn = new PgnHolder(getInstance().getFiles()[i].getAbsolutePath());
                     System.out.println(getInstance().getFiles()[i].getAbsolutePath());
                     try {
-                        long start = System.nanoTime();
+                        start = System.nanoTime();
                         try {
                             pgn.loadPgn();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         games.addAll(pgn.getGame());
-                        long end = System.nanoTime() - start;
-                        System.out.println("Czas parsowania w ms " + end / 1000000);
+                        System.out.println("Czas parsowania w ms " + (System.nanoTime() - start) / 1000000);
                         System.out.println(games.size());
                         start = System.nanoTime();
                         for (int j = 0; j < games.size(); j++) {
@@ -87,7 +86,6 @@ class PickerFrame extends JFrame {
                                                 games.get(j).getWhitePlayer().getElo(),
                                                 games.get(j).getBlackPlayer().getElo()
                                         );
-
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -99,14 +97,12 @@ class PickerFrame extends JFrame {
                                 board.doMove(moves.get(k));
                             }
                         }
-                        end = System.nanoTime() - start;
                         System.out.println("Zakończono zapisywanie " + getInstance().getFiles()[i].getAbsolutePath());
-                        System.out.println("Czas zapisu w ms " + end / 1000000);
+                        System.out.println("Czas zapisu w ms " + (System.nanoTime() - start) / 1000000);
                         dispose();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 }
             }
         });

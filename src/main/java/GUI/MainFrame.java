@@ -94,6 +94,7 @@ class MainFrame extends JFrame {
         Button submitButton = new Button("Submit");
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                long start, end;
                 String[][] stringBoard = new String[8][8];
                 for (int i = 0; i < 8; i++)
                     for (int j = 0; j < 8; j++)
@@ -123,9 +124,9 @@ class MainFrame extends JFrame {
                 System.out.println(stateFEN);
                 long[] longArrayFEN = converter.convert(stateFEN);
                 ArrayList<Statistics> stats;
-                long start = System.nanoTime();
+                start = System.nanoTime();
                 stats = selectHitsWithTheSameFEN(longArrayFEN);
-                long end = System.nanoTime() - start;
+                end = System.nanoTime() - start;
                 System.out.println("Wyszukiwanie " + end / 1000000);
                 if (getIsWhiteMove())
                     Collections.sort(stats, new SortForWhites());
@@ -138,8 +139,8 @@ class MainFrame extends JFrame {
                 movesHistoryPanel.remove(movesLabel);
                 movesHistoryPanel.add(movesLabel);
                 String hit;
-                Double percentDraws, percentWhite, percentBlack;
-                Integer nrOfGames;
+                double percentDraws, percentWhite, percentBlack;
+                int nrOfGames;
                 String[] row;
                 model.setRowCount(0);
                 for (int i = 0; i < getStats().size(); i++) {
@@ -166,17 +167,17 @@ class MainFrame extends JFrame {
                     percentBlack = BigDecimal.valueOf(percentBlack)
                             .setScale(2, RoundingMode.HALF_UP)
                             .doubleValue();
-                    row = new String[]{hit, nrOfGames.toString(), percentWhite.toString(), percentBlack.toString(), percentDraws.toString()};
+                    row = new String[]{hit, Integer.toString(nrOfGames), String.valueOf(percentWhite), String.valueOf(percentBlack), String.valueOf(percentDraws)};
                     model.addRow(row);
-                    mainTable[0] = new JTable(model);
-                    statisticsTablePanel.remove(1);
-                    statisticsTablePanel.add(mainTable[0]);
-                    chessBoard.setLayout(new GridLayout(0, 9));
-                    chessBoard.removeAll();
-                    prepareChessBoardSquares(chessBoardSquares, new Point[8][8]);
-                    addColumnLabel(chessBoard);
-                    addSquaresToBoard(chessBoard, chessBoardSquares);
                 }
+                mainTable[0] = new JTable(model);
+                statisticsTablePanel.remove(1);
+                statisticsTablePanel.add(mainTable[0]);
+                chessBoard.setLayout(new GridLayout(0, 9));
+                chessBoard.removeAll();
+                prepareChessBoardSquares(chessBoardSquares, new Point[8][8]);
+                addColumnLabel(chessBoard);
+                addSquaresToBoard(chessBoard, chessBoardSquares);
             }
         });
 
