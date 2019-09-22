@@ -26,7 +26,7 @@ public class SaveMoveToString {
                                 append(MovesHistorySingleton.getFullMovesCounter()).
                                 append(".").
                                 append(" ").
-                                append(differences.get(i)).
+                                append(differences.get(i).toUpperCase()).
                                 append("x").
                                 append(colLabel[cols.get(i)]).
                                 append(rowLabel[rows.get(i)]).
@@ -37,7 +37,7 @@ public class SaveMoveToString {
                                 append(MovesHistorySingleton.getFullMovesCounter()).
                                 append(".").
                                 append(" ").
-                                append(differences.get(i)).
+                                append(differences.get(i).toUpperCase()).
                                 append(colLabel[cols.get(i)]).
                                 append(rowLabel[rows.get(i)]).
                                 append(" ");
@@ -45,14 +45,14 @@ public class SaveMoveToString {
                 } else {
                     if (capture)
                         stringMove.
-                                append(differences.get(i)).
+                                append(differences.get(i).toUpperCase()).
                                 append("x").
                                 append(colLabel[cols.get(i)]).
                                 append(rowLabel[rows.get(i)]).
                                 append(" ");
                     else
                         stringMove.
-                                append(differences.get(i)).
+                                append(differences.get(i).toUpperCase()).
                                 append(colLabel[cols.get(i)]).
                                 append(rowLabel[rows.get(i)]).
                                 append(" ");

@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS MetaData
     BlackELO  SMALLINT    NULL,
     PRIMARY KEY (MetaId)
 );
+//ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS Hit;
 CREATE TABLE IF NOT EXISTS Hit
@@ -22,7 +23,14 @@ CREATE TABLE IF NOT EXISTS Hit
     StateBeforeHit3 BIGINT     NULL,
     StateBeforeHit4 BIGINT     NULL,
     MetaId          INT        NULL,
-    PRIMARY KEY (HitId)
-);
+    PRIMARY KEY (HitId),
+    CONSTRAINT MetaId
+    FOREIGN KEY (MetaId)
+    REFERENCES MetaData (MetaId)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+//ENGINE = InnoDB;
+
 DROP INDEX IF EXISTS index_name;
-CREATE INDEX IF NOT EXISTS index_name ON Hit (Hit, StateBeforeHit, StateBeforeHit2, StateBeforeHit3, StateBeforeHit4);
+//CREATE INDEX IF NOT EXISTS index_name
+//ON Hit (Hit, StateBeforeHit ASC, StateBeforeHit2 ASC, StateBeforeHit3 ASC, StateBeforeHit4 ASC);
