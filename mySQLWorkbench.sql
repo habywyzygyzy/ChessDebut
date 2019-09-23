@@ -1,4 +1,4 @@
-//DROP TABLE IF EXISTS `MetaData`;
+DROP TABLE IF EXISTS `MetaData`;
 CREATE TABLE IF NOT EXISTS `MetaData`
 (
     `MetaId`    INT         AUTO_INCREMENT NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `MetaData`
     PRIMARY KEY (`MetaId`)
 );
 
-//DROP TABLE IF EXISTS `Hit`;
+DROP TABLE IF EXISTS `Hit`;
 CREATE TABLE IF NOT EXISTS `Hit`
 (
     `HitId`           INT        AUTO_INCREMENT NOT NULL,
@@ -25,4 +25,4 @@ CREATE TABLE IF NOT EXISTS `Hit`
     PRIMARY KEY (`HitId`)
 );
 DROP INDEX IF EXISTS index_name;
-CREATE INDEX IF NOT EXISTS index_name ON `Hit` (`Hit`, `StateBeforeHit`, `StateBeforeHit2`, `StateBeforeHit3`, `StateBeforeHit4`);
+//CREATE INDEX IF NOT EXISTS index_name ON `Hit` (`Hit`, `StateBeforeHit`, `StateBeforeHit2`, `StateBeforeHit3`, `StateBeforeHit4`);
