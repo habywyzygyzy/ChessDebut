@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Saves last move so it could be added to game history
  */
-public class SaveMoveForHistoryOfGame {
+public class SaveMoveForGameHistory {
     /**
      * @param differences Differencex between board before and after making a move
      * @param rows        Row index for the differences

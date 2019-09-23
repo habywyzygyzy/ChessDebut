@@ -113,29 +113,29 @@ class ChessBoardPanel extends JPanel {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (ChessBoardSingleton.getInstance().getState()[i][j].contains("p")) {
-                    icons[i][j] = new ImageIcon("simple//BP.gif");
+                    icons[i][j] = new ImageIcon("icons//BP.gif");
                 } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("P")) {
-                    icons[i][j] = new ImageIcon("simple//WP.gif");
+                    icons[i][j] = new ImageIcon("icons//WP.gif");
                 } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("q")) {
-                    icons[i][j] = new ImageIcon("simple//BQ.gif");
+                    icons[i][j] = new ImageIcon("icons//BQ.gif");
                 } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("Q")) {
-                    icons[i][j] = new ImageIcon("simple//WQ.gif");
+                    icons[i][j] = new ImageIcon("icons//WQ.gif");
                 } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("k")) {
-                    icons[i][j] = new ImageIcon("simple//BK.gif");
+                    icons[i][j] = new ImageIcon("icons//BK.gif");
                 } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("K")) {
-                    icons[i][j] = new ImageIcon("simple//WK.gif");
+                    icons[i][j] = new ImageIcon("icons//WK.gif");
                 } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("b")) {
-                    icons[i][j] = new ImageIcon("simple//BB.gif");
+                    icons[i][j] = new ImageIcon("icons//BB.gif");
                 } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("B")) {
-                    icons[i][j] = new ImageIcon("simple//WB.gif");
+                    icons[i][j] = new ImageIcon("icons//WB.gif");
                 } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("r")) {
-                    icons[i][j] = new ImageIcon("simple//BR.gif");
+                    icons[i][j] = new ImageIcon("icons//BR.gif");
                 } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("R")) {
-                    icons[i][j] = new ImageIcon("simple//WR.gif");
+                    icons[i][j] = new ImageIcon("icons//WR.gif");
                 } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("n")) {
-                    icons[i][j] = new ImageIcon("simple//BN.gif");
+                    icons[i][j] = new ImageIcon("icons//BN.gif");
                 } else if (ChessBoardSingleton.getInstance().getState()[i][j].contains("N")) {
-                    icons[i][j] = new ImageIcon("simple//WN.gif");
+                    icons[i][j] = new ImageIcon("icons//WN.gif");
                 } else
                     icons[i][j] = new ImageIcon();
             }

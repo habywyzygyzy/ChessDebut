@@ -2,21 +2,20 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import tools.ConvertFen;
 import tools.FenHandler;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class FenHandlerTest {
     String fen;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
         fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
     }
 
-    @AfterEach
+    @AfterAll
     public void tearDown() {
         fen = "";
     }

@@ -31,7 +31,7 @@ class PickerFrame extends JFrame {
      * Creates PickerFrame
      */
     PickerFrame() {
-        final File[] selectedFolder = {new File("example")};
+        final File[] selectedFolder = {new File("examplePGN")};
         getInstance().setFiles(loadFolder(selectedFolder[0].getAbsolutePath()));
         setPreferredSize(new Dimension(400, 200));
         setLayout(new GridLayout(3, 1));

@@ -6,7 +6,7 @@ import singletons.FiltersSingleton;
 import singletons.MovesHistorySingleton;
 import singletons.StatisticsSingleton;
 import tools.ConvertFen;
-import tools.SaveMoveForHistoryOfGame;
+import tools.SaveMoveForGameHistory;
 import tools.SortForBlacks;
 import tools.SortForWhites;
 
@@ -120,7 +120,7 @@ class MainFrame extends JFrame {
                 getInstance().setState(stringBoard);
                 if (differences.size() != 0)
                     MovesHistorySingleton.setMoves(MovesHistorySingleton.getMoves().
-                            append(SaveMoveForHistoryOfGame.saveMoveToString(differences, rowIndex, columnIndex, capture)));
+                            append(SaveMoveForGameHistory.saveMoveToString(differences, rowIndex, columnIndex, capture)));
                 System.out.println(MovesHistorySingleton.getMoves().toString());
 
                 String stateFEN = translateBoardToFEN(getInstance().getState());
