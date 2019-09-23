@@ -40,6 +40,9 @@ public class Initialize {
     private static String[][] initialBoardState() {
         String[][] initialState = new String[8][8];
         for (int i = 0; i < 8; i++) {
+            Arrays.fill(initialState[i], "");
+        }
+        for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 switch (i) {
                     case 0: {
