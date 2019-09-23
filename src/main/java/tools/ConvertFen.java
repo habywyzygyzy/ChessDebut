@@ -2,10 +2,16 @@ package tools;
 
 import java.util.Arrays;
 
+/**
+ * Converts chess board in FEN format to array of longs
+ */
 public class ConvertFen {
 
     private int[] map = new int[128];
 
+    /**
+     * Initialize map values
+     */
     public ConvertFen() {
         Arrays.fill(map, 0);
         map[(byte) 'p'] = 1;
@@ -31,6 +37,10 @@ public class ConvertFen {
         map[(byte) '8'] = 21;
     }
 
+    /**
+     * @param fen Chess Board in FEN format
+     * @return fen converted to array of longs
+     */
     public long[] convert(String fen) {
         int arrLength = 4;
         long[] converted = new long[arrLength];
@@ -48,10 +58,20 @@ public class ConvertFen {
         return converted;
     }
 
+    /**
+     * @param c Char to be mapped
+     * @return Int value for mapped char
+     */
     private int fenValue(char c) {
         return this.map[(byte) c];
     }
 
+    /**
+     * Exponentiation for long type
+     * @param value Value to be raised
+     * @param exponent Exponent for the value
+     * @return value to the power of exponent
+     */
     private static long powLong(int value, int exponent) {
         long ret = 1;
         for (int i = 0; i < exponent; i++) {

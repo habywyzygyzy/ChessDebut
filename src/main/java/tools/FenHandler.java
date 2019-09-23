@@ -2,7 +2,14 @@ package tools;
 
 import static singletons.ChessBoardSingleton.*;
 
+/**
+ * Handling chess board in FEN format
+ */
 public class FenHandler {
+    /**
+     * @param board Chess board state
+     * @return Chess board in simplified FEN format
+     */
     public static String translateBoardToFEN(String[][] board) {
         String fen = "";
         Boolean whiteShortCastling, whiteLongCastling, blackShortCastling, blackLongCastling;
@@ -48,6 +55,10 @@ public class FenHandler {
         return fen;
     }
 
+    /**
+     * @param fen Chess Board in FEN format
+     * @return Chess board in simplified FEN format - no white spaces, half move counter, full move counter
+     */
     public static String removeWhiteSpaces(String fen) {
         String newString = fen;
         String board;

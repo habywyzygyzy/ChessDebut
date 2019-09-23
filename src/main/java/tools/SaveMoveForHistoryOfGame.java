@@ -5,7 +5,17 @@ import singletons.MovesHistorySingleton;
 
 import java.util.ArrayList;
 
-public class SaveMoveToString {
+/**
+ * Saves last move so it could be added to game history
+ */
+public class SaveMoveForHistoryOfGame {
+    /**
+     * @param differences Differencex between board before and after making a move
+     * @param rows        Row index for the differences
+     * @param cols        Col index for the differences
+     * @param capture     Flag that shows if captture occured
+     * @return String that contains move that was made
+     */
     public static String saveMoveToString(ArrayList<String> differences, ArrayList<Integer> rows, ArrayList<Integer> cols, boolean capture) {
         char[] colLabel = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
         char[] rowLabel = {'8', '7', '6', '5', '4', '3', '2', '1'};

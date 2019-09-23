@@ -1,11 +1,20 @@
 package models;
 
+/**
+ * Model that holds statisctics of a move
+ */
 public class Statistics {
     private int blackWins;
     private int whiteWins;
     private int draws;
     private String hit;
 
+    /**
+     * @param blackWins How many times black player won after this move was used
+     * @param whiteWins How many times white player won after this move was used
+     * @param draws     How many times draw occured after this move was used
+     * @param hit       Move
+     */
     public Statistics(int blackWins, int whiteWins, int draws, String hit) {
         this.blackWins = blackWins;
         this.whiteWins = whiteWins;

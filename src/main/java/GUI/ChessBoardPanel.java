@@ -7,12 +7,21 @@ import java.awt.*;
 
 import static singletons.ChessBoardSingleton.getInstance;
 
+/**
+ * Chessboard Panel
+ */
 class ChessBoardPanel extends JPanel {
 
+    /**
+     * Sets the panel visibility
+     */
     ChessBoardPanel() {
         this.setVisible(true);
     }
 
+    /**
+     * Prinsts current chessboard state in console using String[][]
+     */
     private void printCurrentBoardState() {
         for (String[] strings : getInstance().getState()) {
             for (String string : strings) {
@@ -22,6 +31,10 @@ class ChessBoardPanel extends JPanel {
         }
     }
 
+    /**
+     * @param chessBoardPanel   Panel with chessboard
+     * @param chessBoardSquares 2D array of squares inside chessboard
+     */
     static void addSquaresToBoard(JPanel chessBoardPanel, JTextField[][] chessBoardSquares) {
         int k = 8;
         for (int i = 0; i < 8; i++) {
@@ -34,6 +47,11 @@ class ChessBoardPanel extends JPanel {
         }
     }
 
+    /**
+     * Adds labels for columns
+     *
+     * @param chessBoardPanel Chessboard panel
+     */
     static void addColumnLabel(JPanel chessBoardPanel) {
         chessBoardPanel.add(new JLabel(""));
         for (int i = 0; i < 8; i++) {
@@ -41,6 +59,11 @@ class ChessBoardPanel extends JPanel {
         }
     }
 
+    /**
+     * Sets color, font, icons for chessboard squares
+     *
+     * @param chessBoardSquares 2D array of squares insde the chessboard
+     */
     static void prepareChessBoardSquares(JTextField[][] chessBoardSquares) {
         Font font = new Font("Arial", Font.BOLD, 28);
         Insets margin = new Insets(0, 0, 0, 0);
@@ -82,7 +105,10 @@ class ChessBoardPanel extends JPanel {
         }
     }
 
-    static ImageIcon[][] checkIcon() {
+    /**
+     * @return 2D array of icons for squares depending on the squares content
+     */
+    private static ImageIcon[][] checkIcon() {
         ImageIcon icons[][] = new ImageIcon[8][8];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {

@@ -10,8 +10,17 @@ import static singletons.ChessBoardSingleton.getIsWhiteMove;
 import static singletons.DatabaseConfigSingleton.getConn;
 import static singletons.FiltersSingleton.*;
 
+/**
+ * Select data from database
+ */
 public class SelectData {
 
+    /**
+     * Selects data with the same FEN
+     *
+     * @param FEN Chessboard in FEN format
+     * @return List of statisctics for current chessboard state
+     */
     public static ArrayList<Statistics> selectHitsWithTheSameFEN(long[] FEN) {
         ArrayList<Statistics> stats = new ArrayList<Statistics>();
         java.sql.PreparedStatement preparedStatement = null;

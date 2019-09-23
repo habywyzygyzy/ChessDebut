@@ -4,11 +4,19 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+/**
+ * Singleton that holds database configuration
+ */
 public class DatabaseConfigSingleton {
     private static Connection conn;
     private static Statement stmt;
     private static ResultSet rs;
 
+    /**
+     * @param conn Database Connection
+     * @param stmt Statement to query the database
+     * @param rs   Result Set for database
+     */
     private DatabaseConfigSingleton(Connection conn, Statement stmt, ResultSet rs) {
         DatabaseConfigSingleton.conn = conn;
         DatabaseConfigSingleton.stmt = stmt;
@@ -19,6 +27,9 @@ public class DatabaseConfigSingleton {
         return DatabaseConfigSingleton.SingletonHolder.INSTANCE;
     }
 
+    /**
+     * Class that holds the instance of singleton
+     */
     private static class SingletonHolder {
         private static final DatabaseConfigSingleton INSTANCE = new DatabaseConfigSingleton(conn, stmt, rs);
     }

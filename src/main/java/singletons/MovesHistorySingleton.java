@@ -2,11 +2,18 @@ package singletons;
 
 import java.util.ArrayList;
 
+/**
+ * Singleton that holds history of moves made by user
+ */
 public class MovesHistorySingleton {
 
     private static StringBuilder moves;
     private static int fullMovesCounter;
 
+    /**
+     * @param moves            Moves history
+     * @param fullMovesCounter Number of full moves that were made
+     */
     private MovesHistorySingleton(StringBuilder moves, int fullMovesCounter) {
         MovesHistorySingleton.moves = moves;
         MovesHistorySingleton.fullMovesCounter = fullMovesCounter;
@@ -16,6 +23,9 @@ public class MovesHistorySingleton {
         return SingletonHolder.INSTANCE;
     }
 
+    /**
+     * Class that holds the instance of singleton
+     */
     private static class SingletonHolder {
         private static final MovesHistorySingleton INSTANCE = new MovesHistorySingleton(moves, fullMovesCounter);
     }

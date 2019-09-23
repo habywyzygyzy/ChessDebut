@@ -9,7 +9,14 @@ import static javax.swing.SwingUtilities.invokeLater;
 import static singletons.ChessBoardSingleton.setIsWhiteMove;
 import static tools.Initialize.*;
 
+/**
+ * Main class of application
+ */
 public class Application {
+    /**
+     * Runs the Application, initializes data and creates the MainFrame - GUI
+     * @param args
+     */
     public static void main(String[] args) {
 
         invokeLater(new Runnable() {

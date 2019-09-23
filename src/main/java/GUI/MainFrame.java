@@ -6,7 +6,7 @@ import singletons.FiltersSingleton;
 import singletons.MovesHistorySingleton;
 import singletons.StatisticsSingleton;
 import tools.ConvertFen;
-import tools.SaveMoveToString;
+import tools.SaveMoveForHistoryOfGame;
 import tools.SortForBlacks;
 import tools.SortForWhites;
 
@@ -26,14 +26,19 @@ import java.util.Collections;
 import static GUI.ChessBoardPanel.*;
 import static database.SelectData.selectHitsWithTheSameFEN;
 import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 import static singletons.ChessBoardSingleton.*;
 import static singletons.StatisticsSingleton.getStats;
 import static tools.CaptureCheck.wasCaptured;
 import static tools.FenHandler.translateBoardToFEN;
 
+/**
+ * Main frame - windows of application
+ */
 class MainFrame extends JFrame {
 
+    /**
+     * Creates the MainFrame
+     */
     MainFrame() {
         super("Chess Debut");
         JMenuBar menuBar;
@@ -115,7 +120,7 @@ class MainFrame extends JFrame {
                 getInstance().setState(stringBoard);
                 if (differences.size() != 0)
                     MovesHistorySingleton.setMoves(MovesHistorySingleton.getMoves().
-                            append(SaveMoveToString.saveMoveToString(differences, rowIndex, columnIndex, capture)));
+                            append(SaveMoveForHistoryOfGame.saveMoveToString(differences, rowIndex, columnIndex, capture)));
                 System.out.println(MovesHistorySingleton.getMoves().toString());
 
                 String stateFEN = translateBoardToFEN(getInstance().getState());
@@ -233,6 +238,11 @@ class MainFrame extends JFrame {
         setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
+    /**
+     * Sets the constraints for ChessBoardPanel
+     *
+     * @param gbc GridBagConstraints for GridBagLayout
+     */
     private void setConstraintsForChessBoardPanel(GridBagConstraints gbc) {
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -241,6 +251,11 @@ class MainFrame extends JFrame {
         gbc.anchor = GridBagConstraints.WEST;
     }
 
+    /**
+     * Sets the constraints for MovesHistoryPanel
+     *
+     * @param gbc GridBagConstraints for GridBagLayout
+     */
     private void setConstraintsForMovesHistoryPanel(GridBagConstraints gbc) {
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -252,6 +267,11 @@ class MainFrame extends JFrame {
         gbc.anchor = GridBagConstraints.SOUTH;
     }
 
+    /**
+     * Sets the constraints for StatiscticsPanel
+     *
+     * @param gbc GridBagConstraints for GridBagLayout
+     */
     private void setConstraintsForStatisticsPanel(GridBagConstraints gbc) {
         gbc.gridx = 0;
         gbc.gridy = 0;

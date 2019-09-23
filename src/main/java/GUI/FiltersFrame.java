@@ -10,7 +10,13 @@ import java.awt.event.WindowEvent;
 
 import static singletons.FiltersSingleton.*;
 
+/**
+ * Frame that allows to add the filters for database searching
+ */
 class FiltersFrame extends JFrame {
+    /**
+     * Creates the FiltersFrame
+     */
     FiltersFrame() {
         super("Filters");
         String year, minELO, maxELO, opening, name;

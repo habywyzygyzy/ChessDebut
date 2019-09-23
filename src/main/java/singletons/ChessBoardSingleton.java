@@ -1,5 +1,8 @@
 package singletons;
 
+/**
+ * Singleton that contains current board state
+ */
 public class ChessBoardSingleton {
 
     private static String[][] state;
@@ -7,6 +10,12 @@ public class ChessBoardSingleton {
     private static Boolean whiteCastlingDone;
     private static Boolean blackCastlingDone;
 
+    /**
+     * @param state Current chessboard state
+     * @param isWhiteMove Flag that shows which player has the move now
+     * @param whiteCastlingDone Flag that shows if white player have done catling
+     * @param blackCastlingDone Flag that shows if black player have done catling
+     */
     private ChessBoardSingleton(String[][] state, Boolean isWhiteMove, Boolean whiteCastlingDone, Boolean blackCastlingDone) {
         ChessBoardSingleton.state = state;
         ChessBoardSingleton.isWhiteMove = isWhiteMove;
@@ -17,6 +26,9 @@ public class ChessBoardSingleton {
     }
 
 
+    /**
+     * Class that holds the instance of singleton
+     */
     private static class SingletonHolder {
         private static final ChessBoardSingleton INSTANCE = new ChessBoardSingleton(state, isWhiteMove, whiteCastlingDone, blackCastlingDone);
     }

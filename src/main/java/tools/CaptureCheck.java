@@ -1,6 +1,14 @@
 package tools;
 
+/**
+ * Check if capture occured during last move
+ */
 public class CaptureCheck {
+    /**
+     * @param board Board state beofre the move
+     * @param board2 Board state after the move
+     * @return True if captured occured, false if it did not
+     */
     public static boolean wasCaptured(String[][] board, String[][] board2){
         int counter = 0;
         int counter2 = 0;

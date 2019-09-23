@@ -5,6 +5,9 @@ import java.sql.SQLException;
 
 import static singletons.DatabaseConfigSingleton.*;
 
+/**
+ * Class that handles connection with database
+ */
 public class DBConnection {
     private static final String JDBC_DRIVER = "org.h2.Driver";
     private static final String DB_URL = "jdbc:h2:~/test;mode=mysql";
@@ -12,6 +15,9 @@ public class DBConnection {
     private static final String USER = "sa";
     private static final String PASS = "";
 
+    /**
+     * Open connection with database
+     */
     public static void openConnection() {
         try {
             Class.forName(JDBC_DRIVER);
@@ -22,6 +28,11 @@ public class DBConnection {
         }
     }
 
+    /**
+     * Close connection with database
+     *
+     * @throws SQLException Throws exception if could not close connection
+     */
     public static void closeConnection() throws SQLException {
         try {
             if (getRs() != null)

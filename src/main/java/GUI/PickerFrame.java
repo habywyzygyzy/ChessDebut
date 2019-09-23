@@ -22,8 +22,14 @@ import static tools.FenHandler.removeWhiteSpaces;
 import static tools.LoadFolder.loadFolder;
 import static tools.MovesListToStringList.saveMovesToList;
 
+/**
+ * Frame that allows to choose folder for parsing
+ */
 class PickerFrame extends JFrame {
 
+    /**
+     * Creates PickerFrame
+     */
     PickerFrame() {
         final File[] selectedFolder = {new File("example")};
         getInstance().setFiles(loadFolder(selectedFolder[0].getAbsolutePath()));

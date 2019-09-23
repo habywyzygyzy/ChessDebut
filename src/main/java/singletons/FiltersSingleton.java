@@ -1,5 +1,8 @@
 package singletons;
 
+/**
+ * Singleton that holds filters added by user
+ */
 public class FiltersSingleton {
 
     private static String name;
@@ -8,6 +11,13 @@ public class FiltersSingleton {
     private static int minELO;
     private static int maxELO;
 
+    /**
+     * @param name    Name of player
+     * @param opening Used opening
+     * @param year    Minimum year
+     * @param minELO  Minimum ELO of a player
+     * @param maxELO  Maximum ELO of a player
+     */
     private FiltersSingleton(String name, String opening, int year, int minELO, int maxELO) {
         FiltersSingleton.name = name;
         FiltersSingleton.opening = opening;
@@ -20,6 +30,9 @@ public class FiltersSingleton {
         return SingletonHolder.INSTANCE;
     }
 
+    /**
+     * Class that holds the instance of singleton
+     */
     private static class SingletonHolder {
         private static final FiltersSingleton INSTANCE = new FiltersSingleton(name, opening, year, minELO, maxELO);
     }

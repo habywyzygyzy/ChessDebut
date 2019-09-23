@@ -7,7 +7,13 @@ import java.sql.SQLException;
 
 import static singletons.DatabaseConfigSingleton.getStmt;
 
+/**
+ * Executes SQL
+ */
 public class ExecuteSQL {
+    /**
+     * Creates data structures (tables) that will hold the data using SQL file attached to project
+     */
     public static void executeSQL() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader("mySQLWorkbench.sql"));

@@ -11,7 +11,13 @@ import java.math.RoundingMode;
 
 import static singletons.StatisticsSingleton.getStats;
 
+/**
+ * Panel that holds the move statisctics
+ */
 class StatisticsTablePanel extends JPanel {
+    /**
+     * Creates the StatiscticsTablePanel
+     */
     StatisticsTablePanel() {
         final JTable mainTable;
         final String[] columns = {"Next Move", "# of Games", "% of White Victories", "% of Black Victories", "% of Draws"};

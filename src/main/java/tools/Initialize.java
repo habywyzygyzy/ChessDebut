@@ -13,7 +13,13 @@ import static singletons.ChessBoardSingleton.setIsWhiteMove;
 import static singletons.FiltersSingleton.*;
 import static singletons.MovesHistorySingleton.*;
 
+/**
+ * Initialize data
+ */
 public class Initialize {
+    /**
+     * Set up all necessary data, create tables, open database connection
+     */
     public static void initialize() {
         openConnection();
         executeSQL();
@@ -25,10 +31,14 @@ public class Initialize {
         setYear(0);
         setFullMovesCounter(1);
         setMoves(new StringBuilder(""));
+        ChessBoardSingleton.getInstance().setState(initialBoardState());
+    }
+
+    /**
+     * @return Initial state of the chess board
+     */
+    private static String[][] initialBoardState() {
         String[][] initialState = new String[8][8];
-        for (int i = 0; i < 8; i++) {
-            Arrays.fill(initialState[i], "");
-        }
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 switch (i) {
@@ -86,8 +96,8 @@ public class Initialize {
                         break;
                     }
                 }
-                ChessBoardSingleton.getInstance().setState(initialState);
             }
         }
+        return initialState;
     }
 }
