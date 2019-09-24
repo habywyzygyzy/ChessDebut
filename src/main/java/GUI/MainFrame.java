@@ -138,8 +138,7 @@ class MainFrame extends JFrame {
                     Collections.sort(stats, new SortForBlacks());
                 Collections.reverse(stats);
                 StatisticsSingleton.setStats(stats);
-                if (differences.size() != 0)
-                    setIsWhiteMove(!getIsWhiteMove());
+                setIsWhiteMove(!getIsWhiteMove());
                 movesLabel.setText(MovesHistorySingleton.getMoves().toString());
                 movesHistoryPanel.remove(movesLabel);
                 movesHistoryPanel.add(movesLabel);
