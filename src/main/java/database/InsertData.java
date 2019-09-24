@@ -15,8 +15,8 @@ public class InsertData {
      * @param winner    Winner of a game
      * @param gameYear  Year of a game
      * @param opening   Opening used in game
-     * @param whiteName Name of white player
-     * @param blackName Name of black player
+     * @param whiteName Name of player with white pieces
+     * @param blackName Name of player with black pieces
      * @param whiteELO  White player ELO
      * @param blackELO  Black player ELO
      */

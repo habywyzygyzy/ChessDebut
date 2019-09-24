@@ -19,7 +19,7 @@ public class SelectData {
      * Selects data with the same FEN
      *
      * @param FEN Chessboard in FEN format
-     * @return List of statisctics for current chessboard state
+     * @return List of statistics for current chessboard state
      */
     public static ArrayList<Statistics> selectHitsWithTheSameFEN(long[] FEN) {
         ArrayList<Statistics> stats = new ArrayList<Statistics>();
@@ -40,7 +40,6 @@ public class SelectData {
                         " `MetaData`.`BlackName`," +
                         " `MetaData`.`Opening` ";
         String from = "FROM `Hit` ";
-        String use = "";//"USE INDEX (index_name)";
         String join = "JOIN `MetaData` ";
         String on = "ON (`Hit`.`MetaId` = `MetaData`.`MetaId`) ";
         String where = "WHERE `StateBeforeHit`  = '" + FEN[0] + "'";
@@ -66,7 +65,7 @@ public class SelectData {
         if (!getOpening().isEmpty())
             opening = "AND `MetaData`.`Opening` = '" + getOpening() + "'";
 
-        String sql = select + from + use + join + on + where + and + and2 + and3 + minELO + maxELO + gameYear + name + opening;
+        String sql = select + from + join + on + where + and + and2 + and3 + minELO + maxELO + gameYear + name + opening;
         System.out.println(sql);
         try {
             preparedStatement = getConn().prepareStatement(sql);

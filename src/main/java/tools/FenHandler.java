@@ -21,16 +21,17 @@ public class FenHandler {
                 if (board[rank][file].length() == 0) {
                     empty++;
                 } else {
-                    if (empty != 0) rankFen.append(empty);
+                    if (empty != 0)
+                        rankFen.append(empty);
                     rankFen.append(board[rank][file]);
                     empty = 0;
                 }
             }
-            if (empty != 0) rankFen.append(empty);
+            if (empty != 0)
+                rankFen.append(empty);
             fen += rankFen;
             if (!(rank == board.length - 1)) {
-                String RANK_SEPARATOR = "/";
-                fen += RANK_SEPARATOR;
+                fen += "/";
             }
         }
         if (getIsWhiteMove())
