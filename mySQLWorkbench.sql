@@ -24,5 +24,3 @@ CREATE TABLE IF NOT EXISTS `Hit`
     `MetaId`          INT        NULL,
     PRIMARY KEY (`HitId`)
 );
-DROP INDEX IF EXISTS index_name;
-//CREATE INDEX IF NOT EXISTS index_name ON `Hit` (`Hit`, `StateBeforeHit`, `StateBeforeHit2`, `StateBeforeHit3`, `StateBeforeHit4`);
