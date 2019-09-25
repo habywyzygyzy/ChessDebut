@@ -85,7 +85,7 @@ class MainFrame extends JFrame {
 
         final StatisticsTablePanel statisticsTablePanel = new StatisticsTablePanel();
         final String[] columns = {"Next Move", "# of Games", "% of White Victories", "% of Black Victories", "% of Draws"};
-        final JLabel[][] data = new JLabel[0][];
+        final String[][] data = new String[0][];
         final DefaultTableModel model = new DefaultTableModel(data, columns);
         final JTable[] mainTable = new JTable[1];
         setConstraintsForStatisticsPanel(gbc);
@@ -143,9 +143,9 @@ class MainFrame extends JFrame {
                 movesHistoryPanel.remove(movesLabel);
                 movesHistoryPanel.add(movesLabel);
                 String hit;
-                Double percentDraws, percentWhite, percentBlack;
-                Integer nrOfGames;
-                JLabel[] row;
+                double percentDraws, percentWhite, percentBlack;
+                int nrOfGames;
+                String[] row;
                 model.setRowCount(0);
                 for (int i = 0; i < getStats().size(); i++) {
                     hit = getStats().get(i).getHit();
@@ -171,8 +171,7 @@ class MainFrame extends JFrame {
                     percentBlack = BigDecimal.valueOf(percentBlack)
                             .setScale(2, RoundingMode.HALF_UP)
                             .doubleValue();
-                    //row = new String[]{hit, Integer.toString(nrOfGames), String.valueOf(percentWhite), String.valueOf(percentBlack), String.valueOf(percentDraws)};
-                    row = new JLabel[]{new JLabel(hit), new JLabel(nrOfGames.toString()), new JLabel(percentWhite.toString()), new JLabel(percentBlack.toString()), new JLabel(percentDraws.toString())};
+                    row = new String[]{hit, Integer.toString(nrOfGames), String.valueOf(percentWhite), String.valueOf(percentBlack), String.valueOf(percentDraws)};
                     model.addRow(row);
                     mainTable[0] = new JTable(model);
                     statisticsTablePanel.remove(1);
