@@ -179,8 +179,8 @@ class MainFrame extends JFrame {
                     chessBoard.setLayout(new GridLayout(0, 9));
                     chessBoard.removeAll();
                     prepareChessBoardSquares(chessBoardSquares);
-                    addColumnLabel(chessBoard);
                     addSquaresToBoard(chessBoard, chessBoardSquares);
+                    addColumnLabel(chessBoard);
                 }
             }
         });
@@ -226,14 +226,14 @@ class MainFrame extends JFrame {
         topPanel.add(filtersResetButton);
         chessBoard.setLayout(chessBoardLayout);
         prepareChessBoardSquares(chessBoardSquares);
-        addColumnLabel(chessBoard);
         addSquaresToBoard(chessBoard, chessBoardSquares);
+        addColumnLabel(chessBoard);
         chessBoardPanel.setLayout(new BorderLayout());
         chessBoardPanel.add(chessBoard, BorderLayout.CENTER);
         chessBoardPanel.add(topPanel, BorderLayout.NORTH);
         setConstraintsForChessBoardPanel(gbc);
         add(chessBoardPanel, gbc);
-        pack();
+        //pack();
         setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 

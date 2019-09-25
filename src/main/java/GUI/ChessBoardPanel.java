@@ -20,7 +20,7 @@ class ChessBoardPanel extends JPanel {
     }
 
     /**
-     * Prinsts current chessboard state in console using String[][]
+     * Prints current chessboard state in console using String[][]
      */
     private void printCurrentBoardState() {
         for (String[] strings : getInstance().getState()) {
@@ -37,10 +37,14 @@ class ChessBoardPanel extends JPanel {
      */
     static void addSquaresToBoard(JPanel chessBoardPanel, JTextField[][] chessBoardSquares) {
         int k = 8;
+        JLabel label = null;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (j == 0)
-                    chessBoardPanel.add(new JLabel(String.valueOf(k), SwingConstants.CENTER));
+                if (j == 0) {
+                    label = new JLabel(String.valueOf(k) + "   ", SwingConstants.RIGHT);
+                    label.setFont(new Font("Arial", Font.BOLD, 18));
+                    chessBoardPanel.add(label);
+                }
                 chessBoardPanel.add(chessBoardSquares[j][i]);
             }
             k--;
@@ -54,8 +58,11 @@ class ChessBoardPanel extends JPanel {
      */
     static void addColumnLabel(JPanel chessBoardPanel) {
         chessBoardPanel.add(new JLabel(""));
+        JLabel label = null;
         for (int i = 0; i < 8; i++) {
-            chessBoardPanel.add(new JLabel("ABCDEFGH".substring(i, i + 1), SwingConstants.CENTER));
+            label = new JLabel("abcdefgh".substring(i, i + 1), SwingConstants.CENTER);
+            label.setFont(new Font("Arial", Font.BOLD, 18));
+            chessBoardPanel.add(label);
         }
     }
 
@@ -80,9 +87,9 @@ class ChessBoardPanel extends JPanel {
 
                     public void paintComponent(Graphics g) {
                         if ((finalJ % 2 == 1 && finalI % 2 == 1) || (finalJ % 2 == 0 && finalI % 2 == 0)) {
-                            g.setColor(Color.BLACK);
-                        } else {
                             g.setColor(Color.WHITE);
+                        } else {
+                            g.setColor(Color.BLACK);
                         }
                         g.fillRect(1, 1, 600, 600);
                         g.drawImage(image, 10, 30, this);
@@ -95,11 +102,6 @@ class ChessBoardPanel extends JPanel {
                 field.setFont(font);
                 field.setForeground(Color.lightGray);
                 field.setText(ChessBoardSingleton.getInstance().getState()[i][j]);
-                if ((j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0)) {
-                    field.setBackground(Color.WHITE);
-                } else {
-                    field.setBackground(Color.BLACK);
-                }
                 chessBoardSquares[j][i] = field;
             }
         }
@@ -109,7 +111,7 @@ class ChessBoardPanel extends JPanel {
      * @return 2D array of icons for squares depending on the squares content
      */
     private static ImageIcon[][] checkIcon() {
-        ImageIcon icons[][] = new ImageIcon[8][8];
+        ImageIcon[][] icons = new ImageIcon[8][8];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (ChessBoardSingleton.getInstance().getState()[i][j].contains("p")) {
