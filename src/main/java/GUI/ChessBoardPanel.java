@@ -5,8 +5,6 @@ import singletons.ChessBoardSingleton;
 import javax.swing.*;
 import java.awt.*;
 
-import static singletons.ChessBoardSingleton.getInstance;
-
 /**
  * Chessboard Panel
  */
@@ -17,18 +15,6 @@ class ChessBoardPanel extends JPanel {
      */
     ChessBoardPanel() {
         this.setVisible(true);
-    }
-
-    /**
-     * Prints current chessboard state in console using String[][]
-     */
-    private void printCurrentBoardState() {
-        for (String[] strings : getInstance().getState()) {
-            for (String string : strings) {
-                System.out.print(string + " ");
-            }
-            System.out.println();
-        }
     }
 
     /**
@@ -57,9 +43,11 @@ class ChessBoardPanel extends JPanel {
      * @param chessBoardPanel Chessboard panel
      */
     static void addColumnLabel(JPanel chessBoardPanel) {
+        //GridBagConstraints gbc = new GridBagConstraints();
         chessBoardPanel.add(new JLabel(""));
         JLabel label = null;
         for (int i = 0; i < 8; i++) {
+            //setConstraintsForColumnLabel(gbc, i);
             label = new JLabel("abcdefgh".substring(i, i + 1), SwingConstants.CENTER);
             label.setFont(new Font("Arial", Font.BOLD, 18));
             chessBoardPanel.add(label);
@@ -143,5 +131,16 @@ class ChessBoardPanel extends JPanel {
             }
         }
         return icons;
+    }
+
+    private static void setConstraintsForColumnLabel(GridBagConstraints gbc, int pos) {
+        gbc.gridx = pos;
+        gbc.gridy = 8;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        //gbc.weightx = 100;
+        //gbc.weighty = 5;
+        gbc.anchor = GridBagConstraints.SOUTH;
     }
 }

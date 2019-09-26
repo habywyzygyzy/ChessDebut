@@ -73,8 +73,12 @@ class MainFrame extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         setVisible(true);
 
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        int width = gd.getDisplayMode().getWidth();
+        int height = gd.getDisplayMode().getHeight();
         final JPanel chessBoard = new JPanel();
-
+        chessBoard.setMinimumSize(new Dimension(width *50/100, height * 9 / 10));
+        chessBoard.setPreferredSize(new Dimension(width *50/100, height * 9 / 10));
         final JLabel movesLabel = new JLabel(MovesHistorySingleton.getMoves().toString());
         movesLabel.setVerticalAlignment(SwingConstants.TOP);
         movesLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -84,6 +88,8 @@ class MainFrame extends JFrame {
         add(movesHistoryPanel, gbc);
 
         final StatisticsTablePanel statisticsTablePanel = new StatisticsTablePanel();
+        statisticsTablePanel.setMinimumSize(new Dimension(width*50/100, height * 9 / 10));
+        statisticsTablePanel.setPreferredSize(new Dimension(width*50/100, height * 9 / 10));
         final String[] columns = {"Next Move", "# of Games", "% of White Victories", "% of Black Victories", "% of Draws"};
         final String[][] data = new String[0][];
         final DefaultTableModel model = new DefaultTableModel(data, columns);
@@ -94,6 +100,7 @@ class MainFrame extends JFrame {
         ChessBoardPanel chessBoardPanel = new ChessBoardPanel();
         final JTextField[][] chessBoardSquares = new JTextField[8][8];
         GridLayout chessBoardLayout = new GridLayout(0, 9);
+        //GridBagLayout chessBoardLayout = new GridBagLayout();
         FlowLayout topLayout = new FlowLayout();
         Button submitButton = new Button("Submit");
         submitButton.addActionListener(new ActionListener() {
@@ -176,7 +183,6 @@ class MainFrame extends JFrame {
                     mainTable[0] = new JTable(model);
                     statisticsTablePanel.remove(1);
                     statisticsTablePanel.add(mainTable[0]);
-                    chessBoard.setLayout(new GridLayout(0, 9));
                     chessBoard.removeAll();
                     prepareChessBoardSquares(chessBoardSquares);
                     addSquaresToBoard(chessBoard, chessBoardSquares);
@@ -233,7 +239,7 @@ class MainFrame extends JFrame {
         chessBoardPanel.add(topPanel, BorderLayout.NORTH);
         setConstraintsForChessBoardPanel(gbc);
         add(chessBoardPanel, gbc);
-        //pack();
+        pack();
         setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
