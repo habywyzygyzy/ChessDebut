@@ -14,7 +14,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 
-import static database.InsertData.insertIntoHit;
+import static database.InsertData.insertIntoMoves;
 import static database.InsertData.insertIntoMetaData;
 import static singletons.ParseFolderPathSingleton.getInstance;
 import static tools.CheckingNulls.checkString;
@@ -99,7 +99,7 @@ class PickerFrame extends JFrame {
                             movesList = saveMovesToList(games.get(j).getMoveText());
                             board = new Board();
                             for (int k = 0; k < moves.size() && k < movesList.size(); k++) {
-                                insertIntoHit(movesList.get(k), converter.convert(removeWhiteSpaces(board.getFen())), j + 1);
+                                insertIntoMoves(movesList.get(k), converter.convert(removeWhiteSpaces(board.getFen())), j + 1);
                                 board.doMove(moves.get(k));
                             }
                         }

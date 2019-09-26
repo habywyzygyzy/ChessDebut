@@ -20,12 +20,14 @@ class StatisticsTablePanel extends JPanel {
      */
     StatisticsTablePanel() {
         final JTable mainTable;
-        final String[] columns = {"Next Move", "# of Games", "% of White Victories", "% of Black Victories", "% of Draws"};
+        final String[] columns = {"Move", "# of Games", "% of White Victories", "% of Black Victories", "% of Draws"};
         final String[][] data = new String[0][];
         final DefaultTableModel model = new DefaultTableModel(data, columns);
         mainTable = new JTable(model);
         JTableHeader header = mainTable.getTableHeader();
         mainTable.setAutoCreateRowSorter(true);
+        mainTable.setFont(new Font("Arial", Font.PLAIN, 18));
+        mainTable.getTableHeader().setFont(new Font("Arial", Font.PLAIN, 18));
         this.setLayout(new BorderLayout());
         this.add(header, BorderLayout.NORTH);
         this.add(mainTable, BorderLayout.CENTER);

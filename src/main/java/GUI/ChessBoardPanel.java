@@ -28,7 +28,7 @@ class ChessBoardPanel extends JPanel {
             for (int j = 0; j < 8; j++) {
                 if (j == 0) {
                     label = new JLabel(String.valueOf(k) + "   ", SwingConstants.RIGHT);
-                    label.setFont(new Font("Arial", Font.BOLD, 18));
+                    label.setFont(new Font("Arial", Font.BOLD, 24));
                     chessBoardPanel.add(label);
                 }
                 chessBoardPanel.add(chessBoardSquares[j][i]);
@@ -49,7 +49,9 @@ class ChessBoardPanel extends JPanel {
         for (int i = 0; i < 8; i++) {
             //setConstraintsForColumnLabel(gbc, i);
             label = new JLabel("abcdefgh".substring(i, i + 1), SwingConstants.CENTER);
-            label.setFont(new Font("Arial", Font.BOLD, 18));
+            label.setVerticalAlignment(JLabel.TOP);
+            label.setVerticalTextPosition(JLabel.TOP);
+            label.setFont(new Font("Arial", Font.BOLD, 24));
             chessBoardPanel.add(label);
         }
     }
@@ -75,9 +77,9 @@ class ChessBoardPanel extends JPanel {
 
                     public void paintComponent(Graphics g) {
                         if ((finalJ % 2 == 1 && finalI % 2 == 1) || (finalJ % 2 == 0 && finalI % 2 == 0)) {
-                            g.setColor(Color.WHITE);
+                            g.setColor(new Color(232, 235, 239));
                         } else {
-                            g.setColor(Color.BLACK);
+                            g.setColor(new Color(125, 135, 150));
                         }
                         g.fillRect(1, 1, 600, 600);
                         g.drawImage(image, 10, 30, this);
@@ -88,7 +90,7 @@ class ChessBoardPanel extends JPanel {
 
                 field.setHorizontalAlignment(JTextField.CENTER);
                 field.setFont(font);
-                field.setForeground(Color.lightGray);
+                field.setForeground(Color.BLACK);
                 field.setText(ChessBoardSingleton.getInstance().getState()[i][j]);
                 chessBoardSquares[j][i] = field;
             }

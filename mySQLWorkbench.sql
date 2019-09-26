@@ -1,4 +1,4 @@
-//DROP TABLE IF EXISTS `MetaData`;
+DROP TABLE IF EXISTS `MetaData`;
 CREATE TABLE IF NOT EXISTS `MetaData`
 (
     `MetaId`    INT         AUTO_INCREMENT NOT NULL,
@@ -12,15 +12,15 @@ CREATE TABLE IF NOT EXISTS `MetaData`
     PRIMARY KEY (`MetaId`)
 );
 
-//DROP TABLE IF EXISTS `Hit`;
-CREATE TABLE IF NOT EXISTS `Hit`
+DROP TABLE IF EXISTS `Moves`;
+CREATE TABLE IF NOT EXISTS `Moves`
 (
-    `HitId`           INT        AUTO_INCREMENT NOT NULL,
+    `MovesId`           INT        AUTO_INCREMENT NOT NULL,
     `Hit`             VARCHAR(7) NULL,
     `StateBeforeHit`  BIGINT     NULL,
     `StateBeforeHit2` BIGINT     NULL,
     `StateBeforeHit3` BIGINT     NULL,
     `StateBeforeHit4` BIGINT     NULL,
     `MetaId`          INT        NULL,
-    PRIMARY KEY (`HitId`)
+    PRIMARY KEY (`MovesId`)
 );

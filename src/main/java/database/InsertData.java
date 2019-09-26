@@ -39,11 +39,10 @@ public class InsertData {
      * @param stateBeforeHit Arrays of longs containing converted chessboard in FEN format
      * @param metaId         Game ID
      */
-    public static void insertIntoHit(String hit, long[] stateBeforeHit, int metaId) {
+    public static void insertIntoMoves(String hit, long[] stateBeforeHit, int metaId) {
         String sql;
-        String insert = "INSERT INTO `Hit`(`Hit`, `StateBeforeHit`, `StateBeforeHit2`, `StateBeforeHit3`, `StateBeforeHit4`,  `MetaId`) ";
+        String insert = "INSERT INTO `Moves`(`Hit`, `StateBeforeHit`, `StateBeforeHit2`, `StateBeforeHit3`, `StateBeforeHit4`,  `MetaId`) ";
         String values = "VALUES ('" + hit + "','" + stateBeforeHit[0] + "','" + stateBeforeHit[1] + "','" + stateBeforeHit[2] + "','" + stateBeforeHit[3] + "','" + metaId + "')";
-
         try {
             sql = insert + values;
             getStmt().executeUpdate(sql);

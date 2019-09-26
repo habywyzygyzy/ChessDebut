@@ -2,6 +2,7 @@ package GUI;
 
 import database.DBConnection;
 import models.Statistics;
+import singletons.ChessBoardSingleton;
 import singletons.FiltersSingleton;
 import singletons.MovesHistorySingleton;
 import singletons.StatisticsSingleton;
@@ -11,6 +12,7 @@ import tools.SortForBlacks;
 import tools.SortForWhites;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,6 +22,8 @@ import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -90,10 +94,16 @@ class MainFrame extends JFrame {
         final StatisticsTablePanel statisticsTablePanel = new StatisticsTablePanel();
         statisticsTablePanel.setMinimumSize(new Dimension(width*50/100, height * 9 / 10));
         statisticsTablePanel.setPreferredSize(new Dimension(width*50/100, height * 9 / 10));
-        final String[] columns = {"Next Move", "# of Games", "% of White Victories", "% of Black Victories", "% of Draws"};
+        final String[] columns = {"Move", "# of Games", "% of White Victories", "% of Black Victories", "% of Draws"};
         final String[][] data = new String[0][];
         final DefaultTableModel model = new DefaultTableModel(data, columns);
         final JTable[] mainTable = new JTable[1];
+        final DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        final NumberFormat nf= NumberFormat.getInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setRoundingMode(RoundingMode.HALF_UP);
+        final DecimalFormat df = new DecimalFormat("#.00");
+        rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
         setConstraintsForStatisticsPanel(gbc);
         add(statisticsTablePanel, gbc);
 
@@ -128,12 +138,11 @@ class MainFrame extends JFrame {
                 if (differences.size() != 0)
                     MovesHistorySingleton.setMoves(MovesHistorySingleton.getMoves().
                             append(SaveMoveForGameHistory.saveMoveToString(differences, rowIndex, columnIndex, capture)));
-                System.out.println(MovesHistorySingleton.getMoves().toString());
-
                 String stateFEN = translateBoardToFEN(getInstance().getState());
                 ConvertFen converter = new ConvertFen();
                 System.out.println(stateFEN);
                 long[] longArrayFEN = converter.convert(stateFEN);
+                System.out.println(longArrayFEN[0] + " " + longArrayFEN[1] + " "  + longArrayFEN[2] + " "  + longArrayFEN[3]);
                 ArrayList<Statistics> stats;
                 start = System.nanoTime();
                 stats = selectHitsWithTheSameFEN(longArrayFEN);
@@ -178,9 +187,21 @@ class MainFrame extends JFrame {
                     percentBlack = BigDecimal.valueOf(percentBlack)
                             .setScale(2, RoundingMode.HALF_UP)
                             .doubleValue();
-                    row = new String[]{hit, Integer.toString(nrOfGames), String.valueOf(percentWhite), String.valueOf(percentBlack), String.valueOf(percentDraws)};
+                    if (ChessBoardSingleton.getIsWhiteMove())
+                        row = new String[]{"Black move: " + hit, Integer.toString(nrOfGames), String.valueOf(nf.format(percentWhite)), String.valueOf(nf.format(percentBlack)), String.valueOf(nf.format(percentDraws))};
+                    else
+                        row = new String[]{"White move: " + hit, Integer.toString(nrOfGames), String.valueOf(nf.format(percentWhite)), String.valueOf(nf.format(percentBlack)), String.valueOf(nf.format(percentDraws))};
+                    //row = new String[]{"White move: " + hit, Integer.toString(nrOfGames), String.valueOf(percentWhite), String.valueOf(percentBlack), String.valueOf(percentDraws)};
                     model.addRow(row);
                     mainTable[0] = new JTable(model);
+                    mainTable[0].setFont(new Font("Arial", Font.PLAIN, 18));
+                    mainTable[0].getTableHeader().setFont(new Font("Arial", Font.PLAIN, 18));
+                    mainTable[0].getColumnModel().getColumn(1).setCellRenderer(rightRenderer);
+                    mainTable[0].getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
+                    mainTable[0].getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+                    mainTable[0].getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+                    mainTable[0].setAutoResizeMode(1);
+                    mainTable[0].setRowHeight(30);
                     statisticsTablePanel.remove(1);
                     statisticsTablePanel.add(mainTable[0]);
                     chessBoard.removeAll();

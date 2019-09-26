@@ -30,8 +30,8 @@ public class SelectData {
         String name = "";
         String opening = "";
         String select =
-                "SELECT `Hit`.MetaId," +
-                        " `Hit`.Hit," +
+                "SELECT `Moves`.MetaId," +
+                        " `Moves`.Hit," +
                         " `MetaData`.`Result`," +
                         " `MetaData`.`WhiteELO`," +
                         " `MetaData`.`BlackELO`," +
@@ -39,9 +39,9 @@ public class SelectData {
                         " `MetaData`.`WhiteName`," +
                         " `MetaData`.`BlackName`," +
                         " `MetaData`.`Opening` ";
-        String from = "FROM `Hit` ";
+        String from = "FROM `Moves` ";
         String join = "JOIN `MetaData` ";
-        String on = "ON (`Hit`.`MetaId` = `MetaData`.`MetaId`) ";
+        String on = "ON (`Moves`.`MetaId` = `MetaData`.`MetaId`) ";
         String where = "WHERE `StateBeforeHit`  = '" + FEN[0] + "'";
         String and = "AND `StateBeforeHit2`  = '" + FEN[1] + "'";
         String and2 = "AND `StateBeforeHit3`  = '" + FEN[2] + "'";
