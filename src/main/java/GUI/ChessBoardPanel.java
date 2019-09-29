@@ -43,11 +43,9 @@ class ChessBoardPanel extends JPanel {
      * @param chessBoardPanel Chessboard panel
      */
     static void addColumnLabel(JPanel chessBoardPanel) {
-        //GridBagConstraints gbc = new GridBagConstraints();
         chessBoardPanel.add(new JLabel(""));
         JLabel label = null;
         for (int i = 0; i < 8; i++) {
-            //setConstraintsForColumnLabel(gbc, i);
             label = new JLabel("abcdefgh".substring(i, i + 1), SwingConstants.CENTER);
             label.setVerticalAlignment(JLabel.TOP);
             label.setVerticalTextPosition(JLabel.TOP);
@@ -79,10 +77,10 @@ class ChessBoardPanel extends JPanel {
                         if ((finalJ % 2 == 1 && finalI % 2 == 1) || (finalJ % 2 == 0 && finalI % 2 == 0)) {
                             g.setColor(new Color(232, 235, 239));
                         } else {
-                            g.setColor(new Color(125, 135, 150));
+                            g.setColor(new Color(125, 135, 150));Ś
                         }
                         g.fillRect(1, 1, 600, 600);
-                        g.drawImage(image, 10, 30, this);
+                        g.drawImage(image, 0, 20, this);
                         super.paintComponent(g);
                     }
                 };
@@ -133,16 +131,5 @@ class ChessBoardPanel extends JPanel {
             }
         }
         return icons;
-    }
-
-    private static void setConstraintsForColumnLabel(GridBagConstraints gbc, int pos) {
-        gbc.gridx = pos;
-        gbc.gridy = 8;
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.fill = GridBagConstraints.BOTH;
-        //gbc.weightx = 100;
-        //gbc.weighty = 5;
-        gbc.anchor = GridBagConstraints.SOUTH;
     }
 }

@@ -110,7 +110,6 @@ class MainFrame extends JFrame {
         ChessBoardPanel chessBoardPanel = new ChessBoardPanel();
         final JTextField[][] chessBoardSquares = new JTextField[8][8];
         GridLayout chessBoardLayout = new GridLayout(0, 9);
-        //GridBagLayout chessBoardLayout = new GridBagLayout();
         FlowLayout topLayout = new FlowLayout();
         Button submitButton = new Button("Submit");
         submitButton.addActionListener(new ActionListener() {
@@ -191,7 +190,6 @@ class MainFrame extends JFrame {
                         row = new String[]{"Black move: " + hit, Integer.toString(nrOfGames), String.valueOf(nf.format(percentWhite)), String.valueOf(nf.format(percentBlack)), String.valueOf(nf.format(percentDraws))};
                     else
                         row = new String[]{"White move: " + hit, Integer.toString(nrOfGames), String.valueOf(nf.format(percentWhite)), String.valueOf(nf.format(percentBlack)), String.valueOf(nf.format(percentDraws))};
-                    //row = new String[]{"White move: " + hit, Integer.toString(nrOfGames), String.valueOf(percentWhite), String.valueOf(percentBlack), String.valueOf(percentDraws)};
                     model.addRow(row);
                     mainTable[0] = new JTable(model);
                     mainTable[0].setFont(new Font("Arial", Font.PLAIN, 18));
