@@ -77,7 +77,7 @@ class ChessBoardPanel extends JPanel {
                         if ((finalJ % 2 == 1 && finalI % 2 == 1) || (finalJ % 2 == 0 && finalI % 2 == 0)) {
                             g.setColor(new Color(232, 235, 239));
                         } else {
-                            g.setColor(new Color(125, 135, 150));Ś
+                            g.setColor(new Color(125, 135, 150));
                         }
                         g.fillRect(1, 1, 600, 600);
                         g.drawImage(image, 0, 20, this);

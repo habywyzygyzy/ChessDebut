@@ -70,8 +70,6 @@ public class SaveMoveForGameHistory {
                 }
             }
         }
-        if (MovesHistorySingleton.getFullMovesCounter() % 10 == 0)
-            stringMove.append("/n");
         return stringMove.toString();
     }
 }
