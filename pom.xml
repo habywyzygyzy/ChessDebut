@@ -23,7 +23,7 @@
     <description>App for chess debut training</description>
     <properties>
         <log4j.version>1.2.14</log4j.version>
-        <junit.version>4.10</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
     <repositories>
         <repository>
@@ -80,7 +80,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.1</version>
         </dependency>
     </dependencies>
 </project>
